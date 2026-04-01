@@ -19,6 +19,8 @@ export interface User {
     photoURL?: string;
     role: 'admin' | 'customer';
     wishlist?: string[]; // array of product IDs
+    address?: string | { street: string; city: string; region: string; zip: string };
+    phone?: string;
 }
 
 export interface Review {
