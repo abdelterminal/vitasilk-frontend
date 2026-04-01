@@ -370,6 +370,8 @@ export interface User {
   role: 'admin' | 'customer';
   photo_url?: string;
   created_at?: string;
+  address?: string | { street: string; city: string; region: string; zip: string };
+  phone?: string;
 }
 
 export interface Product {
