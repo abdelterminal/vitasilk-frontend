@@ -36,7 +36,6 @@ const AdminDashboard = () => {
     const [recentLogs, setRecentLogs] = useState<any[]>([]);
     const [lowStock, setLowStock] = useState<any[]>([]);
     const [topProducts, setTopProducts] = useState<any[]>([]);
-    const [currentTime, setCurrentTime] = useState(new Date());
     const router = useRouter();
 
     useEffect(() => {
@@ -80,10 +79,6 @@ const AdminDashboard = () => {
 
     const currentItem = [...menuGroups[0].items, ...menuGroups[1].items, ...menuGroups[2].items].find(item => item.id === activeTab);
 
-    useEffect(() => {
-        const timer = setInterval(() => setCurrentTime(new Date()), 1000);
-        return () => clearInterval(timer);
-    }, []);
 
     useEffect(() => {
         adminApi.getLogs(1).then(res => setRecentLogs(res.data)).catch(console.error);
@@ -118,12 +113,6 @@ const AdminDashboard = () => {
     return (
         <AdminGuard>
             <div className="min-h-screen bg-[#FAF9F6] flex">
-                {/* Custom Clock Component */}
-                <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] bg-white/40 backdrop-blur-xl border border-white/20 px-4 lg:px-6 py-2 lg:py-3 shadow-2xl rounded-full hidden md:flex items-center gap-3 lg:gap-4 whitespace-nowrap">
-                    <span className="text-sm lg:text-xl font-sans font-light text-gray-900 tracking-widest">
-                        {currentTime.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                    </span>
-                </div>
 
                 {/* Mobile Sidebar Overlay */}
                 <AnimatePresence>
