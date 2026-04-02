@@ -62,7 +62,7 @@ const REGIONS = [
 ];
 
 function AccountPageContent() {
-    const { userData: user, loading: authLoading, logout } = useAuth();
+    const { userData: user, loading: authLoading, logout, refreshUser } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
     const initialTab = (searchParams.get('tab') as TabType) || 'profile';
@@ -153,6 +153,7 @@ const [claimedGift, setClaimedGift] = useState(false);
                 phone: editForm.phone,
                 address: editForm.address,
             });
+            await refreshUser();
             setIsEditing(false);
         } catch (error) {
             console.error("Error saving profile:", error);
