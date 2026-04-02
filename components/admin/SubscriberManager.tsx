@@ -12,7 +12,7 @@ const SubscriberManager = () => {
 
     useEffect(() => {
         subscribersApi.getAll()
-            .then(res => setSubscribers(res.data.data))
+            .then(res => setSubscribers(res.data || []))
             .catch(console.error)
             .finally(() => setLoading(false));
     }, []);
