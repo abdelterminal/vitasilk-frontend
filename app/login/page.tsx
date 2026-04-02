@@ -180,11 +180,6 @@ const LoginPage = () => {
                         >
                             Créer un Compte
                         </Link>
-                        <div className="mt-6 p-4 bg-primary/5 border border-primary/10 rounded-sm text-center">
-                            <p className="text-[9px] uppercase tracking-widest text-primary font-bold mb-1">Accès Démonstration Admin</p>
-                            <p className="text-[10px] text-gray-500 font-medium">Email: <span className="text-gray-900">admin@vitasilk.com</span></p>
-                            <p className="text-[10px] text-gray-500 font-medium">Pass: <span className="text-gray-900">Admin@123456</span></p>
-                        </div>
                     </div>
                 </motion.div>
             </div>

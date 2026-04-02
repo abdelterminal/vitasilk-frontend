@@ -93,7 +93,7 @@ const Navbar = () => {
                         </div>
                         <div className="hidden sm:flex items-center space-x-2 group cursor-pointer hover:text-primary transition-colors">
                             <Mail size={11} className="text-primary/70" />
-                            <span>contact@vitasilk.com</span>
+                            <span>contact@vitasilk.ma</span>
                         </div>
                     </div>
 
