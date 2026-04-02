@@ -1,5 +1,4 @@
-import { db } from './firebase';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { adminApi } from './api';
 
 export type LogAction =
     | 'product_add' | 'product_edit' | 'product_delete'
@@ -11,12 +10,7 @@ export type LogAction =
 
 export const logAdminAction = async (action: LogAction, details: string, adminName: string = 'Directeur') => {
     try {
-        await addDoc(collection(db, 'admin_logs'), {
-            action,
-            details,
-            adminName,
-            timestamp: serverTimestamp()
-        });
+        await adminApi.createLog({ action, details, admin_name: adminName });
     } catch (error) {
         console.error("Error logging admin action:", error);
     }
