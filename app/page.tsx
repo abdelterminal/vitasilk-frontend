@@ -20,11 +20,11 @@ type Product = ApiProduct;
 
 // Animated text ticker for the animated quote band
 const QUOTES = [
-    "L'ART DE LA SOIE PARISIENNE",
+    "LISSAGE SANS FORMALDÉHYDE",
     "QUALITÉ PROFESSIONNELLE CERTIFIÉE",
     "VOS CHEVEUX MÉRITENT LE MEILLEUR",
     "L'OR 24K AU CŒUR DE NOS FORMULES",
-    "LISSAGE BRÉSILIEN D'EXCEPTION",
+    "LISSAGE PROFESSIONNEL",
 ];
 
 const AnimatedQuoteBand = () => {

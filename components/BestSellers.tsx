@@ -10,7 +10,7 @@ const BEST_SELLERS = [
   {
     id: 1,
     name: "Filler Glow 1L",
-    subtitle: "Protéine Brésilienne Kératine",
+    subtitle: "Protéine Kératine",
     price: "À partir de 299 MAD",
     badge: "#1 Best-seller",
     badgeBg: "bg-primary text-white",

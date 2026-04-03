@@ -75,7 +75,7 @@ export default function NewsletterBanner() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-3xl md:text-5xl lg:text-7xl font-sans font-light !text-white leading-[1.1] mb-8"
                     >
-                        Le <span className="text-primary">secret</span> d'un cheveu parfait commence <span className="text-primary">ici.</span>
+                        Restez informée. <span className="text-primary">Profitez en première.</span>
                     </motion.h2>
 
                     <motion.p
@@ -85,7 +85,7 @@ export default function NewsletterBanner() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="!text-white/90 text-sm md:text-base font-light max-w-2xl mx-auto mb-10 leading-relaxed"
                     >
-                        Rejoignez notre newsletter pour recevoir des conseils <span className="text-primary font-medium">d'experts</span>, nos nouveautés en avant-première et des offres exclusives réservées à nos membres.
+                        Inscrivez-vous et recevez nos <span className="text-primary font-medium">offres en exclusivité</span>, nos nouveautés et conseils capillaires directement dans votre boîte mail.
                     </motion.p>
 
  <motion.form

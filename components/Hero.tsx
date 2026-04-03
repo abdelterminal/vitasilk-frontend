@@ -56,7 +56,7 @@ const Hero = () => {
  style={{color: '#C9A14A'}}
  >
    <span className="flex items-center space-x-2 text-primary font-bold uppercase text-[10px] md:text-sm">
-  Maison de Beauté Capillaire
+  Spécialiste du Lissage Professionnel
   </span>
  </motion.div>
 
@@ -96,8 +96,8 @@ const Hero = () => {
  className="text-white/80 text-base md:text-lg max-w-2xl mx-auto mb-16 tracking-wide leading-relaxed"
  style={{fontFamily: "'Poppins', sans-serif", fontWeight: 400}}
  >
- L'alliance ultime du prestige et de la performance, <br className="hidden md:block" />
- pour une chevelure d'exception signée Vitasilk.
+ Des cheveux lisses, brillants et sains — <br className="hidden md:block" />
+ dès le premier lavage.
  </motion.p>
 
  <motion.div
@@ -108,7 +108,7 @@ const Hero = () => {
  >
  <Link href="/boutique" className="group relative px-12 py-5 text-white font-medium uppercase tracking-widest text-[11px] overflow-hidden transition-all duration-700 shadow-[0_10px_30px_rgba(201,161,74,0.3)] hover:shadow-[0_15px_40px_rgba(201,161,74,0.5)] hover:-translate-y-1" style={{backgroundColor: '#C9A14A', borderRadius: '4px'}}>
  <span className="absolute inset-0 w-full h-full scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700" style={{backgroundColor: 'rgba(0,0,0,0.1)'}} />
- <span className="relative z-10">Explorer l'Exclusive</span>
+ <span className="relative z-10">Voir nos produits</span>
  </Link>
 
  <Link href="/about" className="group flex items-center space-x-4 text-white uppercase tracking-wider text-[11px] font-medium transition-all hover:text-primary">
@@ -135,7 +135,7 @@ const Hero = () => {
  transition={{ delay: 2.5, duration: 1.5 }}
  className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6"
  >
- <span className="text-[10px] font-bold uppercase text-primary">Luxe Brésilen • 24K Gold</span>
+ <span className="text-[10px] font-bold uppercase text-primary">Lissage Pro • 24K Gold</span>
  <div className="w-[1px] h-16 bg-gradient-to-b from-primary to-transparent relative overflow-hidden" style={{background: 'linear-gradient(to bottom, #C9A14A, transparent)'}}>
  <motion.div
  animate={{ y: ['-100%', '300%'] }}

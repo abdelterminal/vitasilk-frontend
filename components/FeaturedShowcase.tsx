@@ -29,16 +29,15 @@ export default function FeaturedShowcase() {
                         >
                             <div className="flex items-center gap-3 mb-6">
                                 <span className="w-8 h-px bg-primary"></span>
-                                <span className="text-[11px] uppercase font-bold text-primary">L'Art du Soin</span>
+                                <span className="text-[11px] uppercase font-bold text-primary">Prendre soin de vos cheveux</span>
                             </div>
 
                             <h2 className="text-3xl md:text-5xl font-sans font-light text-gray-900 leading-[1.1] mb-8">
-                                Transformez la beauté naturel de vos <span className="text-primary">cheveux au quotidien.</span>
+                                Des cheveux transformés, <span className="text-primary">dès la première utilisation.</span>
                             </h2>
 
                             <p className="text-gray-500 font-light leading-relaxed mb-10 text-lg">
-                                Nos protocoles de soins ont été conçus pour offrir une expérience sensorielle luxueuse tout en réparant la fibre capillaire en profondeur.
-                                La brillance devient exceptionnelle, le touché incomparable.
+                                Nos soins réparent, lissent et font briller. Faciles à utiliser — le résultat se voit immédiatement.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-6">
@@ -52,7 +51,7 @@ export default function FeaturedShowcase() {
                                     href="/about"
                                     className="inline-flex items-center gap-3 font-medium text-gray-900 hover:text-primary transition-colors group"
                                 >
-                                    <span className="border-b border-black pb-1 group-hover:border-primary">Notre Savoir-Faire</span>
+                                    <span className="border-b border-black pb-1 group-hover:border-primary">Notre histoire</span>
                                     <ExternalLink size={16} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </div>

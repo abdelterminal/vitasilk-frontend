@@ -7,29 +7,29 @@ import Image from 'next/image';
 
 const FEATURES = [
  {
- title: "Technologie Brésilienne",
- description: "Formules authentiques développées et testées par des experts au Brésil pour garantir le lissage le plus parfait.",
+ title: "Formules Exclusives",
+ description: "Des formules développées par des experts, utilisées par les meilleurs salons.",
  icon: FlaskConical,
  color: "text-blue-500",
  bgIcon: "bg-blue-50"
  },
  {
  title: "Ingrédients Nobles",
- description: "Or 24K, huile de coco pure, extraits de café vert et protéines végétales pour nourrir intensément le cheveu.",
+ description: "Or 24K, huile de coco et kératine — pour des cheveux nourris, lisses et brillants.",
  icon: Leaf,
  color: "text-emerald-500",
  bgIcon: "bg-emerald-50"
  },
  {
  title: "Zéro Formaldéhyde",
- description: "Des lissages 100% sûrs, sans formol, respectueux de votre santé et de la fibre capillaire.",
+ description: "Sans formol — sûr pour vous, sûr pour votre coiffeuse, efficace pour vos cheveux.",
  icon: ShieldCheck,
  color: "text-indigo-500",
  bgIcon: "bg-indigo-50"
  },
  {
  title: "Résultat Salon",
- description: "La qualité exigée par les professionnels de la coiffure, désormais accessible chez vous.",
+ description: "Le même résultat qu'en salon. Sans vous déplacer.",
  icon: Award,
  color: "text-amber-500",
  bgIcon: "bg-amber-50"
@@ -61,8 +61,8 @@ export default function BrandBenefits() {
  {/* Overlay elements */}
  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
  <div className="absolute bottom-8 left-8 right-8 text-white">
- <h3 className="text-2xl font-light mb-2">L'Excellence Capillaire</h3>
- <p className="text-white/80 text-sm font-light">Le secret des salons de coiffure prestigieux.</p>
+ <h3 className="text-2xl font-light mb-2">Résultat visible</h3>
+ <p className="text-white/80 text-sm font-light">Dès la première utilisation.</p>
  </div>
  </motion.div>
 

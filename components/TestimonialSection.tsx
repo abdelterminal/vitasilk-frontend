@@ -85,7 +85,7 @@ export default function TestimonialSection() {
  <div className="mb-12">
  <Quote className="text-primary/20 w-16 h-16 mb-6" />
  <h2 className="text-3xl lg:text-5xl font-sans font-light text-gray-900 leading-tight">
- L'expérience de <br /><span className="text-primary">celles qui l'ont testé</span>
+ Ce que disent <br /><span className="text-primary">nos clientes</span>
  </h2>
  </div>
 
