@@ -47,12 +47,12 @@ const Hero = () => {
  </div>
 
  {/* Content */}
- <div className="relative z-10 text-center px-6 max-w-[1200px] mx-auto pt-20 flex flex-col items-center">
+ <div className="relative z-10 text-center px-6 max-w-[1200px] mx-auto pt-10 md:pt-16 lg:pt-20 flex flex-col items-center">
  <motion.div
  initial={{ opacity: 0, y: -20 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 1.2, ease: "easeOut" }}
- className="flex items-center justify-center space-x-4 uppercase text-[10px] md:text-[11px] font-bold mb-8"
+ className="flex items-center justify-center space-x-4 uppercase text-[10px] md:text-[11px] font-bold mb-4 md:mb-8"
  style={{color: '#C9A14A'}}
  >
    <span className="flex items-center space-x-2 text-primary font-bold uppercase text-[10px] md:text-sm">
@@ -64,9 +64,9 @@ const Hero = () => {
  initial={{ opacity: 0, y: 30 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
- className="mb-10 text-center"
+ className="mb-4 md:mb-8 lg:mb-10 text-center"
  >
-  <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[8rem] text-white leading-[0.9] tracking-tight text-center" style={{fontFamily: "'Playfair Display', serif"}}>
+  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[8rem] text-white leading-[0.9] tracking-tight text-center" style={{fontFamily: "'Playfair Display', serif"}}>
   <motion.span
  initial={{ opacity: 0, scale: 0.9 }}
  animate={{ opacity: 1, scale: 1 }}
@@ -93,7 +93,7 @@ const Hero = () => {
  initial={{ opacity: 0 }}
  animate={{ opacity: 1 }}
  transition={{ duration: 1.2, delay: 1 }}
- className="text-white/80 text-base md:text-lg max-w-2xl mx-auto mb-16 tracking-wide leading-relaxed"
+ className="text-white/80 text-sm md:text-base lg:text-lg max-w-2xl mx-auto mb-8 md:mb-12 lg:mb-16 tracking-wide leading-relaxed"
  style={{fontFamily: "'Poppins', sans-serif", fontWeight: 400}}
  >
  Des cheveux lisses, brillants et sains — <br className="hidden md:block" />
