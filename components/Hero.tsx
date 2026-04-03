@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const Hero = () => {
  return (
- <section className="relative h-screen w-full overflow-hidden flex items-center justify-center" style={{backgroundColor: '#0D0D0D'}}>
+ <section className="relative h-screen w-full overflow-hidden flex items-center justify-center min-h-[600px]" style={{backgroundColor: '#0D0D0D'}}>
  {/* Background Video with subtle zoom effect */}
  <motion.div
  initial={{ scale: 1.1 }}
@@ -47,7 +47,7 @@ const Hero = () => {
  </div>
 
  {/* Content */}
- <div className="relative z-10 text-center px-6 max-w-[1200px] mx-auto pt-10 md:pt-16 lg:pt-20 flex flex-col items-center">
+ <div className="relative z-10 text-center px-6 max-w-[1200px] mx-auto mt-16 md:mt-20 flex flex-col items-center">
  <motion.div
  initial={{ opacity: 0, y: -20 }}
  animate={{ opacity: 1, y: 0 }}
@@ -133,7 +133,7 @@ const Hero = () => {
  initial={{ opacity: 0 }}
  animate={{ opacity: 1 }}
  transition={{ delay: 2.5, duration: 1.5 }}
- className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6"
+ className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden xl:flex flex-col items-center gap-6"
  >
  <span className="text-[10px] font-bold uppercase text-primary">Lissage Pro • 24K Gold</span>
  <div className="w-[1px] h-16 bg-gradient-to-b from-primary to-transparent relative overflow-hidden" style={{background: 'linear-gradient(to bottom, #C9A14A, transparent)'}}>
