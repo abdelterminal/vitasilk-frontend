@@ -14,7 +14,7 @@ const BEST_SELLERS = [
     price: "À partir de 299 MAD",
     badge: "#1 Best-seller",
     badgeBg: "bg-primary text-white",
-    image: "/img/lissage pro/FILLER-GLOW-1L-PROTEIN-SHAMPO-–-Brazilian-Keratin-Protein-shooting-800x1005-1.png",
+    image: "/img/lissage pro/VitaSilk-Filter-Glow-1L.jpg",
     href: "/boutique",
     purchases: "+250 achats",
   },
