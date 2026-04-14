@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'api.vitasilk.srv1516989.hstgr.cloud',
+        hostname: 'api.vitasilk.srv1584216.hstgr.cloud',
         pathname: '/uploads/**',
       },
       {
