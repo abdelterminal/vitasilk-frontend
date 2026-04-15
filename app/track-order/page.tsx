@@ -417,30 +417,6 @@ const TrackOrderPageContent = () => {
                                     </div>
                                 </div>
 
-                                {/* Support */}
-                                <div className="p-6 rounded-2xl bg-gray-950 text-white space-y-6 shadow-md">
-                                    <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center text-primary">
-                                        <Headphones size={18} />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <h4 className="text-xl font-light tracking-widest uppercase">
-                                            Votre <span className="font-medium text-primary">Ambassadeur</span>
-                                        </h4>
-                                        <p className="text-[10px] font-normal text-white/40 leading-relaxed uppercase tracking-wider">
-                                            Notre conciergerie assure l'intégrité de vos produits.
-                                        </p>
-                                    </div>
-                                    <div className="flex gap-3">
-                                        <Link href="/account?tab=chat" className="flex-1 py-3 text-[10px] uppercase tracking-widest font-medium rounded-xl flex items-center justify-center gap-2 bg-white text-gray-950 hover:bg-primary hover:text-white transition-all shadow-md">
-                                            <MessageSquare size={14} />
-                                            <span>Contact</span>
-                                        </Link>
-                                        <div className="flex-1 py-3 rounded-xl flex items-center justify-center gap-2 border border-white/10 text-[10px] uppercase tracking-widest font-medium text-white/40">
-                                            <ShieldCheck size={14} className="text-primary" />
-                                            <span>Sécurisé</span>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </motion.div>
                     )}
