@@ -182,10 +182,6 @@ export default function CheckoutPage() {
     const handlePlaceOrder = async () => {
         setIsSubmitting(true);
         try {
-            const totalDiscountPct = cartTotal > 0
-                ? ((discount + eventDiscountAmount) / cartTotal) * 100
-                : 0;
-
             const res = await ordersApi.create({
                 items: cart.map(item => ({ product_id: Number(item.product.id), quantity: item.quantity })),
                 address: deliveryAddress.city,
@@ -193,7 +189,7 @@ export default function CheckoutPage() {
                 city: deliveryAddress.city,
                 payment_method: paymentMethod === 'transfer' ? 'bank_transfer' : 'cash',
                 notes: deliveryAddress.notes || undefined,
-                discount_percentage: totalDiscountPct,
+                promo_code: appliedPromo?.code || undefined,
             });
 
             setOrderId(`VT-${res.data.id}`);
