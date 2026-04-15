@@ -146,6 +146,7 @@ export default function CheckoutPage() {
     const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cash');
 
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [orderError, setOrderError] = useState('');
 
     const validateStep1 = () => {
         const errs: Record<string, string> = {};
@@ -181,6 +182,7 @@ export default function CheckoutPage() {
 
     const handlePlaceOrder = async () => {
         setIsSubmitting(true);
+        setOrderError('');
         try {
             const res = await ordersApi.create({
                 items: cart.map(item => ({ product_id: Number(item.product.id), quantity: item.quantity })),
@@ -195,8 +197,8 @@ export default function CheckoutPage() {
             setOrderId(`VT-${res.data.id}`);
             clearCart();
             setStep(3);
-        } catch (error) {
-            console.error('Order failed:', error);
+        } catch (error: any) {
+            setOrderError(error?.message || 'Une erreur est survenue. Veuillez réessayer.');
         } finally {
             setIsSubmitting(false);
         }
@@ -357,6 +359,12 @@ export default function CheckoutPage() {
                                                     />
                                                 </FormField>
                                             </div>
+
+                                            {orderError && (
+                                                <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-sm text-sm text-red-600 text-center">
+                                                    {orderError}
+                                                </div>
+                                            )}
 
                                             <button
                                                 onClick={() => { if (validateStep1()) handlePlaceOrder(); }}
