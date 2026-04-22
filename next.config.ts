@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'api.vitasilk.ma',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'cdn.shopify.com',
       },
       {
