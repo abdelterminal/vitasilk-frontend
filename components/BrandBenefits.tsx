@@ -53,10 +53,10 @@ export default function BrandBenefits() {
  className="absolute inset-0"
  >
  <Image
- src="/img/lissage pro/BlueSilk-Modele-shooting-e1762520646963.png"
+ src="/img/pub1.png"
  alt="Résultat Vitasilk"
  fill
- className="object-cover object-center group-hover:scale-105 transition-transform duration-[1.5s]"
+ className="object-contain object-center group-hover:scale-105 transition-transform duration-[1.5s]"
  />
  {/* Overlay elements */}
  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
