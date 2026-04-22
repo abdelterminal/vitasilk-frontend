@@ -129,7 +129,7 @@ const ProductDetailsPage = () => {
         if (product?.category && id) {
             productsApi.getAll({ limit: 8 })
                 .then(res => {
-                    const prods: Product[] = res.data
+                    const prods: Product[] = (res.data || [])
                         .filter(p => p.category_name === product.category && String(p.id) !== id)
                         .slice(0, 7)
                         .map(p => ({

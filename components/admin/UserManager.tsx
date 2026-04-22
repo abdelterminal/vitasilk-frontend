@@ -50,7 +50,7 @@ const UserManager = () => {
 
     useEffect(() => {
         usersApi.getAll(1, 200)
-            .then(res => setUsers(res.data))
+            .then(res => setUsers(res.data || []))
             .catch(console.error)
             .finally(() => setLoading(false));
     }, []);
@@ -114,7 +114,7 @@ const UserManager = () => {
         setOrdersLoading(true);
         try {
             const res = await ordersApi.getAll({ limit: 50 });
-            setUserOrders(res.data.filter((o: any) => o.user_email === u.email || o.user_id === u.id));
+            setUserOrders((res.data || []).filter((o: any) => o.user_email === u.email || o.user_id === u.id));
         } catch (e) { }
         setOrdersLoading(false);
     };

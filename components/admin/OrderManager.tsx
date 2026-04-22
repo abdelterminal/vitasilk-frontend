@@ -71,7 +71,7 @@ export default function OrderManager() {
 
     useEffect(() => {
         ordersApi.getAll({ limit: 200 })
-            .then(res => setOrders(res.data))
+            .then(res => setOrders(res.data || []))
             .catch(console.error)
             .finally(() => setLoading(false));
     }, []);

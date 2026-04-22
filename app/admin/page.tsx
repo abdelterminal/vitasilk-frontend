@@ -97,7 +97,7 @@ const AdminDashboard = () => {
                     orders: s.totalOrders,
                     customers: s.totalUsers
                 });
-                const allProds = prodsRes.data;
+                const allProds = prodsRes.data || [];
                 setLowStock(allProds.filter(p => p.stock < 10).slice(0, 5));
                 setTopProducts(allProds.slice(0, 3));
             } catch (e) { console.error(e); }

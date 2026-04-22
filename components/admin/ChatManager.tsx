@@ -28,9 +28,9 @@ export default function ChatManager() {
     useEffect(() => {
         chatApi.getSessions()
             .then(res => {
-                setSessions(res.data.data);
+                setSessions(res.data.data || []);
                 if (targetUserId) {
-                    const session = res.data.data.find(s => String(s.user_id) === targetUserId);
+                    const session = (res.data.data || []).find(s => String(s.user_id) === targetUserId);
                     if (session) setSelectedSession(session);
                 }
             })

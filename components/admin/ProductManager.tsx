@@ -52,7 +52,7 @@ const ProductManager = () => {
  const fetchProducts = async () => {
   try {
    const res = await productsApi.getAll({ limit: 200 });
-   setProducts(res.data);
+   setProducts(res.data || []);
   } catch (e) { console.error(e); }
  };
 

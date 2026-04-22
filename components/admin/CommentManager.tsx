@@ -15,7 +15,7 @@ export default function CommentManager() {
 
     useEffect(() => {
         reviewsApi.getAll()
-            .then(res => setComments(res.data.data))
+            .then(res => setComments(res.data.data || []))
             .catch(console.error)
             .finally(() => setLoading(false));
     }, []);
