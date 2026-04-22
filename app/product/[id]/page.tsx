@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { productsApi, reviewsApi, promotionsApi, ordersApi, imageUrl } from '@/lib/api';
 import Image from 'next/image';
@@ -99,6 +99,8 @@ const ProductDetailsPage = () => {
 
     // Related Products
     const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+    const [showStickyBar, setShowStickyBar] = useState(false);
+    const buyAreaRef = useRef<HTMLDivElement>(null);
 
     const scrollCarousel = (direction: 'left' | 'right') => {
         const carousel = document.getElementById('related-products-carousel');
@@ -200,6 +202,15 @@ const ProductDetailsPage = () => {
         if (id) fetchReviews();
     }, [id]);
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => setShowStickyBar(!entry.isIntersecting),
+            { threshold: 0 }
+        );
+        if (buyAreaRef.current) observer.observe(buyAreaRef.current);
+        return () => observer.disconnect();
+    }, [product]);
+
     const handleSubmitReview = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!user || !newComment.trim()) return;
@@ -250,10 +261,10 @@ const ProductDetailsPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#FDFBF7] pt-32 pb-20 px-6 lg:px-12">
+        <div className="min-h-screen bg-[#FDFBF7] pt-24 lg:pt-32 pb-28 lg:pb-20 px-4 sm:px-6 lg:px-12">
             <div className="max-w-7xl mx-auto">
                 {/* Breadcrumbs */}
-                <div className="flex items-center text-[9px] uppercase tracking-[0.2em] font-medium text-gray-400 mb-12 flex-wrap gap-1">
+                <div className="flex items-center text-[9px] uppercase tracking-[0.2em] font-medium text-gray-400 mb-8 lg:mb-12 flex-wrap gap-1">
                     <span onClick={() => router.push('/')} className="hover:text-primary cursor-pointer transition-colors">Accueil</span>
                     <ChevronRight size={10} />
                     <span onClick={() => router.push('/boutique')} className="hover:text-primary cursor-pointer transition-colors">Boutique</span>
@@ -263,7 +274,7 @@ const ProductDetailsPage = () => {
                     <span className="text-gray-700 line-clamp-1 max-w-[200px]">{product.name}</span>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-24">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-24 mb-16 lg:mb-24">
                     {/* === GALLERY === */}
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
                         <div className="relative aspect-[4/5] bg-white border border-gray-100 rounded-sm overflow-hidden group shadow-sm">
@@ -337,7 +348,7 @@ const ProductDetailsPage = () => {
                             <Link href={`/category/${product.category.toLowerCase().replace(/ /g, '-')}`}>
                                 <p className="text-[11px] uppercase tracking-widest text-primary font-bold mb-4 hover:text-black transition-colors cursor-pointer">{product.category}</p>
                             </Link>
-                            <h1 className="text-4xl lg:text-5xl font-sans font-light text-gray-900 tracking-tight leading-tight mb-4">{product.name}</h1>
+                            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-sans font-light text-gray-900 tracking-tight leading-tight mb-4">{product.name}</h1>
 
                             {/* Star summary */}
                             {reviews.length > 0 && (
@@ -350,30 +361,31 @@ const ProductDetailsPage = () => {
                             <div className="flex items-center gap-4 mb-2">
                                 {discount ? (
                                     <>
-                                        <p className="text-4xl font-sans text-primary">
-                                            {(product.price * (1 - discount.percentage / 100)).toLocaleString()} <span className="text-2xl">DH</span>
+                                        <p className="text-3xl sm:text-4xl font-sans text-primary">
+                                            {(product.price * (1 - discount.percentage / 100)).toLocaleString()} <span className="text-xl sm:text-2xl">DH</span>
                                         </p>
-                                        <p className="text-2xl font-sans text-gray-300 line-through">
+                                        <p className="text-xl sm:text-2xl font-sans text-gray-300 line-through">
                                             {product.price.toLocaleString()} DH
                                         </p>
                                     </>
                                 ) : (
-                                    <p className="text-4xl font-sans text-gray-900">
-                                        {product.price.toLocaleString()} <span className="text-2xl">DH</span>
+                                    <p className="text-3xl sm:text-4xl font-sans text-gray-900">
+                                        {product.price.toLocaleString()} <span className="text-xl sm:text-2xl">DH</span>
                                     </p>
                                 )}
                             </div>
                         </div>
 
+                        <div ref={buyAreaRef}>
                         {product.directCheckout && (
-                            <div className="mb-6">
+                            <div className="mb-6" id="checkout-form">
                                 <DirectCheckoutForm product={product} quantity={quantity} discount={discount} />
                             </div>
                         )}
 
                         {/* Add to Cart Panel */}
                         {product.enableCart !== false && (
-                            <div className="bg-white p-8 border border-gray-100 shadow-sm rounded-sm space-y-6">
+                            <div className="bg-white p-5 sm:p-8 border border-gray-100 shadow-sm rounded-sm space-y-6">
                                 {/* Quantity */}
                                 <div className="flex items-center justify-between border-b border-gray-50 pb-6">
                                     <span className="text-[10px] uppercase tracking-wider font-bold text-gray-400">Quantité</span>
@@ -405,9 +417,10 @@ const ProductDetailsPage = () => {
                                 </div>
                             </div>
                         )}
+                        </div>
 
                         {/* Promises */}
-                        <div className="grid grid-cols-2 gap-6 mt-10 pt-8 border-t border-gray-100">
+                        <div className="grid grid-cols-2 gap-4 sm:gap-6 mt-6 lg:mt-10 pt-8 border-t border-gray-100">
                             <div className="flex items-start gap-4">
                                 <Truck className="text-primary mt-1" size={20} />
                                 <div>
@@ -434,7 +447,7 @@ const ProductDetailsPage = () => {
 
                 {/* === RELATED PRODUCTS (CONTROLLED CAROUSEL) === */}
                 {relatedProducts.length > 0 && (
-                    <div className="bg-transparent py-24 border-t border-gray-100 overflow-hidden">
+                    <div className="bg-transparent py-14 lg:py-24 border-t border-gray-100 overflow-hidden">
                         <div className="w-full px-4 md:px-10 mb-12">
                             <div className="flex items-end justify-between">
                                 <div className="space-y-2 text-left">
@@ -475,13 +488,13 @@ const ProductDetailsPage = () => {
 
                 {/* === REVIEWS SECTION === */}
                 <div className="border-t border-gray-100 pt-16">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
                         {/* Rating Summary */}
                         <div className="lg:col-span-4">
                             <h2 className="text-2xl font-sans font-light text-gray-900 mb-8">Avis Clients</h2>
                             {reviews.length > 0 ? (
                                 <div className="bg-white border border-gray-100 rounded-sm p-8 text-center mb-8 shadow-sm">
-                                    <p className="text-7xl font-sans font-light text-primary mb-2">{avgRating}</p>
+                                    <p className="text-5xl lg:text-7xl font-sans font-light text-primary mb-2">{avgRating}</p>
                                     <StarRating rating={avgRating} />
                                     <p className="text-xs text-gray-400 mt-4">{reviews.length} avis vérifiés</p>
 
@@ -654,6 +667,53 @@ const ProductDetailsPage = () => {
                     </>
                 )}
             </AnimatePresence>
+
+            {/* Mobile Sticky Buy Bar */}
+            <AnimatePresence>
+                {showStickyBar && product.stock > 0 && (
+                    <motion.div
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 100, opacity: 0 }}
+                        transition={{ type: 'spring', damping: 26, stiffness: 220 }}
+                        className="fixed bottom-0 left-0 right-0 z-[90] lg:hidden bg-white border-t border-gray-100 shadow-[0_-8px_30px_rgba(0,0,0,0.10)]"
+                    >
+                        <div className="flex items-center gap-3 px-5 py-3">
+                            <div className="flex-1 min-w-0">
+                                <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold truncate">{product.name}</p>
+                                <p className="text-base font-bold text-primary leading-tight">
+                                    {discount
+                                        ? (product.price * (1 - discount.percentage / 100)).toLocaleString()
+                                        : product.price.toLocaleString()
+                                    } DH
+                                </p>
+                            </div>
+                            {product.directCheckout ? (
+                                <button
+                                    onClick={() => document.getElementById('checkout-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                                    className="px-5 py-3 bg-gray-950 text-white text-[10px] uppercase tracking-widest font-bold rounded-sm flex items-center gap-2 shrink-0 active:scale-95 transition-transform"
+                                >
+                                    <Check size={13} />
+                                    <span>Commander</span>
+                                </button>
+                            ) : (
+                                <button
+                                    onClick={handleAddToCart}
+                                    className={cn(
+                                        "px-5 py-3 text-[10px] uppercase tracking-widest font-bold rounded-sm flex items-center gap-2 shrink-0 transition-all duration-500 active:scale-95",
+                                        addedToCart ? "bg-green-500 text-white" : "bg-primary text-white"
+                                    )}
+                                >
+                                    {addedToCart
+                                        ? <><Check size={13} /><span>Ajouté !</span></>
+                                        : <><ShoppingBag size={13} /><span>Acheter</span></>
+                                    }
+                                </button>
+                            )}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
@@ -730,6 +790,7 @@ const DirectCheckoutForm = ({ product, quantity, discount }: { product: Product,
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
     const [orderId, setOrderId] = useState('');
+    const [submittedPhone, setSubmittedPhone] = useState('');
     const [copied, setCopied] = useState(false);
     const { userData: user } = useAuth();
     
@@ -783,9 +844,9 @@ const DirectCheckoutForm = ({ product, quantity, discount }: { product: Product,
                 discount_percentage: discountPct,
             });
 
+            setSubmittedPhone(phone);
             setOrderId(`#${res.data.id}`);
             setSuccess(true);
-            setTimeout(() => setSuccess(false), 5000);
             setName('');
             setCity('');
             setPhone('');
@@ -806,44 +867,8 @@ const DirectCheckoutForm = ({ product, quantity, discount }: { product: Product,
         setTimeout(() => setCopied(false), 2000);
     };
 
-    if (success) {
-        return (
-            <div className="bg-emerald-50 border border-emerald-100 p-8 rounded-sm text-center mt-8 relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-[0.03] luxury-text text-5xl pointer-events-none select-none">Vitasilk</div>
-                <CheckCircle2 size={40} className="text-emerald-500 mx-auto mb-4" />
-                <h3 className="text-xl font-sans font-light text-emerald-900 mb-2">Commande confirmée !</h3>
-                <p className="text-sm text-emerald-700 mb-8">Votre commande a été enregistrée avec succès. Notre équipe vous contactera très prochainement.</p>
-                
-                <div className="bg-white/60 backdrop-blur-sm border border-emerald-200/50 rounded-sm p-6 mb-6 relative group">
-                    <p className="text-[9px] uppercase tracking-[0.2em] text-emerald-600/70 font-bold mb-3">
-                        N° de Suivi | رقم التتبع
-                    </p>
-                    <div className="flex items-center justify-center gap-4">
-                        <p className="text-xl font-mono font-bold text-emerald-900 tracking-widest">{orderId}</p>
-                        <button
-                            onClick={handleCopyId}
-                            className="p-2 rounded-full bg-emerald-100/50 hover:bg-emerald-500 hover:text-white transition-all text-emerald-600"
-                            title="Copier le numéro"
-                        >
-                            {copied ? <Check size={16} /> : <Copy size={16} />}
-                        </button>
-                    </div>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                    <Link
-                        href={`/track-order?id=${orderId}&phone=${phone}`}
-                        className="w-full py-4 bg-emerald-600 text-white text-[9px] uppercase tracking-[0.2em] font-bold hover:bg-emerald-700 transition-all rounded-sm shadow-lg shadow-emerald-200"
-                    >
-                        Suivre ma Commande
-                    </Link>
-                    <p className="text-[10px] text-emerald-600/50 font-medium uppercase tracking-widest">Conservez ce numéro pour suivre votre commande</p>
-                </div>
-            </div>
-        );
-    }
-
     return (
+        <>
         <div className="bg-white border border-gray-100 p-6 md:p-8 rounded-sm shadow-sm relative overflow-hidden">
             <h3 className="text-xl font-sans font-black text-gray-900 mb-1 uppercase tracking-tighter">Achat Rapide</h3>
             <p className="text-[10px] uppercase font-bold tracking-widest text-primary mb-6">Commandez directement sans passer par le panier</p>
@@ -939,6 +964,76 @@ const DirectCheckoutForm = ({ product, quantity, discount }: { product: Product,
                 </p>
             </form>
         </div>
+
+        {/* Thank You Modal */}
+        <AnimatePresence>
+            {success && (
+                <>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200]"
+                        onClick={() => setSuccess(false)}
+                    />
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.92, y: 24 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.92, y: 24 }}
+                        transition={{ type: 'spring', damping: 22, stiffness: 200 }}
+                        className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-[201] max-w-sm mx-auto bg-white rounded-sm shadow-2xl overflow-hidden"
+                    >
+                        <div className="h-1 bg-gradient-to-r from-emerald-400 to-emerald-600" />
+                        <button
+                            onClick={() => setSuccess(false)}
+                            className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-400 z-10"
+                        >
+                            <X size={18} />
+                        </button>
+                        <div className="p-8 text-center">
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ delay: 0.15, type: 'spring', stiffness: 300, damping: 18 }}
+                                className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center mx-auto mb-5"
+                            >
+                                <CheckCircle2 size={30} className="text-emerald-500" />
+                            </motion.div>
+                            <h3 className="text-2xl font-sans font-light text-gray-900 mb-1">Merci !</h3>
+                            <p className="text-[10px] text-emerald-600 font-bold uppercase tracking-widest mb-1">Commande confirmée</p>
+                            <p className="text-xs text-gray-400 mb-6 font-light">Notre équipe vous contactera très prochainement.</p>
+                            <div className="bg-emerald-50 border border-emerald-100 rounded-sm p-4 mb-6">
+                                <p className="text-[9px] uppercase tracking-[0.2em] text-emerald-600/70 font-bold mb-2">N° de commande</p>
+                                <div className="flex items-center justify-center gap-3">
+                                    <p className="text-lg font-mono font-bold text-emerald-900 tracking-widest">{orderId}</p>
+                                    <button
+                                        onClick={handleCopyId}
+                                        className="p-1.5 rounded-full hover:bg-emerald-100 transition-colors text-emerald-600"
+                                    >
+                                        {copied ? <Check size={14} /> : <Copy size={14} />}
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setSuccess(false)}
+                                    className="flex-1 py-3 border border-gray-200 text-[10px] uppercase tracking-widest font-bold text-gray-500 hover:border-gray-400 transition-all rounded-sm"
+                                >
+                                    Fermer
+                                </button>
+                                <Link
+                                    href={`/track-order?id=${orderId}&phone=${submittedPhone}`}
+                                    className="flex-1 py-3 bg-emerald-600 text-white text-[10px] uppercase tracking-widest font-bold hover:bg-emerald-700 transition-all rounded-sm flex items-center justify-center"
+                                >
+                                    Suivre
+                                </Link>
+                            </div>
+                        </div>
+                    </motion.div>
+                </>
+            )}
+        </AnimatePresence>
+        </>
     );
 };
 
