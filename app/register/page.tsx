@@ -65,9 +65,8 @@ const RegisterPage = () => {
 
                 {/* French Flourish in Image Area */}
                 <div className="absolute bottom-12 left-12 z-20 text-white animate-fade-in">
-                    <div className="luxury-text text-5xl mb-2 opacity-90">Privilège Vitasilk</div>
-                    <h1 className="text-4xl font-sans tracking-tight mb-2 leading-tight">Pur Luxe. <br /> Soie Pure.</h1>
-                    <p className="text-[10px] tracking-[0.3em] uppercase opacity-70 font-medium">Maison Vitasilk</p>
+                    <h1 className="text-4xl font-sans tracking-tight mb-2 leading-tight">Cheveux lisses. <br /> Cheveux brillants.</h1>
+                    <p className="text-[10px] tracking-[0.3em] uppercase opacity-70 font-medium">Vitasilk — Soins Capillaires</p>
                 </div>
             </div>
 
@@ -105,7 +104,7 @@ const RegisterPage = () => {
                         <div className="relative inline-block mb-1">
                             <h2 className="text-4xl font-sans font-extralight text-gray-900 tracking-tight">Inscription</h2>
                         </div>
-                        <p className="text-gray-400 text-[9px] tracking-[0.3em] uppercase font-semibold">Rejoindre l'Excellence Vitasilk</p>
+                        <p className="text-gray-400 text-[9px] tracking-[0.3em] uppercase font-semibold">Créez votre compte gratuitement</p>
                     </div>
 
                     <AnimatePresence mode="wait">
@@ -129,7 +128,7 @@ const RegisterPage = () => {
                                 className="bg-green-50 backdrop-blur-sm border border-green-100 p-4 mb-6 rounded-sm flex items-center space-x-3 text-green-600 text-xs font-medium"
                             >
                                 <CheckCircle2 size={16} />
-                                <span>Bienvenue dans l'univers Vitasilk !</span>
+                                <span>Compte créé avec succès, bienvenue !</span>
                             </motion.div>
                         )}
                     </AnimatePresence>
@@ -188,7 +187,7 @@ const RegisterPage = () => {
                         <div className="py-2">
                             <label className="flex items-center space-x-3 cursor-pointer group">
                                 <input required type="checkbox" className="w-4 h-4 accent-primary border-gray-200 rounded-sm" />
-                                <span className="text-[9px] text-gray-400 uppercase tracking-widest leading-relaxed font-medium">J'accepte l'art du luxe & les CGU</span>
+                                <span className="text-[9px] text-gray-400 uppercase tracking-widest leading-relaxed font-medium">J'accepte les conditions d'utilisation</span>
                             </label>
                         </div>
 
@@ -203,7 +202,7 @@ const RegisterPage = () => {
                                     <Loader2 className="animate-spin" size={18} />
                                 ) : (
                                     <>
-                                        <span>Créer mon univers</span>
+                                        <span>Créer mon compte</span>
                                         <ArrowRight size={14} className="ml-3 group-hover:translate-x-1 transition-transform" />
                                     </>
                                 )}

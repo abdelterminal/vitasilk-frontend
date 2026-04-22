@@ -74,7 +74,7 @@ const TrackOrderPageContent = () => {
             {
                 status: 'pending',
                 label: 'Commande Reçue',
-                description: 'Traitement par la Maison Vitasilk.',
+                description: 'Votre commande a bien été reçue.',
                 date: baseDate ? formatDate(baseDate) : undefined,
                 icon: Clock
             },
@@ -161,7 +161,7 @@ const TrackOrderPageContent = () => {
                                     className="inline-flex items-center text-[10px] uppercase tracking-wider text-gray-400 hover:text-gray-950 transition-all font-medium group bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-gray-100/50"
                                 >
                                     <ArrowLeft size={14} className="mr-2 group-hover:-translate-x-1 transition-transform" />
-                                    Maison Vitasilk
+                                    Retour à l'accueil
                                 </motion.button>
                             </div>
 
@@ -170,7 +170,7 @@ const TrackOrderPageContent = () => {
                                     Suivi de <span className="font-light italic text-primary/60">Commande</span>
                                 </h1>
                                 <p className="text-sm text-gray-400 font-light max-w-xl mx-auto leading-relaxed tracking-wide">
-                                    Suivez le voyage de vos soins de luxe.
+                                    Entrez votre numéro de commande et votre téléphone pour suivre votre livraison.
                                 </p>
                             </div>
 

@@ -32,26 +32,26 @@ function CountUp({ target, suffix = '', duration = 2 }: { target: number; suffix
 const VALUES = [
     {
         number: '01',
-        title: 'Pureté',
-        desc: 'Des ingrédients nobles et rares, sourcés avec exigence pour préserver la santé de votre chevelure.',
+        title: 'Ingrédients Naturels',
+        desc: 'Des ingrédients naturels de qualité — or 24K, huile de coco, kératine — pour prendre soin de vos cheveux en profondeur.',
         icon: Leaf,
     },
     {
         number: '02',
-        title: 'Savoir-Faire',
-        desc: 'L\'expertise technique brésilienne au service de la beauté, avec 15 ans de recherche capillaire.',
+        title: 'Formules Pro',
+        desc: 'Des formules professionnelles brésiliens, testées en salon et maintenant disponibles pour vous à domicile.',
         icon: FlaskConical,
     },
     {
         number: '03',
-        title: 'Innovation',
-        desc: 'Des formules avant-gardistes sans formaldéhyde pour des résultats exceptionnels en toute sécurité.',
+        title: 'Sans Formaldéhyde',
+        desc: 'Nos produits sont sans formol — efficaces, sûrs, et adaptés à une utilisation régulière.',
         icon: ShieldCheck,
     },
     {
         number: '04',
-        title: 'Excellence',
-        desc: 'Les mêmes soins que les meilleurs salons de coiffure du monde, désormais accessibles pour toutes.',
+        title: 'Résultats Réels',
+        desc: 'Les mêmes résultats qu\'en salon, chez vous, sans vous déplacer, à des prix accessibles.',
         icon: Award,
     },
 ];
@@ -86,13 +86,13 @@ const AboutPage = () => {
                             className="h-px bg-primary mx-auto mb-6 md:mb-8"
                         />
                         <p className="text-[8px] md:text-[10px] uppercase text-primary font-bold mb-3 md:mb-4">
-                            Maison Vitasilk • Depuis 2010
+                            Vitasilk • Depuis 2010
                         </p>
                         <h1 className="text-4xl md:text-7xl lg:text-8xl font-sans font-light !text-white tracking-tight mb-4 md:mb-6 leading-tight">
-                            L'Art de la <span className="text-primary/90">Soie</span>
+                            Nos Produits, <span className="text-primary/90">Votre Beauté</span>
                         </h1>
                         <p className="text-white/70 text-sm md:text-lg font-light max-w-xl mx-auto px-4">
-                            La maison de beauté capillaire qui a révolutionné le soin brésilien.
+                            Des produits professionnels de lissage et soins capillaires, livrés partout au Maroc.
                         </p>
                     </motion.div>
 
@@ -120,31 +120,27 @@ const AboutPage = () => {
                         className="order-2 lg:order-1"
                     >
                         <span className="text-[8px] md:text-[10px] uppercase text-primary font-bold mb-3 md:mb-6 block">
-                            Notre Histoire
+                            Qui sommes-nous ?
                         </span>
                         <h2 className="text-3xl md:text-5xl font-sans font-light text-gray-900 leading-tight mb-6 md:mb-8">
-                            L'excellence<br className="hidden md:block" /><span className="text-primary">brésilienne</span>
+                            Des produits qui<br className="hidden md:block" /><span className="text-primary">font la différence</span>
                         </h2>
                         <div className="space-y-4 md:space-y-5 text-gray-500 text-sm md:text-base leading-relaxed font-light">
                             <p>
-                                Fondée en 2010, Vitasilk est née d'une passion pour la beauté capillaire et d'un désir de rendre accessible
-                                les secrets des meilleurs salons brésiliens au monde entier.
+                                Vitasilk est une marque spécialisée dans le lissage et les soins capillaires. Depuis 2010, on propose des produits professionnels adaptés à toutes les femmes qui veulent avoir des cheveux lisses, brillants et en bonne santé.
                             </p>
                             <p>
-                                Nos formules exclusives, enrichies à l'or 24K, aux protéines végétales et aux extraits naturels,
-                                ont été développées sur plus de 10 ans de recherche intensive pour offrir un lissage
-                                parfait, sans compromis sur la santé du cheveu.
+                                Nos formules sont enrichies à l'or 24K, aux protéines végétales et aux extraits naturels. Elles sont conçues pour donner des résultats visibles dès la première utilisation, sans formaldéhyde.
                             </p>
                             <p>
-                                Aujourd'hui, Vitasilk est présente dans plus de 25 pays et fait confiance par des milliers de coiffeuses
-                                professionnelles et de femmes à travers le monde.
+                                Aujourd'hui, nos produits sont utilisés par des milliers de femmes au Maroc et dans plus de 25 pays. On livre rapidement partout au Maroc, avec paiement à la livraison.
                             </p>
                         </div>
                         <Link
                             href="/boutique"
                             className="inline-flex items-center gap-3 mt-8 md:mt-10 text-[8px] md:text-[10px] uppercase font-bold text-primary border-b border-primary/30 pb-2 hover:text-white hover:border-white transition-colors group"
                         >
-                            Découvrir nos produits
+                            Voir nos produits
                             <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </motion.div>
@@ -189,9 +185,9 @@ const AboutPage = () => {
             <section className="py-16 md:py-20 bg-[#1A1A1A] text-white">
                 <div className="max-w-[1400px] mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 text-center">
                     {[
-                        { target: 15, suffix: '+', label: "Ans d'expertise" },
+                        { target: 15, suffix: '+', label: "Ans d'expérience" },
                         { target: 50, suffix: 'K+', label: "Clientes satisfaites" },
-                        { target: 25, suffix: '', label: "Pays" },
+                        { target: 25, suffix: '+', label: "Pays" },
                         { target: 100, suffix: '%', label: "Sans formaldéhyde" }
                     ].map((stat, i) => (
                         <motion.div
@@ -217,10 +213,10 @@ const AboutPage = () => {
             <section className="py-16 md:py-32 px-4 max-w-[1400px] mx-auto">
                 <div className="text-center mb-12 md:mb-20">
                     <span className="text-[10px] uppercase text-primary font-bold mb-4 block">
-                        Nos Valeurs
+                        Nos Engagements
                     </span>
                     <h2 className="text-3xl md:text-5xl lg:text-6xl font-sans font-light text-gray-900 px-4 leading-tight">
-                        Ce qui nous <span className="text-primary italic">définit</span>
+                        Pourquoi nous <span className="text-primary italic">choisir</span>
                     </h2>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
@@ -256,18 +252,18 @@ const AboutPage = () => {
                 <div className="max-w-[1400px] mx-auto px-4">
                     <div className="text-center mb-10 md:mb-16">
                         <span className="text-[10px] uppercase text-primary font-bold mb-4 block">
-                            La Collection
+                            Aperçu de nos produits
                         </span>
                         <h2 className="text-3xl md:text-5xl font-sans font-light text-gray-900 leading-tight">
-                            Nos Produits <span className="text-primary">Phares</span>
+                            Ce qu'on <span className="text-primary">propose</span>
                         </h2>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
                         {[
                             { src: "/img/lissage pro/vitasilk-shot-3.png", label: "Collection 24K Gold" },
-                            { src: "/img/soins de cheveux/VitaSilk-24k-rose-gold-hair-serum-Shooting.png", label: "Nos Packs Exclusifs" },
+                            { src: "/img/soins de cheveux/VitaSilk-24k-rose-gold-hair-serum-Shooting.png", label: "Nos Coffrets" },
                             { src: "/img/lissage pro/coffee-exctract-proteine-modele.png", label: "Blue-Silk 1L" },
-                            { src: "/img/soins de cheveux/Organic-Protein-masque-capillaire-modele.png", label: "L'Art de la Maison" },
+                            { src: "/img/soins de cheveux/Organic-Protein-masque-capillaire-modele.png", label: "Soins Capillaires" },
                         ].map(({ src, label }, i) => (
                             <motion.div
                                 key={i}
@@ -314,16 +310,16 @@ const AboutPage = () => {
                 >
                     <div className="w-8 md:w-12 h-px bg-primary mx-auto mb-6 md:mb-8" />
                     <h2 className="text-3xl md:text-6xl font-sans font-light text-white mb-6 md:mb-8 leading-tight">
-                        Découvrez la <span className="text-primary">Collection</span>
+                        Commandez <span className="text-primary">Maintenant</span>
                     </h2>
                     <p className="text-white/70 text-sm md:text-base mb-8 md:mb-12 font-light px-4">
-                        Des soins d'exception pour une chevelure dont vous avez toujours rêvé.
+                        Des produits qui font vraiment la différence — livrés partout au Maroc avec paiement à la livraison.
                     </p>
                     <Link
                         href="/boutique"
                         className="inline-flex items-center gap-3 px-6 md:px-8 py-2 md:py-3 bg-primary text-white text-[8px] md:text-[9px] uppercase font-bold hover:bg-white hover:text-black transition-colors rounded-sm"
                     >
-                        Explorer la Boutique
+                        Voir tous les produits
                         <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </motion.div>

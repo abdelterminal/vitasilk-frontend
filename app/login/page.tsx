@@ -60,9 +60,8 @@ const LoginPage = () => {
 
                 {/* French Flourish in Image Area */}
                 <div className="absolute bottom-12 left-12 z-20 text-white animate-fade-in">
-                    <div className="luxury-text text-5xl mb-2 opacity-90 !text-white">L'Art de la Soie</div>
-                    <h1 className="text-4xl font-sans tracking-tight mb-2 leading-tight !text-white">Pur Luxe. <br /> Soie Pure.</h1>
-                    <p className="text-[10px] tracking-[0.3em] uppercase opacity-70 font-medium">Maison Vitasilk</p>
+                    <h1 className="text-4xl font-sans tracking-tight mb-2 leading-tight !text-white">Cheveux lisses. <br /> Cheveux brillants.</h1>
+                    <p className="text-[10px] tracking-[0.3em] uppercase opacity-70 font-medium">Vitasilk — Soins Capillaires</p>
                 </div>
             </div>
 
@@ -103,7 +102,7 @@ const LoginPage = () => {
                         <div className="relative inline-block mb-2">
                             <h2 className="text-4xl font-sans font-extralight text-gray-900 tracking-tight">Bienvenue</h2>
                         </div>
-                        <p className="text-gray-400 text-[9px] tracking-[0.3em] uppercase font-semibold">Maison Vitasilk • Pur Luxe</p>
+                        <p className="text-gray-400 text-[9px] tracking-[0.3em] uppercase font-semibold">Vitasilk — Soins Capillaires</p>
                     </div>
 
                     <AnimatePresence>
@@ -164,7 +163,7 @@ const LoginPage = () => {
                                     <Loader2 className="animate-spin" size={18} />
                                 ) : (
                                     <>
-                                        <span>Entrer dans l'univers</span>
+                                        <span>Se connecter</span>
                                         <ArrowRight size={14} className="ml-3 group-hover:translate-x-1 transition-transform" />
                                     </>
                                 )}

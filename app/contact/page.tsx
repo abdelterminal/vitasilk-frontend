@@ -20,12 +20,11 @@ import Image from 'next/image';
 import { messagesApi } from '@/lib/api';
 
 const SUBJECTS = [
- 'Conseil Produit & Rituel Personnalisé',
- 'Suivi de Commande',
- 'Espace Professionnel & Partenariat',
- 'Réclamation & Retour',
- 'Collaboration & Presse',
- 'Autre Demande',
+ 'Conseil produit',
+ 'Suivi de commande',
+ 'Partenariat professionnel',
+ 'Réclamation ou retour',
+ 'Autre demande',
 ];
 
 const ContactPage = () => {
@@ -51,7 +50,7 @@ const ContactPage = () => {
  const contactCards = [
  {
  icon: Phone,
- label: 'Ligne Privée',
+ label: 'Téléphone',
  value: '+212 662 633 170',
  sub: 'Lun – Sam · 9h à 18h',
  href: 'tel:+212662633170',
@@ -60,9 +59,9 @@ const ContactPage = () => {
  },
  {
  icon: Mail,
- label: 'Email Conciergerie',
+ label: 'Email',
  value: 'sales@vitasilk.ma',
- sub: 'Réponse sous 24h ouvrées',
+ sub: 'Réponse sous 24h',
  href: 'mailto:sales@vitasilk.ma',
  color: 'from-rose-50 to-white',
  iconBg: 'bg-rose-100 text-rose-500',
@@ -78,9 +77,9 @@ const ContactPage = () => {
  },
  {
  icon: MapPin,
- label: 'Maison Mère',
+ label: 'Notre Adresse',
  value: 'Meknès, Maroc',
- sub: 'Livraison dans tout le Maroc',
+ sub: 'Livraison partout au Maroc',
  href: '#',
  color: 'from-blue-50 to-white',
  iconBg: 'bg-blue-100 text-blue-500',
@@ -119,14 +118,14 @@ const ContactPage = () => {
  className="max-w-2xl text-left"
  >
                                 <p className="text-[10px] md:text-[12px] uppercase tracking-[0.5em] text-primary font-bold mb-6">
-                                    Maison Vitasilk · Service Client
+                                    Vitasilk · Service Client
                                 </p>
                                 <h1 className="text-5xl md:text-8xl font-sans font-light !text-white tracking-tight leading-none mb-8">
-                                    Conciergerie<br />
-                                    <span className="text-primary font-medium">Privée</span>
+                                    Contactez-<br />
+                                    <span className="text-primary font-medium">nous</span>
                                 </h1>
                                 <p className="text-sm text-white/90 font-light leading-relaxed max-w-md drop-shadow-md">
-                                    Nos experts vous accompagnent dans chaque étape de votre rituel de soins. Un service sur‑mesure, au niveau de votre exigence.
+                                    Une question sur un produit ou votre commande ? Écrivez-nous, on vous répond rapidement.
                                 </p>
  </motion.div>
  </div>
@@ -209,10 +208,10 @@ const ContactPage = () => {
  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(197,165,114,0.08),transparent_70%)]" />
  </div>
  <div className="p-6">
-                                <p className="text-[10px] uppercase tracking-widest font-bold text-primary mb-1">Maison Mère</p>
+                                <p className="text-[10px] uppercase tracking-widest font-bold text-primary mb-1">Notre Adresse</p>
  <p className="text-xs text-gray-500 font-light leading-relaxed">
  Meknès, Maroc<br />
- Livraison nationale & internationale
+ Livraison partout au Maroc
  </p>
  </div>
  </div>
@@ -271,9 +270,9 @@ const ContactPage = () => {
  >
  <CheckCircle2 size={36} className="text-green-500" />
  </motion.div>
- <h3 className="text-3xl font-sans font-light text-[#C9A14A] mb-4">Message Transmis</h3>
+ <h3 className="text-3xl font-sans font-light text-[#C9A14A] mb-4">Message envoyé !</h3>
  <p className="text-sm text-gray-500 font-light mb-10 max-w-sm mx-auto leading-relaxed">
- Notre équipe de conciergerie a bien reçu votre message et vous répondra sous 24h ouvrées.
+ On a bien reçu votre message et on vous répondra dans les 24h.
  </p>
  <button
  onClick={() => { setSuccess(false); setForm({ name: '', email: '', phone: '', subject: '', message: '' }); }}
@@ -293,7 +292,7 @@ const ContactPage = () => {
  >
  <div>
                             <h2 className="text-2xl md:text-3xl font-sans font-light text-gray-900 mb-1">
-                                Votre <span className="text-primary">Message</span>
+                                Envoyez-nous un <span className="text-primary">message</span>
                             </h2>
  <p className="text-xs text-gray-400 font-light">
  Tous les champs marqués <span className="text-primary">*</span> sont requis.
@@ -380,7 +379,7 @@ const ContactPage = () => {
  rows={6}
  value={form.message}
  onChange={e => setForm({ ...form, message: e.target.value })}
- placeholder="Décrivez votre demande en détail, afin que nous puissions vous offrir le meilleur accompagnement..."
+ placeholder="Décrivez votre demande. On vous répond dans les plus brefs délais."
  className={`${fieldClass} resize-none`}
  />
  </Field>
@@ -415,14 +414,14 @@ const ContactPage = () => {
  <div className="bg-[#0D0D0D] py-12 px-6 lg:px-12 mt-8">
  <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
  <p className="text-[10px] uppercase tracking-widest text-gray-500 font-medium">
- © 2026 Maison Vitasilk · Tous droits réservés
+ © 2026 Vitasilk · Tous droits réservés
  </p>
  <div className="flex items-center gap-8">
  <Link href="/boutique" className="text-[9px] uppercase tracking-wider text-gray-500 hover:text-primary transition-colors">
  Boutique
  </Link>
  <Link href="/about" className="text-[9px] uppercase tracking-wider text-gray-500 hover:text-primary transition-colors">
- Notre Histoire
+ À propos
  </Link>
  <Link href="/track-order" className="text-[9px] uppercase tracking-wider text-gray-500 hover:text-primary transition-colors">
  Suivre ma Commande
