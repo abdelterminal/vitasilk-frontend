@@ -46,10 +46,10 @@ export default function BestSellers() {
           <div>
             <div className="flex items-center gap-3 mb-3">
               <TrendingUp size={14} className="text-primary" />
-              <p className="text-[10px] uppercase font-bold text-primary">Nos Incontournables</p>
+              <p className="text-[10px] uppercase font-bold text-primary">Les Plus Commandés</p>
             </div>
             <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">
-              Best-sellers <span className="text-primary">du moment</span>
+              Produits <span className="text-primary">phares</span>
             </h2>
           </div>
           <Link

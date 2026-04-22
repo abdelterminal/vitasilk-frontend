@@ -22,10 +22,10 @@ type Product = ApiProduct;
 // Animated text ticker for the animated quote band
 const QUOTES = [
     "LISSAGE SANS FORMALDÉHYDE",
-    "QUALITÉ PROFESSIONNELLE CERTIFIÉE",
-    "VOS CHEVEUX MÉRITENT LE MEILLEUR",
+    "LIVRAISON PARTOUT AU MAROC",
+    "RÉSULTAT DÈS LA 1ÈRE UTILISATION",
     "L'OR 24K AU CŒUR DE NOS FORMULES",
-    "LISSAGE PROFESSIONNEL",
+    "PAIEMENT SÉCURISÉ ET RAPIDE",
 ];
 
 const AnimatedQuoteBand = () => {
@@ -247,9 +247,9 @@ export default function Home() {
                             className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-100"
                         >
                             <div>
-                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Sélection du Moment</p>
+                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Les Plus Demandés</p>
                                 <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">
-                                    Produits <span className="text-primary">Vedettes</span>
+                                    Nos Produits <span className="text-primary">Phares</span>
                                 </h2>
                             </div>
                             <Link
@@ -307,9 +307,9 @@ export default function Home() {
                             className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-gray-200"
                         >
                             <div>
-                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Catalogue Complet</p>
+                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Tous Nos Produits</p>
                                 <h2 className="text-3xl md:text-5xl font-sans font-light text-gray-900">
-                                    Nos Collections <span className="text-primary">Exclusives</span>
+                                    Notre <span className="text-primary">Catalogue</span>
                                 </h2>
                             </div>
                             <Link
@@ -378,11 +378,11 @@ export default function Home() {
                     viewport={{ once: true }}
                     className="max-w-2xl mx-auto"
                 >
-                    <p className="text-[10px] uppercase font-bold text-primary mb-4">Code Exclusif</p>
+                    <p className="text-[10px] uppercase font-bold text-primary mb-4">Offre Spéciale</p>
                     <h2 className="text-3xl md:text-5xl font-sans font-light !text-white mb-4">
                         -10% sur votre <span className=" text-primary">1ère commande</span>
                     </h2>
-                    <p className="text-white/50 text-sm mb-10">Utilisez le code <strong className="text-white">VITASILK10</strong> à la caisse</p>
+                    <p className="text-white/50 text-sm mb-10">Entrez le code <strong className="text-white">VITASILK10</strong> au moment du paiement</p>
                     <Link
                         href="/boutique"
                         className="inline-flex items-center gap-3 px-12 py-5 bg-primary text-white text-[10px] uppercase font-bold hover:bg-white hover:text-black transition-all duration-300 group"

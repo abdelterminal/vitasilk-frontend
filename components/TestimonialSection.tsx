@@ -10,7 +10,7 @@ const REVIEWS = [
  id: 1,
  name: "Sofia M.",
  role: "Cliente Vérifiée",
- text: "J'ai essayé beaucoup de lissages, mais le Blue Silk de Vitasilk est de loin le meilleur. Mes cheveux sont brillants, doux et parfaitement lisses sans aucun effort le matin. Je recommande à 100% !",
+ text: "J'utilisais des produits de salon mais depuis que j'ai essayé le Blue Silk, je lisse mes cheveux chez moi toute seule. Résultat super lisse et brillant qui dure vraiment. Je recommande à toutes mes amies !",
  product: "Blue-Silk 1L",
  rating: 5,
  image: "/img/lissage pro/BlueSilk-Modele-shooting-e1762520646963.png"
@@ -19,7 +19,7 @@ const REVIEWS = [
  id: 2,
  name: "Amina R.",
  role: "Coiffeuse Professionnelle",
- text: "La gamme 24K Gold est incroyable. Mes clientes adorent l'odeur et le résultat est digne des plus grands salons. Zéro fumée, zéro gêne, c'est un pur bonheur à travailler.",
+ text: "J'utilise la gamme 24K Gold dans mon salon depuis plusieurs mois. Pas de fumée, pas d'odeur forte, et le résultat est vraiment professionnel. Mes clientes reviennent exprès pour ce traitement.",
  product: "Collection 24K Gold",
  rating: 5,
  image: "/img/lissage pro/24k1.png"
@@ -28,7 +28,7 @@ const REVIEWS = [
  id: 3,
  name: "Lina T.",
  role: "Cliente Vérifiée",
- text: "Le masque Organic Protein a sauvé mes cheveux décolorés. Dès la première application, j'ai senti une réelle différence. C'est devenu mon soin hebdomadaire indispensable.",
+ text: "Le masque Organic Protein a réparé mes cheveux abîmés par la décoloration. Dès la première application j'ai senti la différence — cheveux plus doux, moins cassants. Je l'utilise chaque semaine.",
  product: "Masque Organic Protein",
  rating: 5,
  image: "/img/soins de cheveux/Organic-Protein-masque-capillaire-modele.png"
@@ -85,7 +85,7 @@ export default function TestimonialSection() {
  <div className="mb-12">
  <Quote className="text-primary/20 w-16 h-16 mb-6" />
  <h2 className="text-3xl lg:text-5xl font-sans font-light text-gray-900 leading-tight">
- Ce que disent <br /><span className="text-primary">nos clientes</span>
+ Elles ont essayé. <br /><span className="text-primary">Elles recommandent.</span>
  </h2>
  </div>
 

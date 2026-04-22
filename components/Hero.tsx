@@ -56,7 +56,7 @@ const Hero = () => {
  style={{color: '#C9A14A'}}
  >
    <span className="flex items-center space-x-2 text-primary font-bold uppercase text-[10px] md:text-sm">
-  Spécialiste du Lissage Professionnel
+  Lissage &amp; Soins Capillaires — Livraison Partout au Maroc
   </span>
  </motion.div>
 
@@ -74,7 +74,7 @@ const Hero = () => {
  className="inline-block py-2 !text-white"
  style={{fontWeight: 600}}
  >
- Pur Luxe.
+ Cheveux Lisses.
  </motion.span>
  <br />
   <motion.span
@@ -84,7 +84,7 @@ const Hero = () => {
  className="font-light py-2 inline-block !text-white"
  style={{fontWeight: 300}}
  >
- Soie Pure.
+ Cheveux Brillants.
  </motion.span>
  </h1>
  </motion.div>
@@ -96,8 +96,8 @@ const Hero = () => {
  className="text-white/80 text-sm md:text-base lg:text-lg max-w-2xl mx-auto mb-8 md:mb-12 lg:mb-16 tracking-wide leading-relaxed"
  style={{fontFamily: "'Poppins', sans-serif", fontWeight: 400}}
  >
- Des cheveux lisses, brillants et sains — <br className="hidden md:block" />
- dès le premier lavage.
+ Des produits professionnels pour lisser et prendre soin de vos cheveux. <br className="hidden md:block" />
+ Livraison rapide partout au Maroc.
  </motion.p>
 
  <motion.div
@@ -116,7 +116,7 @@ const Hero = () => {
  <Play size={18} className="fill-current ml-1" />
  </span>
   <span className="relative font-bold text-primary tracking-tight">
- Notre Histoire
+ Qui sommes-nous ?
  <span className="absolute -bottom-1 left-0 w-full h-[1px] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500" style={{backgroundColor: 'rgba(255,255,255,0.2)'}} />
  </span>
  </Link>

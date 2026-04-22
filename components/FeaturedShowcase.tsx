@@ -29,15 +29,15 @@ export default function FeaturedShowcase() {
                         >
                             <div className="flex items-center gap-3 mb-6">
                                 <span className="w-8 h-px bg-primary"></span>
-                                <span className="text-[11px] uppercase font-bold text-primary">Prendre soin de vos cheveux</span>
+                                <span className="text-[11px] uppercase font-bold text-primary">Résultats Visibles</span>
                             </div>
 
                             <h2 className="text-3xl md:text-5xl font-sans font-light text-gray-900 leading-[1.1] mb-8">
-                                Des cheveux transformés, <span className="text-primary">dès la première utilisation.</span>
+                                Des cheveux lisses et brillants, <span className="text-primary">dès la première utilisation.</span>
                             </h2>
 
                             <p className="text-gray-500 font-light leading-relaxed mb-10 text-lg">
-                                Nos soins réparent, lissent et font briller. Faciles à utiliser — le résultat se voit immédiatement.
+                                Nos produits lissent, nourrissent et protègent. Faciles à utiliser chez vous — le résultat se voit immédiatement.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-6">
@@ -45,13 +45,13 @@ export default function FeaturedShowcase() {
                                     href="/boutique"
                                     className="inline-flex items-center justify-center bg-black text-white px-8 py-4 text-[11px] uppercase font-bold hover:bg-primary transition-colors"
                                 >
-                                    Découvrir la Boutique
+                                    Voir les produits
                                 </Link>
                                 <Link
                                     href="/about"
                                     className="inline-flex items-center gap-3 font-medium text-gray-900 hover:text-primary transition-colors group"
                                 >
-                                    <span className="border-b border-black pb-1 group-hover:border-primary">Notre histoire</span>
+                                    <span className="border-b border-black pb-1 group-hover:border-primary">En savoir plus</span>
                                     <ExternalLink size={16} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </div>

@@ -7,29 +7,29 @@ import Image from 'next/image';
 
 const FEATURES = [
  {
- title: "Formules Exclusives",
- description: "Des formules développées par des experts, utilisées par les meilleurs salons.",
+ title: "Formules Efficaces",
+ description: "Des formules testées et approuvées par des professionnels, pour des résultats visibles dès la première application.",
  icon: FlaskConical,
  color: "text-blue-500",
  bgIcon: "bg-blue-50"
  },
  {
- title: "Ingrédients Nobles",
- description: "Or 24K, huile de coco et kératine — pour des cheveux nourris, lisses et brillants.",
+ title: "Ingrédients Naturels",
+ description: "Or 24K, huile de coco et kératine — pour des cheveux nourris, lisses et brillants en profondeur.",
  icon: Leaf,
  color: "text-emerald-500",
  bgIcon: "bg-emerald-50"
  },
  {
  title: "Zéro Formaldéhyde",
- description: "Sans formol — sûr pour vous, sûr pour votre coiffeuse, efficace pour vos cheveux.",
+ description: "Sans produits chimiques agressifs — sans risque pour vous et votre coiffeuse.",
  icon: ShieldCheck,
  color: "text-indigo-500",
  bgIcon: "bg-indigo-50"
  },
  {
- title: "Résultat Salon",
- description: "Le même résultat qu'en salon. Sans vous déplacer.",
+ title: "Résultats Immédiats",
+ description: "Vous voyez la différence dès la première utilisation. Pas besoin d'aller au salon.",
  icon: Award,
  color: "text-amber-500",
  bgIcon: "bg-amber-50"
@@ -61,7 +61,7 @@ export default function BrandBenefits() {
  {/* Overlay elements */}
  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
  <div className="absolute bottom-8 left-8 right-8 text-white">
- <h3 className="text-2xl font-light mb-2">Résultat visible</h3>
+ <h3 className="text-2xl font-light mb-2">Résultats immédiats</h3>
  <p className="text-white/80 text-sm font-light">Dès la première utilisation.</p>
  </div>
  </motion.div>
@@ -94,7 +94,7 @@ export default function BrandBenefits() {
  >
   <p className="text-[11px] uppercase font-bold text-primary mb-3 text-center lg:text-left">Pourquoi Vitasilk ?</p>
   <h2 className="text-3xl lg:text-5xl font-sans font-light text-gray-900 leading-tight text-center lg:text-left">
-  La Science du <br /><span className="text-primary">Lissage Parfait</span>
+  Ce qui rend nos <br /><span className="text-primary">produits efficaces</span>
   </h2>
  </motion.div>
 

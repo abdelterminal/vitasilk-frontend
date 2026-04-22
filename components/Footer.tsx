@@ -20,7 +20,7 @@ const Footer = () => {
                         <Image src="/img/logo.png" alt="Vitasilk" width={140} height={40} className="brightness-0 invert object-contain" />
                     </Link>
                     <p className="text-[13px] text-gray-500 leading-relaxed font-light">
-                        Soins capillaires professionnels alliant innovation et excellence. Expédition partout au Maroc depuis Meknès.
+                        Produits de lissage et soins capillaires livrés partout au Maroc depuis Meknès.
                     </p>
                     <div className="flex gap-4">
                         <a href="https://instagram.com/vitasilk.bs" target="_blank" rel="noopener noreferrer"
@@ -69,7 +69,7 @@ const Footer = () => {
                             { href: '/livraison', label: 'Livraison & Retours' },
                             { href: '/cgv', label: 'Conditions de vente' },
                             { href: '/contact', label: 'Nous contacter' },
-                            { href: '/about', label: 'La Maison Vitasilk' },
+                            { href: '/about', label: 'À propos' },
                         ].map(({ href, label }) => (
                             <li key={href}>
                                 <Link href={href} className="text-[13px] text-gray-500 hover:text-white transition-colors font-light">

@@ -66,7 +66,7 @@ export default function NewsletterBanner() {
                         transition={{ duration: 0.6 }}
                         className="text-[10px] uppercase font-bold text-primary mb-4"
                     >
-                        Vitasilk Privé
+                        Offres &amp; Nouveautés
                     </motion.p>
                     <motion.h2
                         initial={{ opacity: 0, y: 30 }}
@@ -75,7 +75,7 @@ export default function NewsletterBanner() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-3xl md:text-5xl lg:text-7xl font-sans font-light !text-white leading-[1.1] mb-8"
                     >
-                        Restez informée. <span className="text-primary">Profitez en première.</span>
+                        Recevez nos offres <span className="text-primary">en avant-première.</span>
                     </motion.h2>
 
                     <motion.p
@@ -85,7 +85,7 @@ export default function NewsletterBanner() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="!text-white/90 text-sm md:text-base font-light max-w-2xl mx-auto mb-10 leading-relaxed"
                     >
-                        Inscrivez-vous et recevez nos <span className="text-primary font-medium">offres en exclusivité</span>, nos nouveautés et conseils capillaires directement dans votre boîte mail.
+                        Inscrivez-vous et soyez la première à recevoir nos <span className="text-primary font-medium">promotions</span>, nouveaux produits et conseils pour prendre soin de vos cheveux.
                     </motion.p>
 
  <motion.form
