@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Hero from "@/components/Hero";
 import ProductCardCompact from "@/components/ProductCardCompact";
 import BrandBenefits from "@/components/BrandBenefits";
@@ -56,6 +57,50 @@ const AnimatedQuoteBand = () => {
             </div>
             <div className="h-px w-16 bg-primary/40 flex-shrink-0 hidden md:block" />
         </div>
+    );
+};
+
+// Large featured product card with image overlay
+const FeaturedProductCard = ({ product }: { product: Product }) => {
+    const { discount } = useDiscount();
+    const hasDiscount = !!discount?.percentage;
+    const discountedPrice = hasDiscount
+        ? product.price * (1 - discount.percentage / 100)
+        : product.price;
+    const imgSrc = product.images?.[0] || '/img/logo.png';
+
+    return (
+        <Link href={`/product/${product.id}`} className="block h-full">
+            <div className="group relative overflow-hidden h-full min-h-[420px] bg-[#FDFBF7]">
+                <Image
+                    src={imgSrc}
+                    alt={product.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                {hasDiscount && (
+                    <div className="absolute top-4 left-4 z-10 bg-primary text-white text-[9px] uppercase font-bold px-3 py-1.5 tracking-widest">
+                        -{discount.percentage}%
+                    </div>
+                )}
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white z-10">
+                    <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-primary mb-2">{product.category_name}</p>
+                    <h3 className="text-xl md:text-2xl font-light leading-tight mb-4">{product.name}</h3>
+                    <div className="flex items-end justify-between">
+                        <div>
+                            {hasDiscount && (
+                                <span className="text-xs text-white/50 line-through block mb-0.5">{product.price.toLocaleString()} DH</span>
+                            )}
+                            <span className="text-2xl font-bold text-primary leading-none">{discountedPrice.toLocaleString()} DH</span>
+                        </div>
+                        <span className="text-[9px] uppercase tracking-widest border border-white/40 text-white/80 px-4 py-2 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                            Découvrir
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </Link>
     );
 };
 
@@ -190,6 +235,65 @@ export default function Home() {
                     ))}
                 </motion.div>
             </div>
+
+            {/* Featured Products Showcase */}
+            {!loading && products.length > 0 && (
+                <section className="py-16 px-6 lg:px-12 bg-white">
+                    <div className="max-w-[1600px] mx-auto">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-100"
+                        >
+                            <div>
+                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Sélection du Moment</p>
+                                <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">
+                                    Produits <span className="text-primary">Vedettes</span>
+                                </h2>
+                            </div>
+                            <Link
+                                href="/boutique"
+                                className="inline-flex items-center gap-2 mt-4 md:mt-0 text-[10px] uppercase font-bold text-gray-500 hover:text-primary transition-colors group"
+                            >
+                                <span>Voir la Boutique</span>
+                                <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </motion.div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6 }}
+                                className="lg:col-span-2"
+                            >
+                                <FeaturedProductCard product={products[0]} />
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.1 }}
+                                className="lg:col-span-3 grid grid-cols-2 gap-4"
+                            >
+                                {products.slice(1, 5).map((product, i) => (
+                                    <motion.div
+                                        key={product.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
+                                    >
+                                        <ProductCardCompact product={product} />
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* Products Section */}
             <section className="py-16 px-6 lg:px-12 bg-[#FDFBF7]">
