@@ -16,6 +16,7 @@ const Hero = () => {
  alt="Vitasilk"
  fill
  priority
+ sizes="100vw"
  className="object-cover object-top"
  style={{filter: 'brightness(0.5) contrast(1.1)'}}
  />

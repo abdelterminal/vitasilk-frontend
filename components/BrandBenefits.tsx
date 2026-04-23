@@ -56,6 +56,7 @@ export default function BrandBenefits() {
  src="/img/pub1.png"
  alt="Résultat Vitasilk"
  fill
+ sizes="(max-width: 1024px) 100vw, 50vw"
  className="object-contain object-center group-hover:scale-105 transition-transform duration-[1.5s]"
  />
  {/* Overlay elements */}

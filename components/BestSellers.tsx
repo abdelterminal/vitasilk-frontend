@@ -82,6 +82,7 @@ export default function BestSellers() {
                     alt={product.name}
                     fill
                     priority
+                    sizes="144px"
                     className="object-contain p-3 transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
