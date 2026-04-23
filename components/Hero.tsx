@@ -12,7 +12,7 @@ const Hero = () => {
  {/* Mobile: static image (fast LCP) */}
  <div className="absolute inset-0 z-0 md:hidden">
  <Image
- src="/img/soins de cheveux/Organic-Protein-masque-capillaire-modele.png"
+ src="/img/hero-mobile.webp"
  alt="Vitasilk"
  fill
  priority
