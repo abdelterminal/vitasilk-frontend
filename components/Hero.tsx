@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const Hero = () => {
  return (
- <section className="relative h-screen w-full overflow-hidden flex items-center justify-center min-h-[600px]" style={{backgroundColor: '#0D0D0D'}}>
+ <section className="relative h-screen w-full overflow-hidden flex items-center justify-center min-h-[600px] py-[10px]" style={{backgroundColor: '#0D0D0D'}}>
  {/* Background Video with subtle zoom effect */}
  <motion.div
  initial={{ scale: 1.1 }}
