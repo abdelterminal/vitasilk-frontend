@@ -78,23 +78,22 @@ const FeaturedProductCard = ({ product }: { product: Product }) => {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 {hasDiscount && (
                     <div className="absolute top-4 left-4 z-10 bg-primary text-white text-[9px] uppercase font-bold px-3 py-1.5 tracking-widest">
                         -{discount.percentage}%
                     </div>
                 )}
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white z-10">
+                <div className="absolute bottom-0 left-0 right-0 bg-white p-6 z-10">
                     <p className="text-[9px] uppercase tracking-[0.2em] font-bold text-primary mb-2">{product.category_name}</p>
-                    <h3 className="text-xl md:text-2xl font-light leading-tight mb-4">{product.name}</h3>
+                    <h3 className="text-xl md:text-2xl font-light leading-tight mb-4 text-gray-900">{product.name}</h3>
                     <div className="flex items-end justify-between">
                         <div>
                             {hasDiscount && (
-                                <span className="text-xs text-white/50 line-through block mb-0.5">{product.price.toLocaleString()} DH</span>
+                                <span className="text-xs text-gray-400 line-through block mb-0.5">{product.price.toLocaleString()} DH</span>
                             )}
                             <span className="text-2xl font-bold text-primary leading-none">{discountedPrice.toLocaleString()} DH</span>
                         </div>
-                        <span className="text-[9px] uppercase tracking-widest border border-white/40 text-white/80 px-4 py-2 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                        <span className="text-[9px] uppercase tracking-widest border border-gray-300 text-gray-700 px-4 py-2 group-hover:bg-primary group-hover:border-primary group-hover:text-white transition-all duration-300">
                             Découvrir
                         </span>
                     </div>
