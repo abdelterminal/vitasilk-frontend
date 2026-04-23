@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 const Hero = () => {
  return (
- <section className="relative h-screen w-full overflow-hidden flex items-center justify-center min-h-[600px] pt-16 md:pt-36" style={{backgroundColor: '#0D0D0D'}}>
+ <section className="relative h-screen w-full overflow-hidden flex items-center justify-center min-h-[600px] pt-16 md:pt-36 pb-8 md:pb-16" style={{backgroundColor: '#0D0D0D'}}>
  {/* Background Video with subtle zoom effect */}
  <motion.div
  initial={{ scale: 1.1 }}
@@ -52,7 +52,7 @@ const Hero = () => {
  initial={{ opacity: 0, y: -20 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 1.2, ease: "easeOut" }}
- className="flex items-center justify-center space-x-4 uppercase text-[10px] md:text-[11px] font-bold mb-4 md:mb-8"
+ className="flex items-center justify-center space-x-4 uppercase text-[10px] md:text-[11px] font-bold mb-2 md:mb-4"
  style={{color: '#C9A14A'}}
  >
    <span className="flex items-center space-x-2 text-primary font-bold uppercase text-[10px] md:text-sm">
@@ -64,9 +64,9 @@ const Hero = () => {
  initial={{ opacity: 0, y: 30 }}
  animate={{ opacity: 1, y: 0 }}
  transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
- className="mb-4 md:mb-8 lg:mb-10 text-center"
+ className="mb-2 md:mb-4 lg:mb-6 text-center"
  >
-  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[8rem] text-white leading-[0.9] tracking-tight text-center" style={{fontFamily: "'Playfair Display', serif"}}>
+  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-white leading-[0.9] tracking-tight text-center" style={{fontFamily: "'Playfair Display', serif"}}>
   <motion.span
  initial={{ opacity: 0, scale: 0.9 }}
  animate={{ opacity: 1, scale: 1 }}
@@ -93,7 +93,7 @@ const Hero = () => {
  initial={{ opacity: 0 }}
  animate={{ opacity: 1 }}
  transition={{ duration: 1.2, delay: 1 }}
- className="text-white/80 text-sm md:text-base lg:text-lg max-w-2xl mx-auto mb-8 md:mb-12 lg:mb-16 tracking-wide leading-relaxed"
+ className="text-white/80 text-sm md:text-base max-w-2xl mx-auto mb-6 md:mb-8 lg:mb-10 tracking-wide leading-relaxed"
  style={{fontFamily: "'Poppins', sans-serif", fontWeight: 400}}
  >
  Des produits professionnels pour lisser et prendre soin de vos cheveux. <br className="hidden md:block" />
