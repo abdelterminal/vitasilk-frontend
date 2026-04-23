@@ -12,12 +12,12 @@ const Hero = () => {
  {/* Mobile: static image (fast LCP) */}
  <div className="absolute inset-0 z-0 md:hidden">
  <Image
- src="/img/pub1.png"
+ src="/img/soins de cheveux/Organic-Protein-masque-capillaire-modele.png"
  alt="Vitasilk"
  fill
  priority
- className="object-cover"
- style={{filter: 'brightness(0.4) contrast(1.1)'}}
+ className="object-cover object-top"
+ style={{filter: 'brightness(0.5) contrast(1.1)'}}
  />
  <div className="absolute inset-0" style={{backgroundColor: 'rgba(110, 15, 20, 0.3)'}} />
  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
