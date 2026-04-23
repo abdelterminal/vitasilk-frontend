@@ -81,6 +81,7 @@ export default function BestSellers() {
                     src={product.image}
                     alt={product.name}
                     fill
+                    priority
                     className="object-contain p-3 transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>

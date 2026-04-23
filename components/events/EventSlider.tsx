@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { eventsApi, imageUrl, type Event } from '@/lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { ChevronLeft, ChevronRight, Trophy } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -50,10 +51,13 @@ export default function EventSlider({ onEventClick }: EventSliderProps) {
                         className="absolute inset-0 cursor-pointer"
                         onClick={() => onEventClick(currentEvent)}
                     >
-                        <img
+                        <Image
                             src={imageUrl(currentEvent.banner_url)}
                             alt={currentEvent.title}
-                            className="w-full h-full object-cover"
+                            fill
+                            priority
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 1600px"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent flex flex-col justify-center px-12 md:px-24">
                             <motion.div

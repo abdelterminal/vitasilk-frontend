@@ -76,6 +76,7 @@ const FeaturedProductCard = ({ product }: { product: Product }) => {
                     src={imgSrc}
                     alt={product.name}
                     fill
+                    priority
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 {hasDiscount && (

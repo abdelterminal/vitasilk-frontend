@@ -9,17 +9,13 @@ const Hero = () => {
  return (
  <section className="relative h-screen w-full overflow-hidden flex items-center justify-center min-h-[600px] pt-16 md:pt-36 pb-8 md:pb-16" style={{backgroundColor: '#0D0D0D'}}>
  {/* Background Video with subtle zoom effect */}
- <motion.div
- initial={{ scale: 1.1 }}
- animate={{ scale: 1 }}
- transition={{ duration: 10, ease: "easeOut" }}
- className="absolute inset-0 z-0"
- >
+ <div className="absolute inset-0 z-0">
  <video
  autoPlay
  muted
  loop
  playsInline
+ poster="/img/hero-poster.jpg"
  className="w-full h-full object-cover"
  style={{filter: 'brightness(0.4) contrast(1.1)'}}
  >
@@ -28,7 +24,7 @@ const Hero = () => {
  {/* Cinematic Overlays */}
  <div className="absolute inset-0" style={{backgroundColor: 'rgba(110, 15, 20, 0.3)'}} />
  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
- </motion.div>
+ </div>
 
  {/* Floating Decorative Elements */}
  <div className="absolute inset-0 pointer-events-none overflow-hidden">
