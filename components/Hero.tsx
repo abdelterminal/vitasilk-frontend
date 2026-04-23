@@ -135,7 +135,6 @@ const Hero = () => {
  transition={{ delay: 2.5, duration: 1.5 }}
  className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden xl:flex flex-col items-center gap-6"
  >
- <span className="text-[10px] font-bold uppercase text-primary">Lissage Pro • 24K Gold</span>
  <div className="w-[1px] h-16 bg-gradient-to-b from-primary to-transparent relative overflow-hidden" style={{background: 'linear-gradient(to bottom, #C9A14A, transparent)'}}>
  <motion.div
  animate={{ y: ['-100%', '300%'] }}
