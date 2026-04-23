@@ -1,25 +1,26 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Hero from "@/components/Hero";
 import ProductCardCompact from "@/components/ProductCardCompact";
-import BrandBenefits from "@/components/BrandBenefits";
-import TestimonialSection from "@/components/TestimonialSection";
-import FeaturedShowcase from "@/components/FeaturedShowcase";
-import NewsletterBanner from "@/components/NewsletterBanner";
-import BestSellers from "@/components/BestSellers";
 import { productsApi, type Product as ApiProduct, imageUrl } from "@/lib/api";
-import { motion, AnimatePresence } from "framer-motion";
 import Link from 'next/link';
 import { ArrowRight, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
-import EventSlider from "@/components/events/EventSlider";
-import SpinWheelPopup from "@/components/events/SpinWheelPopup";
 import { useDiscount } from '@/context/DiscountContext';
+
+// Dynamically import all heavy/below-fold components to keep initial bundle lean
+const EventSlider = dynamic(() => import('@/components/events/EventSlider'), { ssr: false });
+const SpinWheelPopup = dynamic(() => import('@/components/events/SpinWheelPopup'), { ssr: false });
+const BestSellers = dynamic(() => import('@/components/BestSellers'));
+const BrandBenefits = dynamic(() => import('@/components/BrandBenefits'));
+const FeaturedShowcase = dynamic(() => import('@/components/FeaturedShowcase'));
+const TestimonialSection = dynamic(() => import('@/components/TestimonialSection'));
+const NewsletterBanner = dynamic(() => import('@/components/NewsletterBanner'));
 
 type Product = ApiProduct;
 
-// Animated text ticker for the animated quote band
 const QUOTES = [
     "LISSAGE SANS FORMALDÉHYDE",
     "LIVRAISON PARTOUT AU MAROC",
@@ -28,6 +29,7 @@ const QUOTES = [
     "PAIEMENT SÉCURISÉ ET RAPIDE",
 ];
 
+// Pure CSS quote rotation — zero framer-motion
 const AnimatedQuoteBand = () => {
     const [current, setCurrent] = useState(0);
 
@@ -42,25 +44,16 @@ const AnimatedQuoteBand = () => {
         <div className="bg-[#111] py-5 overflow-hidden flex items-center justify-center gap-8">
             <div className="h-px w-16 bg-primary/40 flex-shrink-0 hidden md:block" />
             <div className="relative h-6 overflow-hidden flex-1 max-w-xl text-center">
-                <AnimatePresence mode="wait">
-                    <motion.p
-                        key={current}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5 }}
-                        className="text-[10px] md:text-xs uppercase font-normal !text-white/80 absolute inset-0 flex items-center justify-center"
-                    >
-                        {QUOTES[current]}
-                    </motion.p>
-                </AnimatePresence>
+                <p className="text-[10px] md:text-xs uppercase font-normal text-white/80 flex items-center justify-center h-full transition-opacity duration-500">
+                    {QUOTES[current]}
+                </p>
             </div>
             <div className="h-px w-16 bg-primary/40 flex-shrink-0 hidden md:block" />
         </div>
     );
 };
 
-// Large featured product card with image overlay
+// Featured product card — no framer-motion
 const FeaturedProductCard = ({ product }: { product: Product }) => {
     const { discount } = useDiscount();
     const hasDiscount = !!discount?.percentage;
@@ -105,7 +98,7 @@ const FeaturedProductCard = ({ product }: { product: Product }) => {
     );
 };
 
-// Product carousel with navigation
+// Product carousel — no framer-motion
 const ProductCarousel = ({ products, title, href }: { products: Product[]; title: string; href: string }) => {
     const [page, setPage] = useState(0);
     const itemsPerPage = 6;
@@ -122,53 +115,31 @@ const ProductCarousel = ({ products, title, href }: { products: Product[]; title
                 <div className="flex items-center gap-4">
                     {totalPages > 1 && (
                         <div className="flex gap-2">
-                            <button
-                                onClick={() => setPage(p => Math.max(0, p - 1))}
-                                disabled={page === 0}
-                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-black hover:border-black disabled:opacity-30 transition-all"
-                            >
+                            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-black hover:border-black disabled:opacity-30 transition-all">
                                 <ChevronLeft size={14} />
                             </button>
-                            <button
-                                onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
-                                disabled={page === totalPages - 1}
-                                className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-black hover:border-black disabled:opacity-30 transition-all"
-                            >
+                            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page === totalPages - 1} className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-black hover:border-black disabled:opacity-30 transition-all">
                                 <ChevronRight size={14} />
                             </button>
                         </div>
                     )}
-                    <Link
-                        href={href}
-                        className="text-[9px] uppercase font-bold text-primary hover:text-black transition-colors flex items-center gap-2 group"
-                    >
+                    <Link href={href} className="text-[9px] uppercase font-bold text-primary hover:text-black transition-colors flex items-center gap-2 group">
                         <span>Voir tout</span>
                         <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
                 </div>
             </div>
 
-            <motion.div
-                key={page}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
-            >
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                 {visible.map(product => (
                     <ProductCardCompact key={product.id} product={product} />
                 ))}
-            </motion.div>
+            </div>
 
-            {/* Page dots */}
             {totalPages > 1 && (
                 <div className="flex justify-center gap-2 mt-4">
                     {Array.from({ length: totalPages }).map((_, i) => (
-                        <button
-                            key={i}
-                            onClick={() => setPage(i)}
-                            className={`w-2 h-2 rounded-full transition-colors ${i === page ? 'bg-primary' : 'bg-gray-200'}`}
-                        />
+                        <button key={i} onClick={() => setPage(i)} className={`w-2 h-2 rounded-full transition-colors ${i === page ? 'bg-primary' : 'bg-gray-200'}`} />
                     ))}
                 </div>
             )}
@@ -182,7 +153,7 @@ export default function Home() {
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
     useEffect(() => {
-        productsApi.getAll({ limit: 50 })
+        productsApi.getAll({ limit: 24 })
             .then(res => setProducts(res.data))
             .catch(console.error)
             .finally(() => setLoading(false));
@@ -195,34 +166,21 @@ export default function Home() {
 
     return (
         <div className="flex flex-col min-h-screen bg-white">
-            {/* Hero Section */}
             <Hero />
 
-            {/* Dynamic Event Slider */}
             <EventSlider onEventClick={(event) => setSelectedEvent(event)} />
-            
-            <AnimatePresence>
-                {selectedEvent && (
-                    <SpinWheelPopup 
-                        event={selectedEvent} 
-                        onClose={() => setSelectedEvent(null)} 
-                    />
-                )}
-            </AnimatePresence>
 
-            {/* Animated Quote Band */}
+            {selectedEvent && (
+                <SpinWheelPopup event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+            )}
+
             <AnimatedQuoteBand />
 
-            {/* Best Sellers Scrolling Strip */}
             <BestSellers />
 
-            {/* Second marquee - reversed direction */}
+            {/* CSS marquee — no framer-motion */}
             <div className="w-full overflow-hidden bg-[#FDFBF7] border-y border-gray-100 py-3">
-                <motion.div
-                    className="flex gap-0 whitespace-nowrap"
-                    animate={{ x: ["-50%", "0%"] }}
-                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                >
+                <div className="flex gap-0 whitespace-nowrap" style={{animation: 'marquee-reverse 25s linear infinite'}}>
                     {[...Array(16)].map((_, i) => (
                         <span key={i} className="flex items-center gap-6 px-8 text-[9px] uppercase font-bold text-gray-400 flex-shrink-0">
                             <span>Huile de Coco •</span>
@@ -234,164 +192,96 @@ export default function Home() {
                             <span>Protéines Naturelles •</span>
                         </span>
                     ))}
-                </motion.div>
+                </div>
             </div>
 
-            {/* Featured Products Showcase */}
+            {/* Featured Products */}
             {!loading && products.length > 0 && (
                 <section className="py-16 px-6 lg:px-12 bg-white">
                     <div className="max-w-[1600px] mx-auto">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-100"
-                        >
+                        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-100">
                             <div>
                                 <p className="text-[10px] uppercase font-bold text-primary mb-2">Les Plus Demandés</p>
                                 <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">
                                     Nos Produits <span className="text-primary">Phares</span>
                                 </h2>
                             </div>
-                            <Link
-                                href="/boutique"
-                                className="inline-flex items-center gap-2 mt-4 md:mt-0 text-[10px] uppercase font-bold text-gray-500 hover:text-primary transition-colors group"
-                            >
+                            <Link href="/boutique" className="inline-flex items-center gap-2 mt-4 md:mt-0 text-[10px] uppercase font-bold text-gray-500 hover:text-primary transition-colors group">
                                 <span>Voir la Boutique</span>
                                 <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
                             </Link>
-                        </motion.div>
-
+                        </div>
                         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6 }}
-                                className="lg:col-span-2"
-                            >
+                            <div className="lg:col-span-2">
                                 <FeaturedProductCard product={products[0]} />
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.1 }}
-                                className="lg:col-span-3 grid grid-cols-2 gap-4"
-                            >
-                                {products.slice(1, 5).map((product, i) => (
-                                    <motion.div
-                                        key={product.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
-                                    >
-                                        <ProductCardCompact product={product} />
-                                    </motion.div>
+                            </div>
+                            <div className="lg:col-span-3 grid grid-cols-2 gap-4">
+                                {products.slice(1, 5).map(product => (
+                                    <ProductCardCompact key={product.id} product={product} />
                                 ))}
-                            </motion.div>
+                            </div>
                         </div>
                     </div>
                 </section>
             )}
 
-            {/* Products Section */}
+            {/* Products by category */}
             <section className="py-16 px-6 lg:px-12 bg-[#FDFBF7]">
                 <div className="max-w-[1600px] mx-auto">
-                    <div>
-                        {/* Header */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-gray-200"
-                        >
-                            <div>
-                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Tous Nos Produits</p>
-                                <h2 className="text-3xl md:text-5xl font-sans font-light text-gray-900">
-                                    Notre <span className="text-primary">Catalogue</span>
-                                </h2>
-                            </div>
-                            <Link
-                                href="/boutique"
-                                className="inline-flex items-center gap-2 mt-4 md:mt-0 px-8 py-3 bg-primary text-white text-[10px] uppercase font-bold hover:bg-black transition-all rounded-sm group"
-                            >
-                                <span>Voir la Boutique</span>
-                                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                        </motion.div>
-
-                        {loading ? (
-                            <div className="flex items-center justify-center py-24">
-                                <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                            </div>
-                        ) : products.length === 0 ? (
-                            <div className="text-center py-24 text-gray-400">
-                                Notre collection arrive bientôt.
-                            </div>
-                        ) : (
-                            <div className="space-y-16">
-                                {categories.map((category) => {
-                                    const categoryProducts = products.filter(p => p.category_name === category);
-                                    if (categoryProducts.length === 0) return null;
-                                    const slug = (products.find(p => p.category_name === category)?.category_slug) || category.toLowerCase().replace(/ /g, '-');
-                                    return (
-                                        <motion.div
-                                            key={category}
-                                            initial={{ opacity: 0, y: 30 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.6 }}
-                                            className="pb-12 border-b border-gray-100 last:border-0 last:pb-0"
-                                        >
-                                            <ProductCarousel
-                                                products={categoryProducts}
-                                                title={category}
-                                                href={`/category/${slug}`}
-                                            />
-                                        </motion.div>
-                                    );
-                                })}
-                            </div>
-                        )}
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-gray-200">
+                        <div>
+                            <p className="text-[10px] uppercase font-bold text-primary mb-2">Tous Nos Produits</p>
+                            <h2 className="text-3xl md:text-5xl font-sans font-light text-gray-900">
+                                Notre <span className="text-primary">Catalogue</span>
+                            </h2>
+                        </div>
+                        <Link href="/boutique" className="inline-flex items-center gap-2 mt-4 md:mt-0 px-8 py-3 bg-primary text-white text-[10px] uppercase font-bold hover:bg-black transition-all rounded-sm group">
+                            <span>Voir la Boutique</span>
+                            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        </Link>
                     </div>
+
+                    {loading ? (
+                        <div className="flex items-center justify-center py-24">
+                            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                        </div>
+                    ) : products.length === 0 ? (
+                        <div className="text-center py-24 text-gray-400">Notre collection arrive bientôt.</div>
+                    ) : (
+                        <div className="space-y-16">
+                            {categories.map((category) => {
+                                const categoryProducts = products.filter(p => p.category_name === category);
+                                if (categoryProducts.length === 0) return null;
+                                const slug = (products.find(p => p.category_name === category)?.category_slug) || category.toLowerCase().replace(/ /g, '-');
+                                return (
+                                    <div key={category} className="pb-12 border-b border-gray-100 last:border-0 last:pb-0">
+                                        <ProductCarousel products={categoryProducts} title={category} href={`/category/${slug}`} />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
                 </div>
             </section>
 
-            {/* Brand Benefits Section */}
             <BrandBenefits />
-
-            {/* Featured Showcase Video */}
             <FeaturedShowcase />
-
-            {/* Testimonials */}
             <TestimonialSection />
-
-            {/* Newsletter Banner */}
             <NewsletterBanner />
 
-            {/* Bottom CTA Banner */}
+            {/* Bottom CTA */}
             <section className="py-20 px-6 bg-[#111] text-white text-center">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="max-w-2xl mx-auto"
-                >
+                <div className="max-w-2xl mx-auto">
                     <p className="text-[10px] uppercase font-bold text-primary mb-4">Offre Spéciale</p>
                     <h2 className="text-3xl md:text-5xl font-sans font-light !text-white mb-4">
-                        -10% sur votre <span className=" text-primary">1ère commande</span>
+                        -10% sur votre <span className="text-primary">1ère commande</span>
                     </h2>
                     <p className="text-white/50 text-sm mb-10">Entrez le code <strong className="text-white">VITASILK10</strong> au moment du paiement</p>
-                    <Link
-                        href="/boutique"
-                        className="inline-flex items-center gap-3 px-12 py-5 bg-primary text-white text-[10px] uppercase font-bold hover:bg-white hover:text-black transition-all duration-300 group"
-                    >
+                    <Link href="/boutique" className="inline-flex items-center gap-3 px-12 py-5 bg-primary text-white text-[10px] uppercase font-bold hover:bg-white hover:text-black transition-all duration-300 group">
                         <span>Profiter de l'Offre</span>
                         <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </Link>
-                </motion.div>
+                </div>
             </section>
         </div>
     );
