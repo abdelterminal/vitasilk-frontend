@@ -128,21 +128,6 @@ const Hero = () => {
  <span className="text-8xl tracking-widest font-light text-white/5" style={{fontFamily: "'Playfair Display', serif"}}>EST. 2024</span>
  </div>
 
- {/* Extreme Scroll Indicator */}
- <motion.div
- initial={{ opacity: 0 }}
- animate={{ opacity: 1 }}
- transition={{ delay: 2.5, duration: 1.5 }}
- className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden xl:flex flex-col items-center gap-6"
- >
- <div className="w-[1px] h-16 bg-gradient-to-b from-primary to-transparent relative overflow-hidden" style={{background: 'linear-gradient(to bottom, #C9A14A, transparent)'}}>
- <motion.div
- animate={{ y: ['-100%', '300%'] }}
- transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
- className="absolute top-0 left-0 w-full h-1/4 bg-white"
- />
- </div>
- </motion.div>
  </section>
  );
 };
