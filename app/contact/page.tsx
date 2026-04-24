@@ -102,7 +102,7 @@ const ContactPage = () => {
           </div>
 
           {/* Middle – contact items */}
-          <div className="space-y-4 my-8">
+          <div className="space-y-4 mt-8 mb-14">
             {CONTACT_ITEMS.map(({ icon: Icon, label, value, href }) => (
               <a
                 key={label}
