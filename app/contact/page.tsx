@@ -85,24 +85,24 @@ const ContactPage = () => {
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9 }}
-          className="relative z-10 flex flex-col h-full px-10 pt-28 pb-16 lg:pt-36 lg:pb-24"
+          className="relative z-10 flex flex-col h-full px-10 pt-24 pb-10 lg:pt-28 lg:pb-12"
         >
           {/* Top – heading */}
-          <div className="mb-12">
-            <p className="text-[10px] uppercase tracking-[0.45em] text-primary font-bold mb-7">
+          <div className="mb-8">
+            <p className="text-[10px] uppercase tracking-[0.45em] text-primary font-bold mb-5">
               Vitasilk · Service Client
             </p>
-            <h1 className="text-5xl lg:text-[3.5rem] xl:text-[4rem] font-sans font-light tracking-tight leading-[1.05] mb-5">
+            <h1 className="text-4xl lg:text-5xl font-sans font-light tracking-tight leading-[1.05] mb-3">
               <span className="text-white drop-shadow-lg">Contactez</span><br />
               <span className="text-primary font-medium drop-shadow-lg">nous</span>
             </h1>
-            <p className="text-[13px] text-white/60 font-light leading-relaxed max-w-[260px]">
+            <p className="text-[12px] text-white/60 font-light leading-relaxed max-w-[260px]">
               Une question sur un produit ou votre commande&nbsp;? On vous répond rapidement.
             </p>
           </div>
 
           {/* Middle – contact items */}
-          <div className="space-y-4 mb-12">
+          <div className="space-y-3 mb-8">
             {CONTACT_ITEMS.map(({ icon: Icon, label, value, href }) => (
               <a
                 key={label}
@@ -111,8 +111,8 @@ const ContactPage = () => {
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="flex items-center gap-4 group"
               >
-                <div className="w-9 h-9 rounded-full border border-white/15 bg-white/8 flex items-center justify-center flex-shrink-0 group-hover:border-primary/70 group-hover:bg-primary/15 transition-all duration-300">
-                  <Icon size={15} className="text-white/50 group-hover:text-primary transition-colors" />
+                <div className="w-8 h-8 rounded-full border border-white/15 bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:border-primary/70 group-hover:bg-primary/15 transition-all duration-300">
+                  <Icon size={13} className="text-white/50 group-hover:text-primary transition-colors" />
                 </div>
                 <div>
                   <p className="text-[8px] uppercase tracking-[0.18em] text-white/35 font-bold mb-0.5">{label}</p>
@@ -123,8 +123,8 @@ const ContactPage = () => {
           </div>
 
           {/* Bottom – hours + social */}
-          <div className="space-y-7 mt-auto">
-            <div className="border-t border-white/10 pt-7">
+          <div className="space-y-5 mt-auto">
+            <div className="border-t border-white/10 pt-5">
               <p className="text-[8px] uppercase tracking-[0.18em] text-primary font-bold mb-4 flex items-center gap-2">
                 <Clock size={10} /> Horaires
               </p>
