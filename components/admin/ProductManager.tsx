@@ -441,6 +441,15 @@ const ProductManager = () => {
   </div>
 
   <div className="space-y-4">
+  <label className="flex items-center space-x-3 cursor-pointer p-4 border border-primary/20 rounded-sm bg-primary/5 hover:bg-primary/10 transition-colors">
+  <input type="checkbox" checked={formData.featured} onChange={(e) => setFormData(prev => ({ ...prev, featured: e.target.checked }))}
+  className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer" />
+  <div>
+    <span className="text-xs font-bold text-gray-700">Produit En Vedette</span>
+    <p className="text-[10px] text-gray-400 font-medium mt-0.5">Apparaît dans la section vedette de la page d'accueil</p>
+  </div>
+  </label>
+
   <label className="flex items-center space-x-3 cursor-pointer p-4 border border-gray-100 rounded-sm bg-gray-50/50 hover:bg-gray-50 transition-colors">
   <input type="checkbox" checked={formData.enableCart} onChange={(e) => {
       const checked = e.target.checked;
