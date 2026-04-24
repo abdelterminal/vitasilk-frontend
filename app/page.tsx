@@ -178,14 +178,19 @@ const ProductCarousel = ({ products, title, href }: { products: Product[]; title
 
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([]);
+    const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
     useEffect(() => {
-        productsApi.getAll({ limit: 50 })
-            .then(res => setProducts(res.data))
-            .catch(console.error)
-            .finally(() => setLoading(false));
+        Promise.all([
+            productsApi.getAll({ limit: 50 }),
+            productsApi.getAll({ featured: true, limit: 6 }),
+        ]).then(([allRes, featuredRes]) => {
+            setProducts(allRes.data);
+            setFeaturedProducts(featuredRes.data);
+        }).catch(console.error)
+        .finally(() => setLoading(false));
     }, []);
 
     const categoriesOrder = ['Lissage Pro', 'Soins de Cheveux', 'Matériel', 'Nos Packs'];
@@ -238,7 +243,7 @@ export default function Home() {
             </div>
 
             {/* Featured Products Showcase */}
-            {!loading && products.length > 0 && (
+            {!loading && featuredProducts.length > 0 && (
                 <section className="py-16 px-6 lg:px-12 bg-white">
                     <div className="max-w-[1600px] mx-auto">
                         <motion.div
@@ -248,9 +253,9 @@ export default function Home() {
                             className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-100"
                         >
                             <div>
-                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Les Plus Demandés</p>
+                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Sélection du Moment</p>
                                 <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">
-                                    Nos Produits <span className="text-primary">Phares</span>
+                                    Nos Produits <span className="text-primary">Vedettes</span>
                                 </h2>
                             </div>
                             <Link
@@ -270,7 +275,7 @@ export default function Home() {
                                 transition={{ duration: 0.6 }}
                                 className="lg:col-span-2"
                             >
-                                <FeaturedProductCard product={products[0]} />
+                                <FeaturedProductCard product={featuredProducts[0]} />
                             </motion.div>
                             <motion.div
                                 initial={{ opacity: 0, x: 20 }}
@@ -279,7 +284,7 @@ export default function Home() {
                                 transition={{ duration: 0.6, delay: 0.1 }}
                                 className="lg:col-span-3 grid grid-cols-2 gap-4"
                             >
-                                {products.slice(1, 5).map((product, i) => (
+                                {featuredProducts.slice(1, 5).map((product, i) => (
                                     <motion.div
                                         key={product.id}
                                         initial={{ opacity: 0, y: 20 }}

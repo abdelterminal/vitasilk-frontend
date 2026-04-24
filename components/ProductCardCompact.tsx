@@ -82,6 +82,13 @@ const ProductCardCompact = ({ product, variant = 'default' }: ProductCardCompact
 						)}
 					</AnimatePresence>
 
+					{/* Vedette badge */}
+					{product.featured && product.stock > 0 && (
+						<div className="absolute top-2 left-2 z-10">
+							<span className="text-[8px] uppercase tracking-wider font-bold text-white bg-primary px-2 py-1 rounded-sm">Vedette</span>
+						</div>
+					)}
+
 					{/* Stock badges */}
 					{product.stock === 0 && (
 						<div className="absolute inset-0 bg-white/70 flex items-center justify-center">
