@@ -9,6 +9,7 @@ const SubscriberManager = () => {
     const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
 
     useEffect(() => {
         subscribersApi.getAll()
@@ -17,33 +18,33 @@ const SubscriberManager = () => {
             .finally(() => setLoading(false));
     }, []);
 
-    const deleteSubscriber = async (id: number, email: string) => {
-        if (confirm("Voulez-vous retirer cet email de la liste d'expédition ?")) {
-            try {
-                await subscribersApi.delete(id);
-                setSubscribers(prev => prev.filter(s => s.id !== id));
-            } catch (e) { console.error(e); }
-        }
+    const deleteSubscriber = async (id: number) => {
+        try {
+            await subscribersApi.delete(id);
+            setSubscribers(prev => prev.filter(s => s.id !== id));
+            setDeleteConfirmId(null);
+        } catch (e) { console.error(e); }
     };
 
+    const escapeCSV = (val: string) => `"${val.replace(/"/g, '""')}"`;
+
     const downloadCSV = () => {
-        const headers = ["Email", "Date d'inscription"];
+        const headers = [escapeCSV('Email'), escapeCSV("Date d'inscription")];
         const rows = subscribers.map(sub => [
-            sub.email,
-            sub.created_at ? new Date(sub.created_at).toLocaleString() : 'N/A'
+            escapeCSV(sub.email || ''),
+            escapeCSV(sub.created_at ? new Date(sub.created_at).toLocaleString('fr-FR') : 'N/A'),
         ]);
 
-        let csvContent = "data:text/csv;charset=utf-8,"
-            + headers.join(",") + "\n"
-            + rows.map(e => e.join(",")).join("\n");
-
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "vitasilk_subscribers.csv");
+        const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        const blob = new Blob(['﻿' + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'vitasilk_subscribers.csv';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     };
 
     const filteredSubscribers = subscribers.filter(sub =>
@@ -101,13 +102,20 @@ const SubscriberManager = () => {
                                 <div className="w-10 h-10 bg-gray-50 text-primary border border-gray-100 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-inner">
                                     <Mail size={16} />
                                 </div>
-                                <button
-                                    onClick={() => deleteSubscriber(sub.id as number, sub.email)}
-                                    className="p-3 text-gray-300 hover:text-red-500 transition-colors"
-                                    title="Retirer de la liste"
-                                >
-                                    <Trash2 size={16} />
-                                </button>
+                                {deleteConfirmId === sub.id ? (
+                                    <div className="flex items-center gap-2">
+                                        <button onClick={() => setDeleteConfirmId(null)} className="text-[8px] uppercase font-black text-gray-400 hover:text-gray-600">Annuler</button>
+                                        <button onClick={() => deleteSubscriber(sub.id as number)} className="text-[8px] uppercase font-black text-red-500 hover:text-red-700">Retirer</button>
+                                    </div>
+                                ) : (
+                                    <button
+                                        onClick={() => setDeleteConfirmId(sub.id as number)}
+                                        className="p-3 text-gray-300 hover:text-red-500 transition-colors"
+                                        title="Retirer de la liste"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                )}
                             </div>
                             <h4 className="text-sm font-bold text-gray-900 mb-2 truncate group-hover:text-primary transition-colors">{sub.email}</h4>
                             <div className="flex items-center gap-2 text-[9px] text-gray-400 font-black uppercase tracking-widest">
