@@ -85,7 +85,7 @@ const ContactPage = () => {
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9 }}
-          className="relative z-10 flex flex-col justify-between h-full px-10 pt-28 pb-12 lg:pt-36 lg:pb-16"
+          className="relative z-10 flex flex-col justify-between h-full px-10 pt-28 pb-20 lg:pt-36 lg:pb-28"
         >
           {/* Top – heading */}
           <div>
