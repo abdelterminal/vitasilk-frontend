@@ -251,6 +251,11 @@ export default function OrderManager() {
                                                 </p>
                                                 <p className="text-[9px] text-gray-400 font-medium">
                                                     {order.created_at ? new Date(order.created_at).toLocaleDateString('fr-FR') : '—'}
+                                                    {order.created_at && (
+                                                        <span className="block text-[9px] text-gray-300 font-normal">
+                                                            {new Date(order.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                                                        </span>
+                                                    )}
                                                 </p>
                                             </div>
                                         </div>
@@ -404,7 +409,14 @@ export default function OrderManager() {
                                         <div className="space-y-4">
                                             <div className="flex justify-between items-center text-sm">
                                                 <span className="text-gray-400">Date</span>
-                                                <span className="text-gray-900 font-medium"> {selectedOrder.created_at ? new Date(selectedOrder.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Maintenant'} </span>
+                                                <span className="text-gray-900 font-medium">
+                                                    {selectedOrder.created_at ? new Date(selectedOrder.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Maintenant'}
+                                                    {selectedOrder.created_at && (
+                                                        <span className="text-gray-400 font-normal text-xs ml-2">
+                                                            {new Date(selectedOrder.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                                                        </span>
+                                                    )}
+                                                </span>
                                             </div>
                                             <div className="flex justify-between items-center text-sm">
                                                 <span className="text-gray-400">Paiement</span>
