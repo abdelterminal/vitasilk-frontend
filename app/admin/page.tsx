@@ -20,7 +20,7 @@ import AdminNotes from '@/components/admin/AdminNotes';
 import Conciergerie from '@/components/admin/Conciergerie';
 import GiftSystemManager from '@/components/admin/GiftSystemManager';
 import EventManager from '@/components/admin/EventManager';
-import { adminApi, productsApi, imageUrl } from '@/lib/api';
+import { adminApi, productsApi, ordersApi, messagesApi, imageUrl } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
@@ -36,6 +36,8 @@ const AdminDashboard = () => {
     const [recentLogs, setRecentLogs] = useState<any[]>([]);
     const [lowStock, setLowStock] = useState<any[]>([]);
     const [topProducts, setTopProducts] = useState<any[]>([]);
+    const [pendingOrders, setPendingOrders] = useState(0);
+    const [unreadMessages, setUnreadMessages] = useState(0);
     const router = useRouter();
 
     useEffect(() => {
@@ -87,9 +89,11 @@ const AdminDashboard = () => {
     useEffect(() => {
         const loadStats = async () => {
             try {
-                const [statsRes, prodsRes] = await Promise.all([
+                const [statsRes, prodsRes, pendingRes, msgsRes] = await Promise.all([
                     adminApi.getStats(),
-                    productsApi.getAll({ limit: 50 })
+                    productsApi.getAll({ limit: 50 }),
+                    ordersApi.getAll({ status: 'pending', limit: 1 }),
+                    messagesApi.getAll(1),
                 ]);
                 const s = statsRes.data;
                 setStats({
@@ -100,6 +104,9 @@ const AdminDashboard = () => {
                 const allProds = prodsRes.data || [];
                 setLowStock(allProds.filter(p => p.stock < 10).slice(0, 5));
                 setTopProducts(allProds.slice(0, 3));
+                setPendingOrders(pendingRes.pagination?.total ?? 0);
+                const msgs = msgsRes.data || [];
+                setUnreadMessages(msgs.filter((m: any) => !m.is_read).length);
             } catch (e) { console.error(e); }
         };
         loadStats();
@@ -251,121 +258,178 @@ const AdminDashboard = () => {
                                 transition={{ duration: 0.3 }}
                             >
                                 {activeTab === 'dashboard' && (
-                                    <div className="space-y-12">
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+                                    <div className="space-y-8">
+
+                                        {/* Greeting */}
+                                        <div className="flex items-end justify-between">
+                                            <div>
+                                                <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-1">
+                                                    {new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}
+                                                </p>
+                                                <h2 className="text-2xl font-sans font-light text-gray-900">
+                                                    Bonjour, <span className="font-medium">{userData?.name?.split(' ')[0]}</span>
+                                                </h2>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                                                <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold hidden sm:block">Système actif</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Action Required Strip */}
+                                        {(pendingOrders > 0 || unreadMessages > 0 || lowStock.length > 0) && (
+                                            <div className="bg-amber-50 border border-amber-200/60 rounded-xl px-5 py-4 flex flex-wrap gap-3 items-center">
+                                                <div className="flex items-center gap-2 mr-1">
+                                                    <AlertTriangle size={13} className="text-amber-500" />
+                                                    <span className="text-[10px] uppercase tracking-widest font-bold text-amber-700">À traiter</span>
+                                                </div>
+                                                {pendingOrders > 0 && (
+                                                    <button
+                                                        onClick={() => setActiveTab('orders')}
+                                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-xs font-bold text-amber-800 hover:bg-amber-100 transition-colors"
+                                                    >
+                                                        <Package size={11} />
+                                                        {pendingOrders} commande{pendingOrders > 1 ? 's' : ''} en attente
+                                                    </button>
+                                                )}
+                                                {unreadMessages > 0 && (
+                                                    <button
+                                                        onClick={() => setActiveTab('messages')}
+                                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-xs font-bold text-amber-800 hover:bg-amber-100 transition-colors"
+                                                    >
+                                                        <Mail size={11} />
+                                                        {unreadMessages} message{unreadMessages > 1 ? 's' : ''} non lu{unreadMessages > 1 ? 's' : ''}
+                                                    </button>
+                                                )}
+                                                {lowStock.length > 0 && (
+                                                    <button
+                                                        onClick={() => setActiveTab('products')}
+                                                        className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-red-200 rounded-lg text-xs font-bold text-red-700 hover:bg-red-50 transition-colors"
+                                                    >
+                                                        <AlertTriangle size={11} />
+                                                        {lowStock.length} produit{lowStock.length > 1 ? 's' : ''} stock faible
+                                                    </button>
+                                                )}
+                                            </div>
+                                        )}
+
+                                        {/* KPI Cards */}
+                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                             {[
-                                                { label: "Ventes Maison", value: stats.sales, trend: "À jour", icon: CreditCard, color: "text-emerald-500", bg: "bg-emerald-50", border: "border-emerald-100" },
-                                                { label: "Commandes", value: stats.orders.toString(), trend: "Total", icon: Package, color: "text-blue-500", bg: "bg-blue-50", border: "border-blue-100" },
-                                                { label: "Membres", value: stats.customers.toString(), trend: "Inscrits", icon: Users, color: "text-purple-500", bg: "bg-purple-50", border: "border-purple-100" }
+                                                { label: "Chiffre d'affaires", value: stats.sales, icon: CreditCard, color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-100" },
+                                                { label: "Commandes totales", value: stats.orders.toString(), icon: Package, color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-100" },
+                                                { label: "Membres inscrits", value: stats.customers.toString(), icon: Users, color: "text-violet-600", bg: "bg-violet-50", border: "border-violet-100" },
                                             ].map((stat, i) => (
-                                                <div key={i} className="bg-white p-6 lg:p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
-                                                    <div className="flex justify-between items-start mb-4 lg:mb-6">
-                                                        <div className={`p-3 lg:p-4 rounded-xl ${stat.bg} ${stat.color} border ${stat.border}`}>
-                                                            <stat.icon size={24} strokeWidth={1.5} className="w-5 h-5 lg:w-6 lg:h-6" />
-                                                        </div>
-                                                        <span className="text-[8px] lg:text-[9px] uppercase tracking-widest font-bold text-gray-400 bg-gray-50 px-2 lg:px-3 py-1 border border-gray-100 rounded-full">{stat.trend}</span>
+                                                <div key={i} className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                                                    <div className={`w-9 h-9 rounded-lg ${stat.bg} border ${stat.border} flex items-center justify-center mb-4`}>
+                                                        <stat.icon size={16} className={stat.color} />
                                                     </div>
-                                                    <p className="text-[10px] lg:text-xs font-semibold text-gray-400 mb-1">{stat.label}</p>
-                                                    <h3 className="text-2xl lg:text-3xl font-sans font-medium text-gray-900 tracking-tight">{stat.value}</h3>
+                                                    <p className="text-[10px] uppercase tracking-widest font-bold text-gray-400 mb-1">{stat.label}</p>
+                                                    <p className="text-3xl font-sans font-medium text-gray-900 tracking-tight">{stat.value}</p>
                                                 </div>
                                             ))}
                                         </div>
 
-                                        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                                            {/* Left Column: Activity & Low Stock */}
-                                            <div className="xl:col-span-2 space-y-8">
-                                                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
-                                                    <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
-                                                        <div className="flex items-center gap-3">
-                                                            <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
-                                                                <TrendingUp size={16} className="text-blue-500" />
-                                                            </div>
-                                                            <h3 className="text-sm font-bold text-gray-900">Activité en direct</h3>
+                                        {/* Main Grid */}
+                                        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+                                            {/* Activity Feed */}
+                                            <div className="xl:col-span-2 bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
+                                                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center">
+                                                            <TrendingUp size={14} className="text-blue-500" />
                                                         </div>
-                                                        <div className="flex items-center gap-2">
-                                                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                                                            <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">Synchronisé</span>
-                                                        </div>
+                                                        <h3 className="text-sm font-bold text-gray-900">Activité récente</h3>
                                                     </div>
-                                                    <div className="space-y-4">
-                                                        {recentLogs.map((log) => (
-                                                            <div key={log.id} className="p-4 rounded-xl bg-gray-50/50 border border-gray-100 flex items-start gap-4 hover:shadow-sm transition-all">
-                                                                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary shrink-0 border border-gray-100 shadow-sm">
-                                                                    <Settings size={16} strokeWidth={1.5} />
-                                                                </div>
-                                                                <div className="flex-1 min-w-0">
-                                                                    <div className="flex items-center gap-2 mb-1">
-                                                                        <span className="text-xs text-gray-900 font-bold truncate">{log.admin_name}</span>
-                                                                        <span className="text-[10px] text-gray-400 font-medium">• {log.created_at ? new Date(log.created_at).toLocaleTimeString('fr-FR') : ''}</span>
-                                                                    </div>
-                                                                    <p className="text-sm text-gray-600 leading-relaxed">{log.details}</p>
-                                                                </div>
-                                                                <span className="text-[8px] uppercase font-bold tracking-[0.1em] px-2 py-1 bg-white text-gray-500 rounded-md border border-gray-200 shadow-sm">
-                                                                    {log.action.split('_')[0]}
-                                                                </span>
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                                        <span className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">En direct</span>
+                                                    </div>
+                                                </div>
+                                                <div className="divide-y divide-gray-50">
+                                                    {recentLogs.map((log) => (
+                                                        <div key={log.id} className="flex items-start gap-4 px-6 py-4 hover:bg-gray-50/50 transition-colors">
+                                                            <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center shrink-0 mt-0.5">
+                                                                <Settings size={13} strokeWidth={1.5} className="text-gray-500" />
                                                             </div>
-                                                        ))}
-                                                        {recentLogs.length === 0 && (
-                                                            <div className="py-12 text-center text-gray-400 text-sm font-medium">Aucune activité enregistrée</div>
-                                                        )}
-                                                    </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <div className="flex items-baseline gap-2 mb-0.5">
+                                                                    <span className="text-xs font-bold text-gray-900">{log.admin_name}</span>
+                                                                    <span className="text-[10px] text-gray-400">{log.created_at ? new Date(log.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+                                                                </div>
+                                                                <p className="text-[12px] text-gray-500 leading-relaxed truncate">{log.details}</p>
+                                                            </div>
+                                                            <span className="text-[8px] uppercase font-bold tracking-wider px-2 py-0.5 bg-gray-100 text-gray-500 rounded-md shrink-0">
+                                                                {log.action.split('_')[0]}
+                                                            </span>
+                                                        </div>
+                                                    ))}
+                                                    {recentLogs.length === 0 && (
+                                                        <div className="py-12 text-center text-gray-400 text-sm">Aucune activité enregistrée</div>
+                                                    )}
                                                 </div>
                                             </div>
 
-                                            {/* Right Column: Top Products & Warnings */}
-                                            <div className="space-y-8">
-                                                {/* Low Stock Warning */}
-                                                <div className="bg-red-50 rounded-2xl border border-red-100 shadow-sm p-6 relative overflow-hidden">
-                                                    <div className="absolute -right-4 -top-4 text-red-100 rotate-12">
-                                                        <AlertTriangle size={100} strokeWidth={1} />
+                                            {/* Right Column */}
+                                            <div className="space-y-6">
+
+                                                {/* Low Stock */}
+                                                <div className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
+                                                    <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
+                                                        <div className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center">
+                                                            <AlertTriangle size={14} className="text-red-500" />
+                                                        </div>
+                                                        <h3 className="text-sm font-bold text-gray-900">Stock faible</h3>
+                                                        {lowStock.length > 0 && (
+                                                            <span className="ml-auto text-[9px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">{lowStock.length}</span>
+                                                        )}
                                                     </div>
-                                                    <div className="relative z-10">
-                                                        <div className="flex items-center gap-3 mb-6">
-                                                            <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center">
-                                                                <AlertTriangle size={16} className="text-red-600" />
-                                                            </div>
-                                                            <h3 className="text-sm font-bold text-red-900">Stock Faible</h3>
-                                                        </div>
-                                                        <div className="space-y-3">
-                                                            {lowStock.map((prod) => (
-                                                                <div key={prod.id} className="flex justify-between items-center bg-white p-3 rounded-xl shadow-sm border border-red-100/50">
-                                                                    <div className="flex items-center gap-3">
-                                                                        <div className="w-8 h-8 bg-gray-50 rounded-lg overflow-hidden border border-gray-100">
-                                                                            {prod.images?.[0] ? <img src={imageUrl(prod.images[0])} alt="" className="w-full h-full object-cover" /> : <Package size={14} className="m-2 text-gray-400" />}
-                                                                        </div>
-                                                                        <span className="text-xs font-bold text-gray-800 line-clamp-1">{prod.name}</span>
-                                                                    </div>
-                                                                    <span className="text-[10px] font-black text-red-600 bg-red-50 px-2 py-1 rounded-md">{prod.stock} restant</span>
+                                                    <div className="divide-y divide-gray-50">
+                                                        {lowStock.map((prod) => (
+                                                            <div key={prod.id} className="flex items-center gap-3 px-5 py-3">
+                                                                <div className="w-8 h-8 bg-gray-50 rounded-lg overflow-hidden border border-gray-100 shrink-0">
+                                                                    {prod.images?.[0] ? <img src={imageUrl(prod.images[0])} alt="" className="w-full h-full object-cover" /> : <Package size={12} className="m-2 text-gray-400" />}
                                                                 </div>
-                                                            ))}
-                                                            {lowStock.length === 0 && <p className="text-xs text-red-700/60 font-medium pb-2">Tous les stocks sont à des niveaux sains.</p>}
-                                                        </div>
+                                                                <p className="text-xs font-medium text-gray-800 flex-1 truncate">{prod.name}</p>
+                                                                <span className={`text-[10px] font-black px-2 py-0.5 rounded-md shrink-0 ${prod.stock === 0 ? 'bg-red-100 text-red-700' : 'bg-amber-50 text-amber-700'}`}>
+                                                                    {prod.stock === 0 ? 'Épuisé' : `${prod.stock} restant`}
+                                                                </span>
+                                                            </div>
+                                                        ))}
+                                                        {lowStock.length === 0 && (
+                                                            <p className="text-xs text-gray-400 text-center py-6">Tous les stocks sont sains</p>
+                                                        )}
                                                     </div>
                                                 </div>
 
                                                 {/* Top Products */}
-                                                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                                                    <div className="flex items-center gap-3 border-b border-gray-100 pb-4 mb-4">
-                                                        <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
-                                                            <TrendingUp size={16} className="text-amber-500" />
+                                                <div className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
+                                                    <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
+                                                        <div className="w-7 h-7 rounded-lg bg-amber-50 flex items-center justify-center">
+                                                            <TrendingUp size={14} className="text-amber-500" />
                                                         </div>
-                                                        <h3 className="text-sm font-bold text-gray-900">Meilleures Ventes</h3>
+                                                        <h3 className="text-sm font-bold text-gray-900">Produits récents</h3>
                                                     </div>
-                                                    <div className="space-y-3">
+                                                    <div className="divide-y divide-gray-50">
                                                         {topProducts.map((prod, idx) => (
-                                                            <div key={prod.id} className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-xl transition-colors">
-                                                                <span className="text-lg font-black text-gray-200 w-4">{idx + 1}</span>
-                                                                <div className="w-10 h-10 bg-white rounded-lg overflow-hidden border border-gray-100 shadow-sm shrink-0">
-                                                                    {prod.images?.[0] ? <img src={imageUrl(prod.images[0])} alt="" className="w-full h-full object-cover" /> : <Package size={16} className="m-3 text-gray-400" />}
+                                                            <div key={prod.id} className="flex items-center gap-3 px-5 py-3">
+                                                                <span className="text-sm font-black text-gray-200 w-4 shrink-0">{idx + 1}</span>
+                                                                <div className="w-9 h-9 bg-gray-50 rounded-lg overflow-hidden border border-gray-100 shrink-0">
+                                                                    {prod.images?.[0] ? <img src={imageUrl(prod.images[0])} alt="" className="w-full h-full object-cover" /> : <Package size={14} className="m-2.5 text-gray-400" />}
                                                                 </div>
                                                                 <div className="flex-1 min-w-0">
-                                                                    <p className="text-xs font-bold text-gray-900 line-clamp-1">{prod.name}</p>
-                                                                    <p className="text-[10px] text-gray-500 font-medium">{prod.price} DH</p>
+                                                                    <p className="text-xs font-bold text-gray-900 truncate">{prod.name}</p>
+                                                                    <p className="text-[10px] text-gray-400">{prod.price} DH</p>
                                                                 </div>
                                                             </div>
                                                         ))}
+                                                        {topProducts.length === 0 && (
+                                                            <p className="text-xs text-gray-400 text-center py-6">Aucun produit</p>
+                                                        )}
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
