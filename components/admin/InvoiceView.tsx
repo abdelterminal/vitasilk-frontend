@@ -150,15 +150,9 @@ export default function InvoiceView({ data, onClose }: { data: InvoiceData, onCl
                             <div className="mt-[-1.5rem] print:mt-2 space-y-2 relative z-10 mr-4">
                                 <p className="text-[11px] uppercase tracking-widest text-amber-600 font-black">N° {String(data.orderId).slice(0, 8).toUpperCase()}</p>
                                 <p className="text-sm font-light text-gray-500">
-                                    Émise le {data.date?.toDate ? data.date.toDate().toLocaleDateString('fr-FR', {
-                                        day: '2-digit',
-                                        month: 'long',
-                                        year: 'numeric'
-                                    }) : new Date().toLocaleDateString('fr-FR', {
-                                        day: '2-digit',
-                                        month: 'long',
-                                        year: 'numeric'
-                                    })}
+                                    Émise le {data.date
+                                        ? new Date(data.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
+                                        : new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })}
                                 </p>
                             </div>
                         </div>

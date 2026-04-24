@@ -523,7 +523,7 @@ export default function OrderManager() {
                                         onClick={() => {
                                             setInvoiceData({
                                                 orderId: selectedOrder.id,
-                                                date: selectedOrder.createdAt,
+                                                date: selectedOrder.created_at,
                                                 customerName: selectedOrder.user_name,
                                                 customerEmail: selectedOrder.user_email,
                                                 customerPhone: selectedOrder.phone || '—',
