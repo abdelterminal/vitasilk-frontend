@@ -18,6 +18,7 @@ export default function EventManager() {
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingEvent, setEditingEvent] = useState<Event | null>(null);
+    const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
 
     const loadEvents = () => {
         eventsApi.getAll()
@@ -28,11 +29,11 @@ export default function EventManager() {
 
     useEffect(() => { loadEvents(); }, []);
 
-    const handleDelete = async (event: Event) => {
-        if (!confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) return;
+    const handleDelete = async (id: number) => {
         try {
-            await eventsApi.delete(event.id);
-            setEvents(prev => prev.filter(e => e.id !== event.id));
+            await eventsApi.delete(id);
+            setEvents(prev => prev.filter(e => e.id !== id));
+            setDeleteConfirmId(null);
         } catch (error) {
             console.error("Error deleting event:", error);
         }
@@ -141,12 +142,19 @@ export default function EventManager() {
                                                 <Edit3 size={18} />
                                             </button>
                                         </div>
-                                        <button
-                                            onClick={() => handleDelete(event)}
-                                            className="p-3 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-all"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
+                                        {deleteConfirmId === event.id ? (
+                                            <div className="flex items-center gap-2">
+                                                <button onClick={() => setDeleteConfirmId(null)} className="text-[9px] uppercase font-black text-gray-400 hover:text-gray-600 transition-colors px-2">Annuler</button>
+                                                <button onClick={() => handleDelete(event.id)} className="text-[9px] uppercase font-black text-red-500 hover:text-red-700 transition-colors px-2">Confirmer</button>
+                                            </div>
+                                        ) : (
+                                            <button
+                                                onClick={() => setDeleteConfirmId(event.id)}
+                                                className="p-3 bg-red-50 text-red-500 rounded-xl hover:bg-red-100 transition-all"
+                                            >
+                                                <Trash2 size={18} />
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </motion.div>
@@ -174,12 +182,24 @@ function EventFormModal({ event, onClose }: { event: Event | null, onClose: () =
     const [image, setImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string>(event?.banner_url ? imageUrl(event.banner_url) : '');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [formError, setFormError] = useState('');
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsSubmitting(true);
+        setFormError('');
 
         const percArray = percentages.split(',').map(p => parseInt(p.trim())).filter(p => !isNaN(p));
+
+        if (percArray.length === 0) {
+            setFormError('Ajoutez au moins un pourcentage.');
+            return;
+        }
+        if (percArray.some(p => p < 1 || p > 100)) {
+            setFormError('Chaque pourcentage doit être entre 1 et 100.');
+            return;
+        }
+
+        setIsSubmitting(true);
 
         try {
             let finalBannerUrl = event?.banner_url || '';
@@ -299,6 +319,12 @@ function EventFormModal({ event, onClose }: { event: Event | null, onClose: () =
                             />
                         </div>
                     </div>
+
+                    {formError && (
+                        <p className="text-xs text-red-500 font-bold flex items-center gap-2 -mt-2">
+                            <span>⚠</span> {formError}
+                        </p>
+                    )}
 
                     <button
                         type="submit"
