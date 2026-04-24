@@ -71,13 +71,13 @@ const ContactPage = () => {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-black/65" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
+        <div className="absolute inset-0 bg-[#0D0D0D]/80" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-black/40 to-black/70" />
 
         {/* Gold lines */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[30%] left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C9A14A]/25 to-transparent" />
-          <div className="absolute bottom-[25%] left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C9A14A]/15 to-transparent" />
+          <div className="absolute top-[32%] left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C9A14A]/20 to-transparent" />
+          <div className="absolute bottom-[22%] left-0 w-full h-px bg-gradient-to-r from-transparent via-[#C9A14A]/12 to-transparent" />
         </div>
 
         {/* Content */}
@@ -85,24 +85,24 @@ const ContactPage = () => {
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9 }}
-          className="relative z-10 flex flex-col justify-between h-full px-10 py-16 lg:py-24"
+          className="relative z-10 flex flex-col justify-between h-full px-10 pt-28 pb-12 lg:pt-36 lg:pb-16"
         >
           {/* Top – heading */}
           <div>
-            <p className="text-[10px] uppercase tracking-[0.5em] text-primary font-bold mb-8">
+            <p className="text-[10px] uppercase tracking-[0.45em] text-primary font-bold mb-7">
               Vitasilk · Service Client
             </p>
-            <h1 className="text-5xl lg:text-6xl xl:text-7xl font-sans font-light text-white tracking-tight leading-none mb-6">
-              Contactez&#8209;<br />
+            <h1 className="text-5xl lg:text-[3.5rem] xl:text-[4rem] font-sans font-light text-white tracking-tight leading-[1.05] mb-5">
+              Contactez<br />
               <span className="text-primary font-medium">nous</span>
             </h1>
-            <p className="text-sm text-white/70 font-light leading-relaxed max-w-xs">
+            <p className="text-[13px] text-white/60 font-light leading-relaxed max-w-[260px]">
               Une question sur un produit ou votre commande&nbsp;? On vous répond rapidement.
             </p>
           </div>
 
           {/* Middle – contact items */}
-          <div className="space-y-5 my-10">
+          <div className="space-y-4 my-8">
             {CONTACT_ITEMS.map(({ icon: Icon, label, value, href }) => (
               <a
                 key={label}
@@ -111,28 +111,28 @@ const ContactPage = () => {
                 rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 className="flex items-center gap-4 group"
               >
-                <div className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:border-primary/60 group-hover:bg-primary/10 transition-all duration-300">
-                  <Icon size={15} className="text-white/60 group-hover:text-primary transition-colors" />
+                <div className="w-9 h-9 rounded-full border border-white/15 bg-white/8 flex items-center justify-center flex-shrink-0 group-hover:border-primary/70 group-hover:bg-primary/15 transition-all duration-300">
+                  <Icon size={15} className="text-white/50 group-hover:text-primary transition-colors" />
                 </div>
                 <div>
-                  <p className="text-[9px] uppercase tracking-widest text-white/30 font-bold mb-0.5">{label}</p>
-                  <p className="text-[13px] text-white/80 group-hover:text-white transition-colors font-light">{value}</p>
+                  <p className="text-[8px] uppercase tracking-[0.18em] text-white/35 font-bold mb-0.5">{label}</p>
+                  <p className="text-[13px] text-white/90 group-hover:text-white transition-colors font-light">{value}</p>
                 </div>
               </a>
             ))}
           </div>
 
           {/* Bottom – hours + social */}
-          <div className="space-y-8">
-            <div className="border-t border-white/10 pt-8">
-              <p className="text-[9px] uppercase tracking-widest text-primary font-bold mb-4 flex items-center gap-2">
-                <Clock size={11} /> Horaires
+          <div className="space-y-7">
+            <div className="border-t border-white/10 pt-7">
+              <p className="text-[8px] uppercase tracking-[0.18em] text-primary font-bold mb-4 flex items-center gap-2">
+                <Clock size={10} /> Horaires
               </p>
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {HOURS.map(row => (
                   <div key={row.day} className="flex justify-between text-[11px]">
                     <span className="text-white/40 font-light">{row.day}</span>
-                    <span className={row.hours === 'Fermé' ? 'text-white/20' : 'text-white/70'}>{row.hours}</span>
+                    <span className={row.hours === 'Fermé' ? 'text-white/20' : 'text-white/75 font-medium'}>{row.hours}</span>
                   </div>
                 ))}
               </div>
@@ -143,7 +143,7 @@ const ContactPage = () => {
                 href="https://instagram.com/vitasilk.bs"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-[9px] uppercase tracking-widest font-bold text-white/50 hover:border-primary/60 hover:text-primary transition-all"
+                className="flex items-center gap-2 px-4 py-2.5 border border-white/15 text-[9px] uppercase tracking-[0.15em] font-bold text-white/55 hover:border-primary/70 hover:text-primary transition-all"
               >
                 <Instagram size={12} /> Instagram
               </a>
@@ -151,7 +151,7 @@ const ContactPage = () => {
                 href="https://wa.me/212662633170"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2.5 border border-white/10 text-[9px] uppercase tracking-widest font-bold text-white/50 hover:border-green-400/60 hover:text-green-400 transition-all"
+                className="flex items-center gap-2 px-4 py-2.5 border border-white/15 text-[9px] uppercase tracking-[0.15em] font-bold text-white/55 hover:border-green-400/70 hover:text-green-400 transition-all"
               >
                 <MessageCircle size={12} /> WhatsApp
               </a>
