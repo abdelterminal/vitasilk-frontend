@@ -8,10 +8,14 @@ import Link from 'next/link';
 
 type Comment = Review & { product_name?: string; product_images?: string };
 
+const ITEMS_PER_PAGE = 10;
+
 export default function CommentManager() {
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
 
     useEffect(() => {
         reviewsApi.getAll()
@@ -20,11 +24,11 @@ export default function CommentManager() {
             .finally(() => setLoading(false));
     }, []);
 
-    const deleteComment = async (id: number, author: string) => {
-        if (!confirm("Voulez-vous vraiment supprimer définitivement ce commentaire ?")) return;
+    const deleteComment = async (id: number) => {
         try {
             await reviewsApi.delete(id);
             setComments(prev => prev.filter(c => c.id !== id));
+            setDeleteConfirmId(null);
         } catch (e) {
             console.error(e);
         }
@@ -35,6 +39,12 @@ export default function CommentManager() {
         (c.product_name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
         (c.comment || '').toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+    const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+    const avgRating = comments.length > 0
+        ? (comments.reduce((sum, c) => sum + c.rating, 0) / comments.length).toFixed(1)
+        : '—';
 
     if (loading) return (
         <div className="flex flex-col items-center justify-center p-32 space-y-4">
@@ -54,7 +64,7 @@ export default function CommentManager() {
                         type="text"
                         placeholder="Filtrer les archives des avis..."
                         value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
                         className="w-full pl-14 pr-6 py-4 bg-gray-50/50 border border-gray-100 focus:outline-none focus:border-primary/40 focus:ring-4 focus:ring-primary/5 text-sm transition-all rounded-sm"
                     />
                 </div>
@@ -64,13 +74,19 @@ export default function CommentManager() {
                         <p className="text-2xl font-sans font-light text-gray-900 leading-none">{comments.length}</p>
                     </div>
                     <div className="w-px h-10 bg-gray-100" />
-                    <MessageSquare size={24} className="text-primary/20" />
+                    <div className="text-right">
+                        <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold leading-none mb-1">Note Moyenne</p>
+                        <div className="flex items-center gap-1.5 justify-end">
+                            <Star size={14} className="fill-primary text-primary" />
+                            <p className="text-2xl font-sans font-light text-gray-900 leading-none">{avgRating}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {/* List */}
             <div className="grid grid-cols-1 gap-6">
-                {filtered.length > 0 ? filtered.map((c) => (
+                {paginated.length > 0 ? paginated.map((c) => (
                     <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -160,13 +176,22 @@ export default function CommentManager() {
                                     </div>
 
                                     <div className="flex items-center gap-3">
-                                        <button
-                                            onClick={() => deleteComment(c.id, c.user_name)}
-                                            className="flex items-center gap-2 px-6 py-2.5 text-red-500 hover:text-white hover:bg-red-500 transition-all rounded-xl text-[10px] uppercase tracking-widest font-black border border-red-100 hover:border-red-600 shadow-sm"
-                                        >
-                                            <Trash2 size={14} />
-                                            <span>Supprimer</span>
-                                        </button>
+                                        {deleteConfirmId === c.id ? (
+                                            <div className="flex items-center gap-3">
+                                                <button onClick={() => setDeleteConfirmId(null)} className="text-[10px] uppercase font-black text-gray-400 hover:text-gray-600 transition-colors">Annuler</button>
+                                                <button onClick={() => deleteComment(c.id)} className="flex items-center gap-2 px-6 py-2.5 text-white bg-red-500 transition-all rounded-xl text-[10px] uppercase tracking-widest font-black shadow-sm">
+                                                    <Trash2 size={14} /> Confirmer
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <button
+                                                onClick={() => setDeleteConfirmId(c.id)}
+                                                className="flex items-center gap-2 px-6 py-2.5 text-red-500 hover:text-white hover:bg-red-500 transition-all rounded-xl text-[10px] uppercase tracking-widest font-black border border-red-100 hover:border-red-600 shadow-sm"
+                                            >
+                                                <Trash2 size={14} />
+                                                <span>Supprimer</span>
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -174,12 +199,36 @@ export default function CommentManager() {
                     </motion.div>
                 )) : (
                     <div className="bg-white border border-gray-100 rounded-sm p-40 text-center relative overflow-hidden">
-                        <div className="absolute inset-0 opacity-[0.02] flex items-center justify-center text-[10rem] font-black -rotate-12 pointer-events-none ">VIDE</div>
+                        <div className="absolute inset-0 opacity-[0.02] flex items-center justify-center text-[10rem] font-black -rotate-12 pointer-events-none">VIDE</div>
                         <MessageSquare className="mx-auto text-gray-100 mb-6" size={64} strokeWidth={1} />
-                        <p className="text-xl font-light text-gray-400 ">Aucune interaction client trouvée</p>
+                        <p className="text-xl font-light text-gray-400">Aucune interaction client trouvée</p>
                     </div>
                 )}
             </div>
+
+            {totalPages > 1 && (
+                <div className="flex items-center justify-between bg-white border border-gray-100 px-8 py-4 shadow-sm">
+                    <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
+                        Page {currentPage} / {totalPages} · {filtered.length} avis
+                    </p>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                            disabled={currentPage === 1}
+                            className="px-4 py-2 text-[10px] uppercase font-black tracking-widest border border-gray-100 text-gray-500 hover:border-primary hover:text-primary transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                            ← Précédent
+                        </button>
+                        <button
+                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                            disabled={currentPage === totalPages}
+                            className="px-4 py-2 text-[10px] uppercase font-black tracking-widest border border-gray-100 text-gray-500 hover:border-primary hover:text-primary transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                        >
+                            Suivant →
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

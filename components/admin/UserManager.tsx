@@ -104,9 +104,9 @@ const UserManager = () => {
     const isInactive = (createdAt: string | undefined) => {
         if (!createdAt) return false;
         const date = new Date(createdAt);
-        const twoMonthsAgo = new Date();
-        twoMonthsAgo.setMonth(twoMonthsAgo.getMonth() - 2);
-        return date < twoMonthsAgo;
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        return date < sixMonthsAgo;
     };
 
     const fetchUserOrders = async (u: any) => {
@@ -181,7 +181,7 @@ const UserManager = () => {
                     <thead>
                         <tr className="border-b border-gray-50 bg-[#FAF9F6]">
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Membre</th>
-                            <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Connectivité</th>
+                            <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Inscription</th>
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Privilège</th>
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold text-right">Actions</th>
                         </tr>
@@ -233,7 +233,7 @@ const UserManager = () => {
                                                     {user.created_at ? new Date(user.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Entrée inconnue'}
                                                 </p>
                                                 {inactive && (
-                                                    <p className="text-[9px] text-amber-500/80 font-bold uppercase tracking-tighter ">Inactivité Prolongée</p>
+                                                    <p className="text-[9px] text-amber-500/80 font-bold uppercase tracking-tighter">Inscrit il y a +6 mois</p>
                                                 )}
                                             </div>
                                         </div>
