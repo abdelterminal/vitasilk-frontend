@@ -32,6 +32,10 @@ const AdminDashboard = () => {
     const { userData, logout } = useAuth();
     const [activeTab, setActiveTab] = useState('dashboard');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+        if (typeof window !== 'undefined') return localStorage.getItem('adminSidebarCollapsed') === 'true';
+        return false;
+    });
     const [stats, setStats] = useState({ sales: '0 DH', orders: 0, customers: 0 });
     const [recentLogs, setRecentLogs] = useState<any[]>([]);
     const [lowStock, setLowStock] = useState<any[]>([]);
@@ -112,6 +116,14 @@ const AdminDashboard = () => {
         loadStats();
     }, []);
 
+    const toggleSidebarCollapsed = () => {
+        setSidebarCollapsed(prev => {
+            const next = !prev;
+            localStorage.setItem('adminSidebarCollapsed', String(next));
+            return next;
+        });
+    };
+
     const handleLogout = () => {
         logout();
         router.push('/login');
@@ -136,100 +148,115 @@ const AdminDashboard = () => {
 
                 {/* Sidebar */}
                 <aside className={cn(
-                    "w-80 bg-white border-r border-gray-100 flex flex-col fixed h-full left-0 top-0 shadow-xl transition-transform duration-500 ease-in-out z-[100]",
-                    "lg:translate-x-0",
-                    isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+                    "bg-white border-r border-gray-100 flex flex-col fixed h-full left-0 top-0 shadow-xl z-[100]",
+                    "transition-all duration-300 ease-in-out",
+                    sidebarCollapsed ? "lg:w-16" : "lg:w-80",
+                    isSidebarOpen ? "translate-x-0 w-80" : "-translate-x-full lg:translate-x-0"
                 )}>
-                    <div className="p-8 lg:p-10 border-b border-gray-50 flex items-center justify-between">
-                        <div>
-                            <div className="flex items-center space-x-3 mb-2">
-                                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary/10 text-white">V</div>
-                                <h2 className="text-xl font-sans font-light tracking-tight text-gray-900">VITASILK</h2>
+                    {/* Header */}
+                    <div className={cn(
+                        "border-b border-gray-50 flex items-center transition-all duration-300",
+                        sidebarCollapsed ? "p-4 justify-center" : "p-8 lg:p-10 justify-between"
+                    )}>
+                        {sidebarCollapsed ? (
+                            <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary/10 text-white">V</div>
+                        ) : (
+                            <div>
+                                <div className="flex items-center space-x-3 mb-2">
+                                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold ring-4 ring-primary/10 text-white">V</div>
+                                    <h2 className="text-xl font-sans font-light tracking-tight text-gray-900">VITASILK</h2>
+                                </div>
+                                <p className="text-[8px] uppercase tracking-[0.5em] text-gray-400 font-bold">Administration</p>
                             </div>
-                            <p className="text-[8px] uppercase tracking-[0.5em] text-gray-400 font-bold">Administration de Luxe</p>
-                        </div>
+                        )}
                         <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden p-2 text-gray-400 hover:text-primary transition-colors">
                             <X size={20} />
                         </button>
                     </div>
 
-                    <nav className="flex-1 overflow-y-auto py-8 px-6 scrollbar-hide">
-                        <div className="space-y-10">
+                    {/* Nav */}
+                    <nav className={cn("flex-1 overflow-y-auto scrollbar-hide transition-all duration-300", sidebarCollapsed ? "py-4 px-2" : "py-8 px-6")}>
+                        <div className={cn(sidebarCollapsed ? "space-y-1" : "space-y-10")}>
                             {menuGroups.map((group, idx) => {
                                 const visibleItems = group.items.filter(item => {
                                     if (userData?.role === 'provider' && !['products', 'categories'].includes(item.id)) return false;
                                     return true;
                                 });
-
                                 if (visibleItems.length === 0) return null;
-
                                 return (
-                                <div key={idx} className="space-y-4">
-                                    <h3 className="px-4 text-[9px] uppercase tracking-[0.3em] text-gray-400 font-bold mb-3">{group.title}</h3>
-                                    <div className="space-y-1.5">
-                                        {visibleItems.map((item) => (
+                                    <div key={idx} className={cn(sidebarCollapsed ? "" : "space-y-4")}>
+                                        {!sidebarCollapsed && (
+                                            <h3 className="px-4 text-[9px] uppercase tracking-[0.3em] text-gray-400 font-bold mb-3">{group.title}</h3>
+                                        )}
+                                        <div className="space-y-1">
+                                            {visibleItems.map((item) => (
                                                 <button
                                                     key={item.id}
-                                                    onClick={() => {
-                                                        setActiveTab(item.id);
-                                                        setIsSidebarOpen(false);
-                                                    }}
+                                                    title={sidebarCollapsed ? item.label : undefined}
+                                                    onClick={() => { setActiveTab(item.id); setIsSidebarOpen(false); }}
                                                     className={cn(
-                                                        "w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-300 group relative",
+                                                        "w-full flex items-center transition-all duration-300 group relative rounded-lg",
+                                                        sidebarCollapsed ? "justify-center px-2 py-3" : "justify-between px-4 py-3",
                                                         activeTab === item.id
                                                             ? `bg-white shadow-sm border border-gray-100 ${item.color}`
                                                             : "text-gray-500 hover:text-gray-900 hover:bg-white/60"
                                                     )}
                                                 >
-                                                    <div className="flex items-center space-x-4">
+                                                    <div className={cn("flex items-center", sidebarCollapsed ? "" : "space-x-4")}>
                                                         <div className={cn("p-1.5 rounded-md transition-colors", activeTab === item.id ? item.bg : "group-hover:bg-gray-100/50")}>
                                                             <item.icon size={16} strokeWidth={activeTab === item.id ? 2 : 1.5} className={activeTab === item.id ? item.color : "text-gray-400 group-hover:text-gray-600"} />
                                                         </div>
-                                                        <span className="text-xs font-semibold tracking-wide">{item.label}</span>
+                                                        {!sidebarCollapsed && <span className="text-xs font-semibold tracking-wide">{item.label}</span>}
                                                     </div>
-                                                    <ChevronRight
-                                                        size={14}
-                                                        className={cn(
-                                                            "transition-all duration-300 opacity-0 group-hover:opacity-100",
-                                                            activeTab === item.id ? "opacity-100 translate-x-0" : "-translate-x-2"
-                                                        )}
-                                                    />
+                                                    {!sidebarCollapsed && (
+                                                        <ChevronRight size={14} className={cn("transition-all duration-300 opacity-0 group-hover:opacity-100", activeTab === item.id ? "opacity-100" : "-translate-x-2")} />
+                                                    )}
                                                 </button>
                                             ))}
+                                        </div>
                                     </div>
-                                </div>
                                 );
                             })}
                         </div>
                     </nav>
 
-                    <div className="p-6 border-t border-gray-100 bg-gray-50/50 space-y-2">
+                    {/* Footer */}
+                    <div className={cn("border-t border-gray-100 bg-gray-50/50 space-y-2 transition-all duration-300", sidebarCollapsed ? "p-2" : "p-6")}>
                         <button
                             onClick={() => router.push('/')}
-                            className="w-full flex items-center space-x-4 px-4 py-3 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-700 hover:text-primary transition-all group"
+                            title={sidebarCollapsed ? "Visiter le Site" : undefined}
+                            className={cn("w-full flex items-center bg-white rounded-lg shadow-sm border border-gray-100 text-gray-700 hover:text-primary transition-all group", sidebarCollapsed ? "justify-center p-3" : "space-x-4 px-4 py-3")}
                         >
-                            <Home size={16} strokeWidth={1.5} className="text-primary group-hover:scale-110 transition-transform" />
-                            <span className="text-xs font-bold">Visiter le Site</span>
+                            <Home size={16} strokeWidth={1.5} className="text-primary group-hover:scale-110 transition-transform flex-shrink-0" />
+                            {!sidebarCollapsed && <span className="text-xs font-bold">Visiter le Site</span>}
                         </button>
                         <button
                             onClick={handleLogout}
-                            className="w-full flex items-center space-x-4 px-4 py-3 text-red-400 hover:bg-red-50 hover:text-red-600 rounded-lg transition-all group"
+                            title={sidebarCollapsed ? "Déconnexion" : undefined}
+                            className={cn("w-full flex items-center text-red-400 hover:bg-red-50 hover:text-red-600 rounded-lg transition-all group", sidebarCollapsed ? "justify-center p-3" : "space-x-4 px-4 py-3")}
                         >
-                            <LogOut size={16} strokeWidth={1.5} className="group-hover:-translate-x-1 transition-transform" />
-                            <span className="text-xs font-bold">Déconnexion</span>
+                            <LogOut size={16} strokeWidth={1.5} className="flex-shrink-0" />
+                            {!sidebarCollapsed && <span className="text-xs font-bold">Déconnexion</span>}
                         </button>
                     </div>
                 </aside>
 
                 {/* Main Content */}
-                <main className="flex-1 lg:ml-80 min-h-screen w-full overflow-x-hidden">
+                <main className={cn("flex-1 min-h-screen w-full overflow-x-hidden transition-all duration-300", sidebarCollapsed ? "lg:ml-16" : "lg:ml-80")}>
                     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 lg:px-12 py-4 lg:py-6 flex justify-between items-center">
                         <div className="flex items-center space-x-4">
-                            <button 
+                            <button
                                 onClick={() => setIsSidebarOpen(true)}
                                 className="lg:hidden p-2 -ml-2 text-gray-900 hover:text-primary transition-colors"
                             >
                                 <Menu size={20} />
+                            </button>
+                            <button
+                                onClick={toggleSidebarCollapsed}
+                                className="hidden lg:flex p-2 text-gray-400 hover:text-primary transition-colors rounded-lg hover:bg-gray-50"
+                                title={sidebarCollapsed ? "Agrandir le menu" : "Réduire le menu"}
+                            >
+                                <Menu size={18} />
                             </button>
                             <div className="flex items-center space-x-2 lg:space-x-4 text-[9px] lg:text-[10px] uppercase tracking-widest text-gray-400 font-medium">
                                 <span className="hidden sm:inline">Admin</span>
