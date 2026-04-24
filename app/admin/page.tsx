@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import AdminGuard from '@/components/AdminGuard';
-import { LayoutDashboard, Package, Users, Tag, Settings, LogOut, ChevronRight, CreditCard, MessageSquare, Mail, Home, AlertTriangle, TrendingUp, Ticket, PieChart, Gem, StickyNote, Smartphone, Gift, Zap, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Users, Tag, Settings, LogOut, ChevronRight, CreditCard, MessageSquare, Mail, Home, AlertTriangle, TrendingUp, Ticket, PieChart, Gem, StickyNote, Smartphone, Gift, Zap, CalendarDays, Menu, X } from 'lucide-react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
@@ -55,7 +55,7 @@ const AdminDashboard = () => {
             title: "Commerce",
             items: [
                 { id: 'dashboard', label: 'Tableau de bord', icon: LayoutDashboard, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-                { id: 'orders', label: 'Commandes', icon: Package, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+                { id: 'orders', label: 'Commandes', icon: ShoppingBag, color: 'text-amber-500', bg: 'bg-amber-500/10' },
                 { id: 'products', label: 'Produits', icon: Package, color: 'text-primary', bg: 'bg-primary/10' },
                 { id: 'categories', label: 'Catégories', icon: Tag, color: 'text-purple-500', bg: 'bg-purple-500/10' },
             ]
@@ -77,7 +77,7 @@ const AdminDashboard = () => {
                 { id: 'promotions', label: 'Offres & Codes', icon: Ticket, color: 'text-pink-500', bg: 'bg-pink-500/10' },
                 { id: 'analytics', label: 'Performances', icon: PieChart, color: 'text-violet-500', bg: 'bg-violet-500/10' },
                 { id: 'gifts', label: 'Gestion des Cadeaux', icon: Gift, color: 'text-amber-600', bg: 'bg-amber-50' },
-                { id: 'events', label: 'Événements & Roue', icon: Zap, color: 'text-primary', bg: 'bg-primary/10' },
+                { id: 'events', label: 'Événements & Roue', icon: CalendarDays, color: 'text-primary', bg: 'bg-primary/10' },
             ]
         }
 
