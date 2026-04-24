@@ -85,10 +85,10 @@ const ContactPage = () => {
           initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9 }}
-          className="relative z-10 flex flex-col justify-between h-full px-10 pt-28 pb-32 lg:pt-36 lg:pb-40"
+          className="relative z-10 flex flex-col h-full px-10 pt-28 pb-16 lg:pt-36 lg:pb-24"
         >
           {/* Top – heading */}
-          <div>
+          <div className="mb-12">
             <p className="text-[10px] uppercase tracking-[0.45em] text-primary font-bold mb-7">
               Vitasilk · Service Client
             </p>
@@ -102,7 +102,7 @@ const ContactPage = () => {
           </div>
 
           {/* Middle – contact items */}
-          <div className="space-y-4 mt-8 mb-14">
+          <div className="space-y-4 mb-12">
             {CONTACT_ITEMS.map(({ icon: Icon, label, value, href }) => (
               <a
                 key={label}
@@ -123,7 +123,7 @@ const ContactPage = () => {
           </div>
 
           {/* Bottom – hours + social */}
-          <div className="space-y-7">
+          <div className="space-y-7 mt-auto">
             <div className="border-t border-white/10 pt-7">
               <p className="text-[8px] uppercase tracking-[0.18em] text-primary font-bold mb-4 flex items-center gap-2">
                 <Clock size={10} /> Horaires
