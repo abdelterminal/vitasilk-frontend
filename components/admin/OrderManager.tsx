@@ -220,7 +220,7 @@ export default function OrderManager() {
 
             {/* List */}
             <div className="bg-white border border-gray-100 shadow-sm overflow-x-auto min-h-[400px]">
-                <table className="w-full text-left border-collapse min-w-[800px]">
+                <table className="w-full text-left border-collapse min-w-[900px]">
                     <thead>
                         <tr className="border-b border-gray-50 bg-[#FAF9F6]">
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Identifiant</th>
@@ -276,8 +276,8 @@ export default function OrderManager() {
                                     </td>
                                     <td className="px-6 md:px-10 py-6 md:py-8 text-right">
                                         <div className={cn(
-                                            "flex items-center justify-end gap-2 md:gap-3 transition-all duration-500",
-                                            "md:translate-x-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-x-0"
+                                            "flex items-center justify-end gap-2 md:gap-3 transition-opacity duration-300",
+                                            "md:opacity-0 md:group-hover:opacity-100"
                                         )}>
                                             <button
                                                 onClick={() => {
