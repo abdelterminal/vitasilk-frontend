@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import AdminGuard from '@/components/AdminGuard';
-import { LayoutDashboard, Package, ShoppingBag, Users, Tag, Settings, LogOut, ChevronRight, CreditCard, MessageSquare, Mail, Home, AlertTriangle, TrendingUp, Ticket, PieChart, Gem, StickyNote, Smartphone, Gift, Zap, CalendarDays, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Users, Tag, Settings, LogOut, ChevronRight, CreditCard, MessageSquare, Mail, Home, AlertTriangle, TrendingUp, Ticket, PieChart, Gem, Smartphone, Gift, Zap, CalendarDays, Menu, X } from 'lucide-react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
@@ -16,7 +16,6 @@ import SubscriberManager from '@/components/admin/SubscriberManager';
 import CommentManager from '@/components/admin/CommentManager';
 import PromotionManager from '@/components/admin/PromotionManager';
 import AnalyticsManager from '@/components/admin/AnalyticsManager';
-import AdminNotes from '@/components/admin/AdminNotes';
 import Conciergerie from '@/components/admin/Conciergerie';
 import GiftSystemManager from '@/components/admin/GiftSystemManager';
 import EventManager from '@/components/admin/EventManager';
@@ -68,7 +67,6 @@ const AdminDashboard = () => {
                 { id: 'subscribers', label: 'Newsletter', icon: Smartphone, color: 'text-cyan-500', bg: 'bg-cyan-500/10' },
                 { id: 'comments', label: 'Moderation', icon: MessageSquare, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
 { id: 'concierge', label: 'VIP Conciergerie', icon: Gem, color: 'text-primary', bg: 'bg-primary/5' },
-                { id: 'notes', label: 'Admin Notes', icon: StickyNote, color: 'text-gray-950', bg: 'bg-gray-100' },
             ]
         },
         {
@@ -474,7 +472,6 @@ const AdminDashboard = () => {
 {activeTab === 'concierge' && <Conciergerie />}
                                 {activeTab === 'gifts' && <GiftSystemManager />}
                                 {activeTab === 'events' && <EventManager />}
-                                {activeTab === 'notes' && <AdminNotes />}
                             </motion.div>
 
                         </AnimatePresence>
