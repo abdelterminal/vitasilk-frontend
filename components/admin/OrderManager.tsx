@@ -455,8 +455,12 @@ export default function OrderManager() {
                                                                 <button
                                                                     key={step.status}
                                                                     onClick={() => updateStatus(selectedOrder.id, step.status)}
-                                                                    disabled={selectedOrder.status === 'delivered' && step.status !== 'delivered'}
-                                                                    className="flex flex-col items-center gap-2 group"
+                                                                    disabled={
+                                                                        isCancelled ||
+                                                                        selectedOrder.status === 'delivered' ||
+                                                                        idx < currentIdx
+                                                                    }
+                                                                    className="flex flex-col items-center gap-2 group disabled:cursor-not-allowed"
                                                                 >
                                                                     <div className={cn(
                                                                         "w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all duration-300 shadow-sm",
