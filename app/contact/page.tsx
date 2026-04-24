@@ -92,9 +92,9 @@ const ContactPage = () => {
             <p className="text-[10px] uppercase tracking-[0.45em] text-primary font-bold mb-7">
               Vitasilk · Service Client
             </p>
-            <h1 className="text-5xl lg:text-[3.5rem] xl:text-[4rem] font-sans font-light text-white tracking-tight leading-[1.05] mb-5">
-              Contactez<br />
-              <span className="text-primary font-medium">nous</span>
+            <h1 className="text-5xl lg:text-[3.5rem] xl:text-[4rem] font-sans font-light tracking-tight leading-[1.05] mb-5">
+              <span className="text-white drop-shadow-lg">Contactez</span><br />
+              <span className="text-primary font-medium drop-shadow-lg">nous</span>
             </h1>
             <p className="text-[13px] text-white/60 font-light leading-relaxed max-w-[260px]">
               Une question sur un produit ou votre commande&nbsp;? On vous répond rapidement.
