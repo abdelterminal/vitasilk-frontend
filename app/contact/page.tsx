@@ -15,7 +15,6 @@ import {
  ArrowUpRight,
  ChevronDown,
 } from 'lucide-react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { messagesApi } from '@/lib/api';
 
@@ -407,26 +406,6 @@ const ContactPage = () => {
  </AnimatePresence>
  </div>
  </motion.div>
- </div>
- </div>
-
- {/* ─── BOTTOM STRIP ─── */}
- <div className="bg-[#0D0D0D] py-12 px-6 lg:px-12 mt-8">
- <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
- <p className="text-[10px] uppercase tracking-widest text-gray-500 font-medium">
- © 2026 Vitasilk · Tous droits réservés
- </p>
- <div className="flex items-center gap-8">
- <Link href="/boutique" className="text-[9px] uppercase tracking-wider text-gray-500 hover:text-primary transition-colors">
- Boutique
- </Link>
- <Link href="/about" className="text-[9px] uppercase tracking-wider text-gray-500 hover:text-primary transition-colors">
- À propos
- </Link>
- <Link href="/track-order" className="text-[9px] uppercase tracking-wider text-gray-500 hover:text-primary transition-colors">
- Suivre ma Commande
- </Link>
- </div>
  </div>
  </div>
 
