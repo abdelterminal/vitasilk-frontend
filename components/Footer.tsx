@@ -12,7 +12,7 @@ const Footer = () => {
         <footer className="bg-[#0e0e0e] text-white">
 
             {/* Main grid */}
-            <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-20 pb-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 border-b border-white/[0.06]">
+            <div className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 pb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 border-b border-white/[0.06]">
 
                 {/* Brand */}
                 <div className="space-y-6">
@@ -42,8 +42,8 @@ const Footer = () => {
 
                 {/* Boutique */}
                 <div>
-                    <p className="text-[10px] uppercase tracking-[0.3em] font-black text-gray-500 mb-6">Boutique</p>
-                    <ul className="space-y-3">
+                    <p className="text-[10px] uppercase tracking-[0.3em] font-black text-gray-500 mb-4">Boutique</p>
+                    <ul className="space-y-2">
                         {[
                             { href: '/boutique', label: 'Tous les produits' },
                             { href: '/category/lissage-pro', label: 'Lissage Pro' },
@@ -62,8 +62,8 @@ const Footer = () => {
 
                 {/* Aide */}
                 <div>
-                    <p className="text-[10px] uppercase tracking-[0.3em] font-black text-gray-500 mb-6">Aide</p>
-                    <ul className="space-y-3">
+                    <p className="text-[10px] uppercase tracking-[0.3em] font-black text-gray-500 mb-4">Aide</p>
+                    <ul className="space-y-2">
                         {[
                             { href: '/track-order', label: 'Suivre ma commande' },
                             { href: '/livraison', label: 'Livraison & Retours' },
@@ -82,7 +82,7 @@ const Footer = () => {
 
                 {/* Contact */}
                 <div>
-                    <p className="text-[10px] uppercase tracking-[0.3em] font-black text-gray-500 mb-6">Contact</p>
+                    <p className="text-[10px] uppercase tracking-[0.3em] font-black text-gray-500 mb-4">Contact</p>
                     <ul className="space-y-4">
                         <li>
                             <a href="https://wa.me/212662633170" target="_blank" rel="noopener noreferrer"
