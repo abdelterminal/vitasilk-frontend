@@ -114,7 +114,7 @@ const ProductManager = () => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const files = Array.from(e.target.files);
-            const slotsLeft = 4 - formData.imageFiles.length;
+            const slotsLeft = 6 - formData.imageFiles.length;
             files.slice(0, slotsLeft).forEach(file => {
                 const reader = new FileReader();
                 reader.onload = (event) => {
@@ -867,7 +867,7 @@ const ProductManager = () => {
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-end">
                                         <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Galerie d'Images</label>
-                                        <span className="text-[9px] text-gray-400 font-medium">{formData.imageFiles.length}/4</span>
+                                        <span className="text-[9px] text-gray-400 font-medium">{formData.imageFiles.length}/6</span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4 mt-4">
                                         {formData.imageFiles.map((img, i) => (
@@ -883,7 +883,7 @@ const ProductManager = () => {
                                                 <button type="button" onClick={() => removeImage(i)} className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"><X size={12} /></button>
                                             </div>
                                         ))}
-                                        {formData.imageFiles.length < 4 && (
+                                        {formData.imageFiles.length < 6 && (
                                             <label className="h-32 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:border-primary/40 hover:bg-primary/5 transition-all text-gray-300 hover:text-primary rounded-sm overflow-hidden relative">
                                                 <Upload size={24} strokeWidth={1} />
                                                 <span className="text-[8px] mt-2 uppercase font-bold tracking-[0.2em]">Ajouter Image</span>
