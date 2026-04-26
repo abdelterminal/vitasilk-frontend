@@ -800,112 +800,251 @@ const ProductManager = () => {
                 )}
             </AnimatePresence>
 
-            {/* ── Product form modal (unchanged) ── */}
-            {showModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-12">
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setShowModal(false)} />
-                    <div className="relative bg-[#FDFBF7] w-full h-full md:h-auto md:max-w-5xl md:max-h-[95vh] overflow-y-auto md:rounded-sm shadow-2xl overflow-hidden border border-white/20">
-                        <div className="sticky top-0 z-20 bg-[#FDFBF7] border-b border-gray-100 px-6 md:px-10 py-6 md:py-8 flex justify-between items-center">
-                            <div>
-                                <h2 className="text-2xl md:text-3xl font-sans font-light text-gray-900">{isEditing ? 'Éditer la Création' : 'Nouvelle Création'}</h2>
-                                <p className="text-[10px] uppercase tracking-widest text-primary font-bold mt-1">Maison Vitasilk</p>
-                            </div>
-                            <button onClick={() => setShowModal(false)} className="w-10 h-10 md:w-12 md:h-12 bg-white flex items-center justify-center text-gray-400 hover:text-black hover:rotate-90 transition-all duration-500 rounded-full border border-gray-100">
-                                <X size={20} />
-                            </button>
-                        </div>
+            {/* ── Product form modal with live preview ── */}
+            {showModal && (() => {
+                const previewImg = formData.imageFiles[0] || null;
+                const previewSrc = previewImg
+                    ? (previewImg.startsWith('data:') ? previewImg : imageUrl(previewImg))
+                    : null;
+                const previewCategory = categories.find(c => c.id === formData.category_id)?.name || '';
+                const previewStock = Number(formData.stock);
 
-                        <form onSubmit={handleSubmit} className="p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
-                            <div className="lg:col-span-7 space-y-10">
-                                <div className="space-y-4">
-                                    <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Nom du Produit</label>
-                                    <input name="name" value={formData.name} onChange={handleInputChange} required placeholder="Ex: Lissage Pro Intense..." className="w-full px-6 py-5 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-8 focus:ring-primary/5 transition-all text-sm rounded-sm shadow-inner" />
-                                </div>
-                                <div className="space-y-4">
-                                    <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Description</label>
-                                    <textarea name="description" value={formData.description} onChange={handleInputChange} rows={6} placeholder="Décrivez ce produit..." className="w-full px-6 py-5 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-8 focus:ring-primary/5 transition-all text-sm rounded-sm shadow-inner resize-none" />
-                                </div>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                                    <div className="space-y-4">
-                                        <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Prix (DH)</label>
-                                        <input name="price" type="number" value={formData.price} onChange={handleInputChange} className="w-full px-6 py-5 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-8 focus:ring-primary/5 text-sm rounded-sm shadow-inner" />
-                                    </div>
-                                    <div className="space-y-4">
-                                        <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Stock</label>
-                                        <input name="stock" type="number" value={formData.stock} onChange={handleInputChange} className="w-full px-6 py-5 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-8 focus:ring-primary/5 text-sm rounded-sm shadow-inner" />
-                                    </div>
-                                </div>
-                                <div className="space-y-4">
-                                    <label className="flex items-center space-x-3 cursor-pointer p-4 border border-primary/20 rounded-sm bg-primary/5 hover:bg-primary/10 transition-colors">
-                                        <input type="checkbox" checked={formData.featured} onChange={(e) => setFormData(prev => ({ ...prev, featured: e.target.checked }))} className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer" />
-                                        <div>
-                                            <span className="text-xs font-bold text-gray-700">Produit En Vedette</span>
-                                            <p className="text-[10px] text-gray-400 font-medium mt-0.5">Apparaît dans la section vedette de la page d'accueil</p>
-                                        </div>
-                                    </label>
-                                    <label className="flex items-center space-x-3 cursor-pointer p-4 border border-gray-100 rounded-sm bg-gray-50/50 hover:bg-gray-50 transition-colors">
-                                        <input type="checkbox" checked={formData.enableCart} onChange={(e) => { const c = e.target.checked; setFormData(prev => ({ ...prev, enableCart: c, directCheckout: (!c && !prev.directCheckout) ? true : prev.directCheckout })); }} className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer" />
-                                        <span className="text-xs font-bold text-gray-700">Activer l'Ajout au Panier</span>
-                                    </label>
-                                    <label className="flex items-center space-x-3 cursor-pointer p-4 border border-gray-100 rounded-sm bg-gray-50/50 hover:bg-gray-50 transition-colors">
-                                        <input type="checkbox" checked={formData.directCheckout} onChange={(e) => { const c = e.target.checked; setFormData(prev => ({ ...prev, directCheckout: c, enableCart: (!c && !prev.enableCart) ? true : prev.enableCart })); }} className="w-5 h-5 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer" />
-                                        <span className="text-xs font-bold text-gray-700">Activer l'Achat Rapide</span>
-                                    </label>
-                                </div>
-                            </div>
+                return (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-6">
+                        <div className="absolute inset-0 bg-black/70 backdrop-blur-md" onClick={() => setShowModal(false)} />
+                        {/* Split container */}
+                        <div className="relative w-full h-full md:h-[95vh] md:max-w-[1380px] flex flex-col md:flex-row md:rounded-xl shadow-2xl overflow-hidden border border-white/10">
 
-                            <div className="lg:col-span-5 space-y-10">
-                                <div className="space-y-4">
-                                    <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Catégorie</label>
-                                    <select name="category_id" value={formData.category_id} onChange={(e) => setFormData(prev => ({ ...prev, category_id: Number(e.target.value) }))} className="w-full px-6 py-5 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-8 focus:ring-primary/5 text-sm rounded-sm shadow-inner uppercase tracking-widest font-bold text-gray-600 appearance-none">
-                                        {categories.length === 0 && <option value={0}>Aucune catégorie</option>}
-                                        {categories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
-                                    </select>
-                                    {categories.length === 0 && <div className="flex items-center space-x-2 text-red-400 text-[10px] pl-1 font-bold"><AlertCircle size={12} /><span>Aucune catégorie trouvée.</span></div>}
-                                </div>
-
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-end">
-                                        <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Galerie d'Images</label>
-                                        <span className="text-[9px] text-gray-400 font-medium">{formData.imageFiles.length}/6</span>
+                            {/* ── LEFT: Form ── */}
+                            <div className="w-full md:w-[58%] bg-[#FDFBF7] flex flex-col h-full overflow-hidden">
+                                {/* Sticky header */}
+                                <div className="shrink-0 bg-[#FDFBF7] border-b border-gray-100 px-6 md:px-10 py-5 flex justify-between items-center">
+                                    <div>
+                                        <h2 className="text-xl md:text-2xl font-sans font-light text-gray-900">{isEditing ? 'Éditer la Création' : 'Nouvelle Création'}</h2>
+                                        <p className="text-[9px] uppercase tracking-widest text-primary font-bold mt-0.5">Maison Vitasilk</p>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-4 mt-4">
-                                        {formData.imageFiles.map((img, i) => (
-                                            <div key={i} className="relative h-32 bg-white border border-gray-100 p-1 group shadow-sm transition-all hover:shadow-lg">
-                                                {img.startsWith('data:')
-                                                    ? <img src={img} alt="Preview" className="object-cover w-full h-full" />
-                                                    : <Image src={imageUrl(img)} alt="Preview" fill className="object-cover" />
-                                                }
-                                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                                    {i > 0 && <button type="button" onClick={() => moveImage(i, 'left')} className="w-7 h-7 bg-white/90 text-gray-900 flex items-center justify-center rounded-full hover:bg-white"><ChevronLeft size={14} /></button>}
-                                                    {i < formData.imageFiles.length - 1 && <button type="button" onClick={() => moveImage(i, 'right')} className="w-7 h-7 bg-white/90 text-gray-900 flex items-center justify-center rounded-full hover:bg-white"><ChevronRightIcon size={14} /></button>}
-                                                </div>
-                                                <button type="button" onClick={() => removeImage(i)} className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"><X size={12} /></button>
-                                            </div>
-                                        ))}
-                                        {formData.imageFiles.length < 6 && (
-                                            <label className="h-32 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:border-primary/40 hover:bg-primary/5 transition-all text-gray-300 hover:text-primary rounded-sm overflow-hidden relative">
-                                                <Upload size={24} strokeWidth={1} />
-                                                <span className="text-[8px] mt-2 uppercase font-bold tracking-[0.2em]">Ajouter Image</span>
-                                                <input type="file" multiple className="hidden" accept="image/*" onChange={handleFileChange} />
-                                            </label>
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="pt-8">
-                                    <button disabled={loading || categories.length === 0} type="submit" className="w-full py-6 bg-primary text-white font-bold uppercase tracking-widest text-xs hover:bg-black transition-all duration-700 flex items-center justify-center space-x-4 shadow-2xl shadow-primary/30 disabled:opacity-30 disabled:cursor-not-allowed group">
-                                        {loading
-                                            ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                            : <><Check size={18} className="group-hover:scale-125 transition-transform" /><span>{isEditing ? 'Confirmer les Modifications' : 'Publier le Produit'}</span></>
-                                        }
+                                    <button onClick={() => setShowModal(false)} className="w-10 h-10 bg-white flex items-center justify-center text-gray-400 hover:text-black hover:rotate-90 transition-all duration-500 rounded-full border border-gray-100">
+                                        <X size={18} />
                                     </button>
                                 </div>
+
+                                {/* Scrollable form body */}
+                                <div className="flex-1 overflow-y-auto">
+                                    <form onSubmit={handleSubmit} className="p-6 md:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                                        <div className="lg:col-span-7 space-y-8">
+                                            <div className="space-y-3">
+                                                <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Nom du Produit</label>
+                                                <input name="name" value={formData.name} onChange={handleInputChange} required placeholder="Ex: Lissage Pro Intense..." className="w-full px-5 py-4 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-4 focus:ring-primary/5 transition-all text-sm rounded-sm shadow-inner" />
+                                            </div>
+                                            <div className="space-y-3">
+                                                <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Description</label>
+                                                <textarea name="description" value={formData.description} onChange={handleInputChange} rows={5} placeholder="Décrivez ce produit..." className="w-full px-5 py-4 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-4 focus:ring-primary/5 transition-all text-sm rounded-sm shadow-inner resize-none" />
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-6">
+                                                <div className="space-y-3">
+                                                    <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Prix (DH)</label>
+                                                    <input name="price" type="number" value={formData.price} onChange={handleInputChange} className="w-full px-5 py-4 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-4 focus:ring-primary/5 text-sm rounded-sm shadow-inner" />
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Stock</label>
+                                                    <input name="stock" type="number" value={formData.stock} onChange={handleInputChange} className="w-full px-5 py-4 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-4 focus:ring-primary/5 text-sm rounded-sm shadow-inner" />
+                                                </div>
+                                            </div>
+                                            <div className="space-y-3">
+                                                <label className="flex items-center space-x-3 cursor-pointer p-4 border border-primary/20 rounded-sm bg-primary/5 hover:bg-primary/10 transition-colors">
+                                                    <input type="checkbox" checked={formData.featured} onChange={(e) => setFormData(prev => ({ ...prev, featured: e.target.checked }))} className="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer" />
+                                                    <div>
+                                                        <span className="text-xs font-bold text-gray-700">Produit En Vedette</span>
+                                                        <p className="text-[10px] text-gray-400 font-medium mt-0.5">Apparaît dans la section vedette de la page d'accueil</p>
+                                                    </div>
+                                                </label>
+                                                <label className="flex items-center space-x-3 cursor-pointer p-3 border border-gray-100 rounded-sm bg-gray-50/50 hover:bg-gray-50 transition-colors">
+                                                    <input type="checkbox" checked={formData.enableCart} onChange={(e) => { const c = e.target.checked; setFormData(prev => ({ ...prev, enableCart: c, directCheckout: (!c && !prev.directCheckout) ? true : prev.directCheckout })); }} className="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer" />
+                                                    <span className="text-xs font-bold text-gray-700">Activer l'Ajout au Panier</span>
+                                                </label>
+                                                <label className="flex items-center space-x-3 cursor-pointer p-3 border border-gray-100 rounded-sm bg-gray-50/50 hover:bg-gray-50 transition-colors">
+                                                    <input type="checkbox" checked={formData.directCheckout} onChange={(e) => { const c = e.target.checked; setFormData(prev => ({ ...prev, directCheckout: c, enableCart: (!c && !prev.enableCart) ? true : prev.enableCart })); }} className="w-4 h-4 text-primary focus:ring-primary border-gray-300 rounded cursor-pointer" />
+                                                    <span className="text-xs font-bold text-gray-700">Activer l'Achat Rapide</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className="lg:col-span-5 space-y-8">
+                                            <div className="space-y-3">
+                                                <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Catégorie</label>
+                                                <select name="category_id" value={formData.category_id} onChange={(e) => setFormData(prev => ({ ...prev, category_id: Number(e.target.value) }))} className="w-full px-5 py-4 bg-white border border-gray-100 outline-none focus:border-primary/40 focus:ring-4 focus:ring-primary/5 text-sm rounded-sm shadow-inner uppercase tracking-widest font-bold text-gray-600 appearance-none">
+                                                    {categories.length === 0 && <option value={0}>Aucune catégorie</option>}
+                                                    {categories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
+                                                </select>
+                                                {categories.length === 0 && <div className="flex items-center space-x-2 text-red-400 text-[10px] pl-1 font-bold"><AlertCircle size={12} /><span>Aucune catégorie trouvée.</span></div>}
+                                            </div>
+
+                                            <div className="space-y-3">
+                                                <div className="flex justify-between items-end">
+                                                    <label className="text-[10px] uppercase font-bold tracking-widest text-gray-500 pl-1">Galerie d'Images</label>
+                                                    <span className="text-[9px] text-gray-400 font-medium">{formData.imageFiles.length}/6</span>
+                                                </div>
+                                                <div className="grid grid-cols-3 gap-3 mt-2">
+                                                    {formData.imageFiles.map((img, i) => (
+                                                        <div key={i} className="relative h-24 bg-white border border-gray-100 p-1 group shadow-sm transition-all hover:shadow-lg rounded-sm">
+                                                            {img.startsWith('data:')
+                                                                ? <img src={img} alt="Preview" className="object-cover w-full h-full rounded-sm" />
+                                                                : <Image src={imageUrl(img)} alt="Preview" fill className="object-cover rounded-sm" />
+                                                            }
+                                                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1 rounded-sm">
+                                                                {i > 0 && <button type="button" onClick={() => moveImage(i, 'left')} className="w-6 h-6 bg-white/90 text-gray-900 flex items-center justify-center rounded-full hover:bg-white"><ChevronLeft size={12} /></button>}
+                                                                {i < formData.imageFiles.length - 1 && <button type="button" onClick={() => moveImage(i, 'right')} className="w-6 h-6 bg-white/90 text-gray-900 flex items-center justify-center rounded-full hover:bg-white"><ChevronRightIcon size={12} /></button>}
+                                                            </div>
+                                                            <button type="button" onClick={() => removeImage(i)} className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-red-500 text-white flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10"><X size={10} /></button>
+                                                        </div>
+                                                    ))}
+                                                    {formData.imageFiles.length < 6 && (
+                                                        <label className="h-24 border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:border-primary/40 hover:bg-primary/5 transition-all text-gray-300 hover:text-primary rounded-sm">
+                                                            <Upload size={18} strokeWidth={1.5} />
+                                                            <span className="text-[8px] mt-1 uppercase font-bold tracking-wider">Ajouter</span>
+                                                            <input type="file" multiple className="hidden" accept="image/*" onChange={handleFileChange} />
+                                                        </label>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <div className="pt-4">
+                                                <button disabled={loading || categories.length === 0} type="submit" className="w-full py-5 bg-primary text-white font-bold uppercase tracking-widest text-xs hover:bg-black transition-all duration-700 flex items-center justify-center space-x-3 shadow-xl shadow-primary/20 disabled:opacity-30 disabled:cursor-not-allowed group rounded-sm">
+                                                    {loading
+                                                        ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                                        : <><Check size={16} className="group-hover:scale-125 transition-transform" /><span>{isEditing ? 'Confirmer les Modifications' : 'Publier le Produit'}</span></>
+                                                    }
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </form>
+
+                            {/* ── RIGHT: Live Preview ── */}
+                            <div className="hidden md:flex w-[42%] bg-[#F5F3EF] border-l border-gray-200 flex-col overflow-hidden">
+                                {/* Preview header */}
+                                <div className="shrink-0 px-6 py-4 border-b border-gray-200 flex items-center justify-between bg-white/60">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-2 h-2 rounded-full bg-amber-400" />
+                                        <span className="text-[9px] uppercase tracking-widest font-black text-gray-400">Aperçu produit</span>
+                                    </div>
+                                    <span className="text-[8px] uppercase tracking-widest font-bold text-gray-300">Mise à jour en direct</span>
+                                </div>
+
+                                {/* Preview content */}
+                                <div className="flex-1 overflow-y-auto p-6">
+                                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                                        {/* Image area */}
+                                        <div className="relative bg-[#FAF9F6] aspect-square overflow-hidden">
+                                            {previewSrc ? (
+                                                // eslint-disable-next-line @next/next/no-img-element
+                                                <img
+                                                    src={previewSrc}
+                                                    alt="Preview"
+                                                    className="w-full h-full object-contain p-6"
+                                                />
+                                            ) : (
+                                                <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-200 gap-3">
+                                                    <ImageIcon size={48} strokeWidth={0.8} />
+                                                    <span className="text-[9px] uppercase tracking-widest font-bold text-gray-300">Aucune image</span>
+                                                </div>
+                                            )}
+
+                                            {/* Featured ribbon */}
+                                            {formData.featured && (
+                                                <div className="absolute top-0 left-0 overflow-hidden w-20 h-20">
+                                                    <div className="absolute top-4 -left-6 bg-primary text-white text-[7px] font-bold uppercase py-1 w-24 text-center -rotate-45">
+                                                        Vedette
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Category badge */}
+                                            {previewCategory && (
+                                                <div className="absolute bottom-4 left-4">
+                                                    <span className="px-3 py-1 bg-white border border-gray-100 text-[8px] uppercase tracking-widest font-black text-gray-800 shadow-sm">
+                                                        {previewCategory}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Thumbnail strip */}
+                                        {formData.imageFiles.length > 1 && (
+                                            <div className="flex gap-2 px-4 py-3 bg-gray-50/50 border-b border-gray-100 overflow-x-auto">
+                                                {formData.imageFiles.map((img, i) => {
+                                                    const src = img.startsWith('data:') ? img : imageUrl(img);
+                                                    return (
+                                                        <div key={i} className={cn("w-12 h-12 shrink-0 rounded-sm border overflow-hidden", i === 0 ? "border-primary" : "border-gray-100")}>
+                                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                            <img src={src} alt="" className="w-full h-full object-contain p-1" />
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
+
+                                        {/* Product info */}
+                                        <div className="p-5 space-y-3">
+                                            {/* Name + stock */}
+                                            <div className="flex items-start justify-between gap-3">
+                                                <h3 className="font-sans font-light text-xl text-gray-900 leading-tight">
+                                                    {formData.name || <span className="text-gray-300 italic text-base">Nom du produit...</span>}
+                                                </h3>
+                                                <span className={cn(
+                                                    "px-2 py-1 rounded-full text-[7px] uppercase font-black tracking-widest border shrink-0 mt-1",
+                                                    previewStock > 10 ? "text-emerald-500 bg-emerald-50 border-emerald-100" :
+                                                    previewStock > 0 ? "text-amber-500 bg-amber-50 border-amber-100" :
+                                                    "text-red-500 bg-red-50 border-red-100"
+                                                )}>
+                                                    {previewStock > 10 ? "Disponible" : previewStock > 0 ? `${previewStock} restant` : "Rupture"}
+                                                </span>
+                                            </div>
+
+                                            {/* Description */}
+                                            <p className="text-xs text-gray-400 leading-relaxed line-clamp-3">
+                                                {formData.description || <span className="italic text-gray-200">Description du produit...</span>}
+                                            </p>
+
+                                            {/* Price */}
+                                            <div className="pt-3 border-t border-gray-50">
+                                                <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-1">Prix</p>
+                                                <p className="text-2xl font-sans font-light text-gray-900">
+                                                    {formData.price ? formData.price.toLocaleString() : '—'}
+                                                    <span className="text-xs text-primary uppercase font-black tracking-normal ml-1">DH</span>
+                                                </p>
+                                            </div>
+
+                                            {/* CTA buttons */}
+                                            <div className="pt-2 space-y-2">
+                                                {formData.enableCart && (
+                                                    <div className="w-full py-3 bg-gray-900 text-white text-[9px] uppercase font-black tracking-widest text-center rounded-sm opacity-80">
+                                                        Ajouter au Panier
+                                                    </div>
+                                                )}
+                                                {formData.directCheckout && (
+                                                    <div className="w-full py-3 bg-primary text-white text-[9px] uppercase font-black tracking-widest text-center rounded-sm opacity-80">
+                                                        Commander Maintenant
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Empty state hint */}
+                                    {!formData.name && !previewSrc && (
+                                        <p className="text-center text-[10px] text-gray-300 uppercase tracking-widest font-bold mt-6">
+                                            Remplissez le formulaire pour voir l'aperçu
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
-            )}
+                );
+            })()}
         </div>
     );
 };
