@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { usersApi, ordersApi } from '@/lib/api';
-import { User as UserIcon, Shield, ShieldAlert, Trash2, Mail, Calendar, Search, Filter, MoreHorizontal, UserCheck, UserX, PackageOpen, Loader2, X, Package } from 'lucide-react';
+import { User as UserIcon, Shield, ShieldAlert, Trash2, Mail, Calendar, Search, Filter, MoreHorizontal, UserCheck, UserX, PackageOpen, Loader2, X, Package, Download, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Toast, { ToastType } from './ui/Toast';
 import ConfirmModal from './ui/ConfirmModal';
@@ -13,6 +13,7 @@ const UserManager = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('all');
+    const [checkedIds, setCheckedIds] = useState<Set<number | string>>(new Set());
 
     // Modal state
     const [selectedUser, setSelectedUser] = useState<any>(null);
@@ -126,6 +127,59 @@ const UserManager = () => {
         return matchesSearch && matchesRole;
     });
 
+    const isEmployee = (u: any) => u.role === 'admin' || u.role === 'super-admin' || u.role === 'provider';
+    const clients   = users.filter(u => !isEmployee(u));
+    const employees = users.filter(u => isEmployee(u));
+
+    const allFilteredChecked =
+        filteredUsers.length > 0 && filteredUsers.every(u => checkedIds.has(u.id));
+
+    const toggleAll = () => {
+        if (allFilteredChecked) {
+            setCheckedIds(prev => { const n = new Set(prev); filteredUsers.forEach(u => n.delete(u.id)); return n; });
+        } else {
+            setCheckedIds(prev => { const n = new Set(prev); filteredUsers.forEach(u => n.add(u.id)); return n; });
+        }
+    };
+
+    const toggleOne = (id: number | string) => {
+        setCheckedIds(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
+    };
+
+    const buildCSV = (list: any[]) => {
+        const headers = ['ID', 'Nom', 'Email', 'Rôle', "Date d'inscription"];
+        const rows = list.map(u => [
+            String(u.id),
+            u.name || '—',
+            u.email || '—',
+            u.role || 'customer',
+            u.created_at ? new Date(u.created_at).toLocaleDateString('fr-FR') : '—',
+        ]);
+        return [headers, ...rows]
+            .map(row => row.map(c => `"${String(c).replace(/"/g, '""')}"`).join(','))
+            .join('\r\n');
+    };
+
+    const downloadCSV = (csv: string, filename: string) => {
+        const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    const exportClients   = () => { downloadCSV(buildCSV(clients),   `clients-${new Date().toISOString().slice(0,10)}.csv`);   showToast(`${clients.length} client(s) exporté(s)`, 'success'); };
+    const exportEmployees = () => { downloadCSV(buildCSV(employees), `employes-${new Date().toISOString().slice(0,10)}.csv`); showToast(`${employees.length} employé(s) exporté(s)`, 'success'); };
+    const exportSelected  = () => {
+        const list = users.filter(u => checkedIds.has(u.id));
+        downloadCSV(buildCSV(list), `selection-utilisateurs-${new Date().toISOString().slice(0,10)}.csv`);
+        showToast(`${list.length} utilisateur(s) exporté(s)`, 'success');
+    };
+
     if (loading) return (
         <div className="flex flex-col items-center justify-center p-32 space-y-6">
             <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -136,15 +190,36 @@ const UserManager = () => {
     return (
         <div className="space-y-12">
             {/* Header Info */}
-            <div className="bg-white p-6 md:p-12 border border-gray-100 shadow-sm relative overflow-hidden flex flex-col md:flex-row justify-between items-center md:items-end gap-6 text-center md:text-left">
+            <div className="bg-white p-6 md:p-12 border border-gray-100 shadow-sm relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                 <div className="absolute top-0 right-0 p-8 opacity-[0.03] luxury-text text-[10rem] pointer-events-none select-none">Membres</div>
                 <div>
                     <h2 className="text-2xl md:text-4xl font-sans font-light tracking-tight text-gray-900 mb-2">Ambassadeurs & Membres</h2>
                     <p className="text-[10px] uppercase tracking-widest text-primary font-bold">Gestion des privilèges de la Maison Vitasilk</p>
                 </div>
-                <div className="relative z-10">
-                    <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-1">Total Effectif</p>
-                    <p className="text-3xl md:text-4xl font-sans font-light text-gray-900">{users.length}</p>
+                <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-end gap-6">
+                    <div className="text-right hidden md:block">
+                        <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-1">Total Effectif</p>
+                        <p className="text-3xl font-sans font-light text-gray-900">{users.length}</p>
+                    </div>
+                    {/* Quick-export buttons */}
+                    <div className="flex gap-3">
+                        <button
+                            onClick={exportClients}
+                            className="flex items-center gap-2 px-5 py-3 bg-primary text-white text-[9px] uppercase font-black tracking-widest hover:bg-black transition-all rounded-sm shadow-md"
+                            title={`Exporter ${clients.length} clients`}
+                        >
+                            <Download size={13} />
+                            Clients ({clients.length})
+                        </button>
+                        <button
+                            onClick={exportEmployees}
+                            className="flex items-center gap-2 px-5 py-3 bg-gray-900 text-white text-[9px] uppercase font-black tracking-widest hover:bg-black transition-all rounded-sm shadow-md"
+                            title={`Exporter ${employees.length} employés`}
+                        >
+                            <Download size={13} />
+                            Employés ({employees.length})
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -180,6 +255,14 @@ const UserManager = () => {
                 <table className="w-full text-left border-collapse min-w-[800px]">
                     <thead>
                         <tr className="border-b border-gray-50 bg-[#FAF9F6]">
+                            <th className="pl-6 md:pl-10 pr-2 py-4 md:py-6 w-10">
+                                <input
+                                    type="checkbox"
+                                    checked={allFilteredChecked}
+                                    onChange={toggleAll}
+                                    className="w-4 h-4 accent-primary cursor-pointer"
+                                />
+                            </th>
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Membre</th>
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Inscription</th>
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Privilège</th>
@@ -196,9 +279,18 @@ const UserManager = () => {
                                     key={user.id}
                                     className={cn(
                                         "hover:bg-gray-50/50 transition-colors group relative overflow-hidden",
-                                        inactive && "bg-amber-50/20"
+                                        inactive && "bg-amber-50/20",
+                                        checkedIds.has(user.id) && "bg-primary/5"
                                     )}
                                 >
+                                    <td className="pl-6 md:pl-10 pr-2 py-6 md:py-8 w-10">
+                                        <input
+                                            type="checkbox"
+                                            checked={checkedIds.has(user.id)}
+                                            onChange={() => toggleOne(user.id)}
+                                            className="w-4 h-4 accent-primary cursor-pointer"
+                                        />
+                                    </td>
                                     <td className="px-6 md:px-10 py-6 md:py-8">
                                         <div className="flex items-center space-x-6">
                                             <div className="w-14 h-14 rounded-full bg-white border border-gray-100 flex items-center justify-center text-primary shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-500 overflow-hidden relative">
@@ -288,6 +380,35 @@ const UserManager = () => {
                     </div>
                 )}
             </div>
+
+            {/* Floating export bar */}
+            <AnimatePresence>
+                {checkedIds.size > 0 && (
+                    <motion.div
+                        initial={{ y: 80, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 80, opacity: 0 }}
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-6 bg-gray-900 text-white px-8 py-4 shadow-2xl rounded-2xl border border-white/10"
+                    >
+                        <span className="text-[10px] uppercase tracking-widest font-black text-white/70">
+                            {checkedIds.size} sélectionné{checkedIds.size > 1 ? 's' : ''}
+                        </span>
+                        <button
+                            onClick={exportSelected}
+                            className="flex items-center gap-3 px-6 py-2.5 bg-primary hover:bg-amber-500 text-white text-[10px] uppercase font-black tracking-widest rounded-xl transition-all shadow-lg"
+                        >
+                            <Download size={14} />
+                            Exporter CSV
+                        </button>
+                        <button
+                            onClick={() => setCheckedIds(new Set())}
+                            className="p-2 rounded-full hover:bg-white/10 transition-colors text-white/50 hover:text-white"
+                        >
+                            <X size={16} />
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Orders Modal */}
             <AnimatePresence>
