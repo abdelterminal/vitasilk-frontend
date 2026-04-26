@@ -5,7 +5,7 @@ import { productsApi, categoriesApi, uploadsApi, imageUrl, type Product as ApiPr
 import {
     Plus, Trash2, Edit, X, Upload, Check, ImageIcon, AlertCircle,
     Search, Filter, ChevronLeft, ChevronRight as ChevronRightIcon,
-    LayoutList, LayoutGrid, Grid2x2, Download, FileUp, Loader2,
+    LayoutList, LayoutGrid, Grid2x2, Download, FileUp, Loader2, Info,
 } from 'lucide-react';
 import Image from 'next/image';
 import { clsx, type ClassValue } from 'clsx';
@@ -57,6 +57,7 @@ const ProductManager = () => {
     const importInputRef = useRef<HTMLInputElement>(null);
     const [importRows, setImportRows] = useState<ImportRow[]>([]);
     const [showImportModal, setShowImportModal] = useState(false);
+    const [showFormatGuide, setShowFormatGuide] = useState(false);
     const [importProgress, setImportProgress] = useState<{ done: number; total: number } | null>(null);
 
     const [formData, setFormData] = useState({
@@ -367,7 +368,7 @@ const ProductManager = () => {
                             Modèle CSV
                         </button>
                         <button
-                            onClick={() => importInputRef.current?.click()}
+                            onClick={() => setShowFormatGuide(true)}
                             className="flex items-center gap-2 px-5 py-3 bg-white border border-primary/30 text-primary text-[9px] uppercase font-black tracking-widest hover:bg-primary hover:text-white transition-all rounded-sm"
                         >
                             <FileUp size={13} />
@@ -605,6 +606,116 @@ const ProductManager = () => {
                             <X size={16} />
                         </button>
                     </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* ── Format guide modal ── */}
+            <AnimatePresence>
+                {showFormatGuide && (
+                    <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+                            className="bg-white w-full max-w-2xl max-h-[90vh] flex flex-col rounded-2xl shadow-2xl overflow-hidden"
+                        >
+                            <div className="p-6 border-b border-gray-100 flex justify-between items-start bg-gray-50/50">
+                                <div>
+                                    <h3 className="text-xl font-bold text-gray-900">Format du fichier CSV</h3>
+                                    <p className="text-[10px] uppercase tracking-widest text-primary font-black mt-1">Guide d'importation de produits</p>
+                                </div>
+                                <button onClick={() => setShowFormatGuide(false)} className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-400 shrink-0">
+                                    <X size={20} />
+                                </button>
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                                <div className="flex items-start gap-3 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-blue-700">
+                                    <Info size={16} className="shrink-0 mt-0.5" />
+                                    <p>La première ligne doit contenir les noms de colonnes exacts ci-dessous. L'ordre des colonnes n'a pas d'importance tant que les noms sont corrects.</p>
+                                </div>
+
+                                {/* Column reference table */}
+                                <div className="border border-gray-100 rounded-xl overflow-hidden">
+                                    <table className="w-full text-sm">
+                                        <thead>
+                                            <tr className="bg-gray-50 border-b border-gray-100">
+                                                <th className="px-4 py-3 text-left text-[9px] uppercase tracking-widest text-gray-400 font-black">Colonne</th>
+                                                <th className="px-4 py-3 text-left text-[9px] uppercase tracking-widest text-gray-400 font-black">Requis</th>
+                                                <th className="px-4 py-3 text-left text-[9px] uppercase tracking-widest text-gray-400 font-black">Type</th>
+                                                <th className="px-4 py-3 text-left text-[9px] uppercase tracking-widests text-gray-400 font-black">Valeurs acceptées</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-gray-50">
+                                            {[
+                                                { col: 'nom', req: true, type: 'Texte', values: 'Nom du produit. Ex: Lissage Pro Intense' },
+                                                { col: 'description', req: false, type: 'Texte', values: 'Description libre, peut être vide' },
+                                                { col: 'prix_dh', req: true, type: 'Nombre', values: 'Prix en dirhams. Ex: 299 ou 149.50' },
+                                                { col: 'prix_eur', req: false, type: 'Nombre', values: "Prix en euros. Mettre 0 si non applicable" },
+                                                { col: 'stock', req: false, type: 'Nombre entier', values: 'Quantité en stock. Défaut: 0' },
+                                                { col: 'categorie', req: false, type: 'Texte', values: "Doit correspondre exactement à une catégorie existante. Si vide ou introuvable, la première catégorie est utilisée" },
+                                                { col: 'vedette', req: false, type: 'Texte', values: "oui / non — affiche le produit en page d'accueil. Défaut: non" },
+                                            ].map(({ col, req, type, values }) => (
+                                                <tr key={col} className="hover:bg-gray-50/50">
+                                                    <td className="px-4 py-3">
+                                                        <code className="text-xs font-black text-primary bg-primary/5 px-2 py-0.5 rounded">{col}</code>
+                                                    </td>
+                                                    <td className="px-4 py-3">
+                                                        {req
+                                                            ? <span className="text-[8px] uppercase font-black text-red-500 bg-red-50 border border-red-100 px-2 py-0.5 rounded-full">Requis</span>
+                                                            : <span className="text-[8px] uppercase font-black text-gray-400 bg-gray-50 border border-gray-100 px-2 py-0.5 rounded-full">Optionnel</span>
+                                                        }
+                                                    </td>
+                                                    <td className="px-4 py-3 text-xs text-gray-500">{type}</td>
+                                                    <td className="px-4 py-3 text-xs text-gray-600 leading-relaxed">{values}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                {/* Example */}
+                                <div>
+                                    <p className="text-[10px] uppercase tracking-widest font-black text-gray-400 mb-3">Exemple de fichier</p>
+                                    <div className="bg-gray-900 rounded-xl p-4 overflow-x-auto">
+                                        <pre className="text-xs text-green-400 font-mono whitespace-pre leading-relaxed">{`nom,description,prix_dh,prix_eur,stock,categorie,vedette\nLissage Pro Intense,Soin lissant longue durée,299,27,50,Soin Cheveux,non\nMasque Hydratant Or,Masque nutrition profonde,189,17,30,Masques,oui\nHuile Argan Premium,,349,32,20,Huiles,non`}</pre>
+                                    </div>
+                                </div>
+
+                                {/* Rules */}
+                                <div className="space-y-2">
+                                    <p className="text-[10px] uppercase tracking-widest font-black text-gray-400 mb-3">Règles importantes</p>
+                                    {[
+                                        'Enregistrer le fichier en format .csv (UTF-8 de préférence)',
+                                        'Les virgules dans un champ de texte doivent être entourées de guillemets doubles : "Soin, nutrition"',
+                                        'Les images ne peuvent pas être importées via CSV — à ajouter manuellement après import',
+                                        "Les catégories doivent exister au préalable dans l'admin",
+                                        'Les lignes sans nom de produit sont ignorées automatiquement',
+                                    ].map((rule, i) => (
+                                        <div key={i} className="flex items-start gap-3 text-xs text-gray-600">
+                                            <span className="w-5 h-5 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-[9px] font-black shrink-0 mt-0.5">{i + 1}</span>
+                                            {rule}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="p-6 border-t border-gray-100 flex flex-wrap gap-3 justify-end">
+                                <button
+                                    onClick={downloadTemplate}
+                                    className="flex items-center gap-2 px-6 py-3 bg-white border border-gray-200 text-gray-600 text-[10px] uppercase font-black tracking-widest rounded-xl hover:border-gray-400 transition-all"
+                                >
+                                    <Download size={13} />
+                                    Télécharger le modèle
+                                </button>
+                                <button
+                                    onClick={() => { setShowFormatGuide(false); importInputRef.current?.click(); }}
+                                    className="flex items-center gap-2 px-8 py-3 bg-gray-900 text-white text-[10px] uppercase font-black tracking-widest rounded-xl hover:bg-primary transition-all"
+                                >
+                                    <FileUp size={13} />
+                                    Choisir un fichier CSV
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
 
