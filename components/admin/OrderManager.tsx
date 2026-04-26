@@ -376,56 +376,55 @@ export default function OrderManager() {
                             </div>
 
                             <div className="flex-1 overflow-y-auto p-8 md:p-12 space-y-12 scrollbar-hide">
-                                {/* Customer & Logistics Grid */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    <div className="space-y-6">
-                                        <p className="text-[10px] uppercase tracking-widest font-black text-primary border-b border-primary/10 pb-2">Client & Contact</p>
-                                        <div className="space-y-4">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 shrink-0 bg-primary/5 rounded-full flex items-center justify-center text-primary font-bold border border-primary/10">
-                                                    {(selectedOrder.user_name || '?')[0].toUpperCase()}
-                                                </div>
-                                                <div className="min-w-0 flex-1">
-                                                    <p className="font-bold text-gray-900 truncate">{selectedOrder.user_name || 'Client Inconnu'}</p>
-                                                    <p className="text-xs text-gray-500 truncate">{selectedOrder.user_email || '—'}</p>
-                                                </div>
+                                {/* Confirmation Card — all info needed for a confirmation call at a glance */}
+                                <div className="bg-gradient-to-br from-primary/5 to-primary/10 border-2 border-primary/20 rounded-2xl p-6 md:p-8">
+                                    <p className="text-[10px] uppercase tracking-widest font-black text-primary mb-6">Fiche de Confirmation</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div className="flex items-center gap-4 bg-white rounded-xl p-4 border border-primary/10 shadow-sm">
+                                            <div className="w-10 h-10 shrink-0 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-lg">
+                                                {(selectedOrder.user_name || '?')[0].toUpperCase()}
                                             </div>
-                                            <p className="text-sm text-gray-600 flex items-center gap-3 bg-gray-50 p-3 rounded-lg border border-gray-100"><Phone size={14} className="text-primary shrink-0" /> <span className="truncate">{selectedOrder.phone || '—'}</span></p>
+                                            <div className="min-w-0">
+                                                <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-0.5">Nom Client</p>
+                                                <p className="text-base font-black text-gray-900 truncate">{selectedOrder.user_name || 'Client Inconnu'}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-4 bg-white rounded-xl p-4 border border-primary/10 shadow-sm">
+                                            <div className="w-10 h-10 shrink-0 bg-emerald-50 rounded-full flex items-center justify-center">
+                                                <Phone size={18} className="text-emerald-600" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-0.5">Téléphone</p>
+                                                <p className="text-base font-black text-gray-900 tracking-wider">{selectedOrder.phone || '—'}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-4 bg-white rounded-xl p-4 border border-primary/10 shadow-sm">
+                                            <div className="w-10 h-10 shrink-0 bg-blue-50 rounded-full flex items-center justify-center">
+                                                <MapPin size={18} className="text-blue-500" />
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-0.5">Ville</p>
+                                                <p className="text-base font-black text-gray-900 truncate">{selectedOrder.city || selectedOrder.address || '—'}</p>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div className="space-y-6">
-                                        <p className="text-[10px] uppercase tracking-widest font-black text-primary border-b border-primary/10 pb-2">Adresse de Livraison</p>
-                                        <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 min-h-[100px] flex items-start gap-4">
-                                            <MapPin size={20} className="text-primary mt-1 shrink-0" />
-                                            <p className="text-sm text-gray-700 leading-relaxed italic">
-                                                {selectedOrder.city || selectedOrder.address || 'Adresse non renseignée'}
-                                            </p>
+                                    <div className="mt-4 pt-4 border-t border-primary/10 flex flex-wrap gap-4 items-center justify-between">
+                                        <div className="flex items-center gap-6 text-sm text-gray-500">
+                                            <span>
+                                                {selectedOrder.created_at
+                                                    ? new Date(selectedOrder.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+                                                    : 'Maintenant'}
+                                                {selectedOrder.created_at && (
+                                                    <span className="text-gray-400 text-xs ml-2">
+                                                        {new Date(selectedOrder.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                                                    </span>
+                                                )}
+                                            </span>
+                                            <span className="px-3 py-1 bg-amber-50 text-amber-600 text-[9px] uppercase font-black rounded-full border border-amber-100">À la livraison</span>
                                         </div>
-                                    </div>
-
-                                    <div className="space-y-6">
-                                        <p className="text-[10px] uppercase tracking-widest font-black text-primary border-b border-primary/10 pb-2">Détails Logistiques</p>
-                                        <div className="space-y-4">
-                                            <div className="flex justify-between items-center text-sm">
-                                                <span className="text-gray-400">Date</span>
-                                                <span className="text-gray-900 font-medium">
-                                                    {selectedOrder.created_at ? new Date(selectedOrder.created_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Maintenant'}
-                                                    {selectedOrder.created_at && (
-                                                        <span className="text-gray-400 font-normal text-xs ml-2">
-                                                            {new Date(selectedOrder.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
-                                                        </span>
-                                                    )}
-                                                </span>
-                                            </div>
-                                            <div className="flex justify-between items-center text-sm">
-                                                <span className="text-gray-400">Paiement</span>
-                                                <span className="px-3 py-1 bg-amber-50 text-amber-600 text-[9px] uppercase font-black rounded-full border border-amber-100">À la livraison</span>
-                                            </div>
-                                            <div className="flex justify-between items-center text-sm pt-4 border-t border-gray-50">
-                                                <span className="text-gray-400">Total Commande</span>
-                                                <span className="text-2xl font-sans font-light text-primary">{selectedOrder.total_price.toLocaleString()} DH</span>
-                                            </div>
+                                        <div className="text-right">
+                                            <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold">Total Commande</p>
+                                            <p className="text-3xl font-sans font-light text-primary">{selectedOrder.total_price.toLocaleString()} DH</p>
                                         </div>
                                     </div>
                                 </div>
@@ -505,23 +504,51 @@ export default function OrderManager() {
                                 </div>
 
                                 {/* Items List */}
-                                <div className="space-y-6">
-                                    <p className="text-[10px] uppercase tracking-widest font-black text-primary border-b border-primary/10 pb-2">Composition du Colis</p>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-4">
+                                    <p className="text-[10px] uppercase tracking-widest font-black text-primary border-b border-primary/10 pb-2">
+                                        Articles Commandés — {(selectedOrder.items ?? []).length} article{(selectedOrder.items?.length ?? 0) > 1 ? 's' : ''}
+                                    </p>
+                                    <div className="border border-gray-100 rounded-2xl overflow-hidden">
+                                        {/* Table header */}
+                                        <div className="grid grid-cols-12 bg-gray-50 border-b border-gray-100 px-5 py-3">
+                                            <div className="col-span-5 text-[9px] uppercase tracking-widest font-black text-gray-400">Article</div>
+                                            <div className="col-span-2 text-[9px] uppercase tracking-widest font-black text-gray-400 text-center">Qté</div>
+                                            <div className="col-span-3 text-[9px] uppercase tracking-widest font-black text-gray-400 text-right">Prix Unitaire</div>
+                                            <div className="col-span-2 text-[9px] uppercase tracking-widest font-black text-gray-400 text-right">Total</div>
+                                        </div>
+                                        {/* Rows */}
                                         {(selectedOrder.items ?? []).map((item, i) => (
-                                            <div key={i} className="flex items-center justify-between p-4 bg-gray-50/50 border border-gray-100 hover:border-primary/20 hover:shadow-md transition-all group rounded-2xl">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="w-16 h-16 bg-white overflow-hidden rounded-xl border border-gray-100 shrink-0 flex items-center justify-center text-gray-200">
-                                                        <Package size={24} />
+                                            <div key={i} className={cn(
+                                                "grid grid-cols-12 items-center px-5 py-4 transition-colors",
+                                                i % 2 === 0 ? "bg-white" : "bg-gray-50/40",
+                                                "border-b border-gray-50 last:border-0"
+                                            )}>
+                                                <div className="col-span-5 flex items-center gap-3">
+                                                    <div className="w-8 h-8 bg-primary/5 rounded-lg flex items-center justify-center shrink-0">
+                                                        <Package size={14} className="text-primary/50" />
                                                     </div>
-                                                    <div>
-                                                        <p className="text-sm font-bold text-gray-900 group-hover:text-primary transition-colors line-clamp-1">{item.product_name}</p>
-                                                        <p className="text-[10px] text-gray-400 font-medium">{item.price} DH × {item.quantity}</p>
-                                                    </div>
+                                                    <p className="text-sm font-bold text-gray-900 leading-tight">{item.product_name}</p>
                                                 </div>
-                                                <p className="text-sm font-black text-gray-900">{(item.price * item.quantity).toLocaleString()} DH</p>
+                                                <div className="col-span-2 flex justify-center">
+                                                    <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white text-sm font-black">
+                                                        {item.quantity}
+                                                    </span>
+                                                </div>
+                                                <div className="col-span-3 text-right">
+                                                    <p className="text-sm font-medium text-gray-600">{item.price.toLocaleString()} DH</p>
+                                                </div>
+                                                <div className="col-span-2 text-right">
+                                                    <p className="text-sm font-black text-gray-900">{(item.price * item.quantity).toLocaleString()} DH</p>
+                                                </div>
                                             </div>
                                         ))}
+                                        {/* Footer total */}
+                                        <div className="grid grid-cols-12 items-center px-5 py-4 bg-gray-900 rounded-b-2xl">
+                                            <div className="col-span-7 text-[10px] uppercase tracking-widest font-black text-white/60">Total à encaisser</div>
+                                            <div className="col-span-5 text-right">
+                                                <span className="text-xl font-black text-white">{selectedOrder.total_price.toLocaleString()} DH</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

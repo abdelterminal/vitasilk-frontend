@@ -429,9 +429,11 @@ export interface CreateOrderPayload {
   address: string;
   phone: string;
   city?: string;
+  customer_name?: string;
   payment_method?: 'cash' | 'bank_transfer';
   notes?: string;
   discount_percentage?: number;
+  promo_code?: string;
 }
 
 export interface Review {

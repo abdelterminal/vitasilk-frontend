@@ -189,6 +189,7 @@ export default function CheckoutPage() {
                 address: deliveryAddress.city,
                 phone: customerInfo.phone,
                 city: deliveryAddress.city,
+                customer_name: customerInfo.firstName.trim(),
                 payment_method: paymentMethod === 'transfer' ? 'bank_transfer' : 'cash',
                 notes: deliveryAddress.notes || undefined,
                 promo_code: appliedPromo?.code || undefined,
