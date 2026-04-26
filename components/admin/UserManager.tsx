@@ -331,20 +331,24 @@ const UserManager = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 md:px-10 py-6 md:py-8">
-                                        <select
-                                            value={user.role || 'customer'}
-                                            onChange={(e) => handleRoleChange(user.id as number, user.email, e.target.value)}
-                                            className={cn(
-                                                "px-3 py-1.5 text-[10px] uppercase font-black tracking-widest bg-white border outline-none cursor-pointer rounded-sm shadow-sm transition-all focus:ring-2",
-                                                user.role === 'admin' ? "text-red-600 border-red-200 focus:ring-red-100" :
-                                                    user.role === 'provider' ? "text-primary border-primary/30 focus:ring-primary/10" :
-                                                        "text-gray-500 border-gray-200 focus:ring-gray-100"
-                                            )}
-                                        >
-                                            <option value="admin">Administrateur</option>
-                                            <option value="provider">Organisateur</option>
-                                            <option value="customer">Client</option>
-                                        </select>
+                                        {(!user.role || user.role === 'customer') ? (
+                                            <span className="px-3 py-1.5 text-[10px] uppercase font-black tracking-widest text-gray-400 border border-gray-200 rounded-sm bg-gray-50 select-none">
+                                                Client
+                                            </span>
+                                        ) : (
+                                            <select
+                                                value={user.role}
+                                                onChange={(e) => handleRoleChange(user.id as number, user.email, e.target.value)}
+                                                className={cn(
+                                                    "px-3 py-1.5 text-[10px] uppercase font-black tracking-widest bg-white border outline-none cursor-pointer rounded-sm shadow-sm transition-all focus:ring-2",
+                                                    user.role === 'admin' ? "text-red-600 border-red-200 focus:ring-red-100" :
+                                                        "text-primary border-primary/30 focus:ring-primary/10"
+                                                )}
+                                            >
+                                                <option value="admin">Administrateur</option>
+                                                <option value="provider">Organisateur</option>
+                                            </select>
+                                        )}
                                     </td>
                                     <td className="px-6 md:px-10 py-6 md:py-8 text-right">
                                         <div className={cn(
