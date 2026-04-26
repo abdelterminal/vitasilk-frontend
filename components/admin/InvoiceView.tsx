@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, User, Calendar, FileText, ShoppingBag, Globe, Shield, MapPin } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { createPortal } from 'react-dom';
-import Image from 'next/image';
 
 interface InvoiceData {
-    orderId: string;
+    orderId: string | number;
     date: any;
     customerName: string;
     customerEmail: string;
@@ -18,242 +17,199 @@ interface InvoiceData {
     total: number;
 }
 
-export default function InvoiceView({ data, onClose }: { data: InvoiceData, onClose: () => void }) {
+export default function InvoiceView({ data, onClose }: { data: InvoiceData; onClose: () => void }) {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         setMounted(true);
-        // Prevent scrolling on body when overlay is open
-        const originalOverflow = document.body.style.overflow;
+        const orig = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
-        return () => {
-            document.body.style.overflow = originalOverflow;
-        };
+        return () => { document.body.style.overflow = orig; };
     }, []);
-
-    const handlePrint = () => {
-        window.print();
-    };
-
-    const XIcon = ({ size, className }: { size: number, className?: string }) => (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-        </svg>
-    );
 
     if (!mounted) return null;
 
+    const formattedDate = data.date
+        ? new Date(data.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
+        : new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+
     const invoiceContent = (
-        <div id="invoice-overlay-root" className="fixed inset-0 z-[1000] bg-black/90 backdrop-blur-md flex items-start justify-center p-0 md:p-8 overflow-y-auto print:bg-white print:static print:overflow-visible font-sans">
+        <div
+            id="invoice-overlay-root"
+            className="fixed inset-0 z-[1000] bg-black/90 backdrop-blur-md flex items-start justify-center p-0 md:p-8 overflow-y-auto print:bg-white print:static print:overflow-visible font-sans"
+        >
             <style jsx global>{`
                 @media print {
-                    @page { 
-                        size: A4; 
-                        margin: 0;
-                    }
-                    
+                    @page { size: A4; margin: 12mm 15mm; }
                     html, body {
                         height: auto !important;
                         margin: 0 !important;
                         padding: 0 !important;
                         background: white !important;
                         overflow: visible !important;
-                        font-family: 'Inter', sans-serif !important;
                     }
-
-                    body > *:not(#invoice-overlay-root) {
-                        display: none !important;
-                    }
-
+                    body > *:not(#invoice-overlay-root) { display: none !important; }
                     #invoice-overlay-root {
                         display: block !important;
                         position: static !important;
-                        width: 210mm !important;
-                        margin: 0 !important;
-                        padding: 0 !important;
                         background: white !important;
+                        padding: 0 !important;
                     }
-
                     #printable-invoice {
-                        width: 210mm !important;
-                        margin: 0 !important;
-                        padding: 10mm 15mm !important;
                         box-shadow: none !important;
                         border: none !important;
-                        background: white !important;
-                        display: flex !important;
-                        flex-direction: column !important;
-                        page-break-after: avoid !important;
-                        page-break-before: avoid !important;
-                    }
-
-                    .print-compact {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        margin: 0 !important;
                         padding: 0 !important;
-                        margin-bottom: 2rem !important;
                     }
-
-                    .print-text-small {
-                        font-size: 0.75rem !important;
-                    }
-                    
-                    .no-print {
-                        display: none !important;
-                    }
-                    
-                    /* Hide huge decorative text in print to save space and avoid page breaks */
-                    .print-hide-deco {
-                        display: none !important;
-                    }
-
+                    .no-print { display: none !important; }
                     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
                 }
             `}</style>
 
+            {/* Close button */}
+            <button
+                onClick={onClose}
+                className="no-print fixed top-6 right-6 z-[1001] w-12 h-12 bg-white text-gray-900 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-xl"
+            >
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+                </svg>
+            </button>
+
             <div
                 id="printable-invoice"
-                className="bg-white w-full max-w-[210mm] relative my-0 md:my-8 shadow-[0_0_100px_rgba(0,0,0,0.5)] print:shadow-none print:my-0 flex flex-col font-sans"
+                className="bg-white w-full max-w-[210mm] my-0 md:my-8 shadow-[0_0_100px_rgba(0,0,0,0.5)] print:shadow-none print:my-0"
             >
-                {/* Close Button - UI Only */}
-                <button
-                    onClick={onClose}
-                    className="absolute -top-4 -right-4 md:top-8 md:-right-16 w-12 h-12 bg-white text-gray-900 rounded-full flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-xl no-print z-10"
-                >
-                    <XIcon size={24} />
-                </button>
-
-                {/* Header Section */}
-                <div className="p-12 md:p-20 flex flex-col gap-12 border-b border-gray-100 print:p-0 print:border-none print:mb-8">
-                    {/* Centered Logo */}
-                    <div className="flex justify-center mb-0 md:mb-4">
-                        <img 
-                            src="/img/logo.svg" 
-                            alt="Vitasilk" 
-                            className="h-20 md:h-28 w-auto object-contain"
-                        />
-                    </div>
-
-                    <div className="flex flex-col md:flex-row justify-between items-start gap-12">
-                        <div className="space-y-4">
-                            <div className="space-y-1 text-[10px] uppercase tracking-widest text-gray-400 font-bold leading-loose">
-                                <p>Vitasilk</p>
+                {/* ── TOP HEADER ── */}
+                <div className="px-12 pt-12 pb-8 md:px-16 md:pt-14 border-b-2 border-gray-900">
+                    <div className="flex items-start justify-between gap-8">
+                        {/* Logo */}
+                        <div>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src="/img/logo.png"
+                                alt="Vitasilk"
+                                className="h-12 md:h-16 w-auto object-contain"
+                            />
+                            <div className="mt-4 space-y-0.5 text-[10px] text-gray-400 leading-relaxed">
                                 <p>Meknès, Maroc</p>
-                                <p>T: +212 662 633 170</p>
+                                <p>+212 662 633 170</p>
                                 <p>sales@vitasilk.ma</p>
                             </div>
                         </div>
 
-                        <div className="text-right flex flex-col items-end print:text-right">
-                            <div className="px-6 py-2 border border-gray-100 rounded-full text-[9px] uppercase tracking-widest text-gray-400 font-black mb-6">
-                                Certifié Authentique
-                            </div>
-                            <h2 className="text-5xl md:text-7xl font-sans text-gray-100 uppercase tracking-tighter font-black leading-none select-none print:text-4xl print:text-gray-900 print:mt-0">Facture</h2>
-                            <div className="mt-[-1.5rem] print:mt-2 space-y-2 relative z-10 mr-4">
-                                <p className="text-[11px] uppercase tracking-widest text-amber-600 font-black">N° {String(data.orderId).slice(0, 8).toUpperCase()}</p>
-                                <p className="text-sm font-light text-gray-500">
-                                    Émise le {data.date
-                                        ? new Date(data.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })
-                                        : new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' })}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 print:gap-4 print:grid-cols-2">
-                        <div className="space-y-6 print:space-y-2">
-                            <h3 className="text-[10px] uppercase tracking-widest text-gray-300 font-black print:text-[8px]">Destinataire</h3>
-                            <div className="space-y-2">
-                                <p className="text-2xl font-sans font-bold text-gray-950 print:text-xl">{data.customerName}</p>
-                                <div className="space-y-1 text-xs text-gray-500 font-light leading-relaxed max-w-xs">
-                                    <p>{data.customerEmail}</p>
-                                    <p>{data.customerPhone}</p>
-                                    <p>
-                                        {typeof data.customerAddress === 'string' 
-                                            ? data.customerAddress 
-                                            : `${(data.customerAddress as any)?.street || ''}, ${(data.customerAddress as any)?.city || ''}, ${(data.customerAddress as any)?.region || ''}`.replace(/^[,\s]+|[,\s]+$/g, '') || 'Adresse non renseignée'}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="space-y-6 md:text-right md:items-end flex flex-col print:space-y-2 print:text-right">
-                            <h3 className="text-[10px] uppercase tracking-widest text-gray-300 font-black print:text-[8px]">Mode de Règlement</h3>
-                            <div className="space-y-2">
-                                <p className="text-sm font-bold text-gray-900 uppercase tracking-widest print:text-xs">Paiement à la Livraison</p>
-                                <div className="inline-flex items-center gap-3 px-4 py-2 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] uppercase font-black tracking-widest print:bg-transparent print:p-0 print:text-[9px]">
-                                    <div className="w-1.5 h-1.5 bg-emerald-600 rounded-full print:hidden" />
-                                    Transaction Sécurisée
-                                </div>
-                            </div>
+                        {/* Invoice title + number */}
+                        <div className="text-right">
+                            <h1 className="text-5xl md:text-6xl font-black uppercase tracking-tight text-gray-100 select-none leading-none">
+                                Facture
+                            </h1>
+                            <p className="text-sm font-black uppercase tracking-widest text-amber-500 mt-1">
+                                N° {String(data.orderId).toUpperCase()}
+                            </p>
+                            <p className="text-xs text-gray-400 mt-1">Émise le {formattedDate}</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Items Table */}
-                <div className="flex-1 p-12 md:p-20 print:p-0 print:flex-none">
-                    <table className="w-full">
+                {/* ── CLIENT + PAYMENT ── */}
+                <div className="px-12 py-8 md:px-16 grid grid-cols-2 gap-8 border-b border-gray-100">
+                    <div>
+                        <p className="text-[9px] uppercase tracking-widest text-gray-300 font-black mb-3">Destinataire</p>
+                        <p className="text-xl font-bold text-gray-900">{data.customerName || '—'}</p>
+                        <div className="mt-2 space-y-0.5 text-xs text-gray-500">
+                            {data.customerPhone && <p>{data.customerPhone}</p>}
+                            {data.customerEmail && <p>{data.customerEmail}</p>}
+                            {data.customerAddress && <p>{data.customerAddress}</p>}
+                        </div>
+                    </div>
+                    <div className="text-right">
+                        <p className="text-[9px] uppercase tracking-widest text-gray-300 font-black mb-3">Règlement</p>
+                        <p className="text-sm font-bold text-gray-900">Paiement à la Livraison</p>
+                        <span className="inline-block mt-2 px-3 py-1 bg-emerald-50 text-emerald-600 text-[9px] uppercase font-black tracking-widest rounded-full border border-emerald-100">
+                            Transaction Sécurisée
+                        </span>
+                    </div>
+                </div>
+
+                {/* ── ITEMS TABLE ── */}
+                <div className="px-12 pt-8 pb-4 md:px-16">
+                    <table className="w-full border-collapse">
                         <thead>
-                            <tr className="border-b-2 border-gray-900 print:border-b">
-                                <th className="pb-8 text-left text-[10px] uppercase tracking-widest text-gray-400 font-black print:pb-4 print:text-[8px] print:tracking-widest">Description de la Sélection</th>
-                                <th className="pb-8 text-center text-[10px] uppercase tracking-widest text-gray-400 font-black print:pb-4 print:text-[8px] print:tracking-widest">P.U</th>
-                                <th className="pb-8 text-center text-[10px] uppercase tracking-widest text-gray-400 font-black print:pb-4 print:text-[8px] print:tracking-widest">Qté</th>
-                                <th className="pb-8 text-right text-[10px] uppercase tracking-widest text-gray-400 font-black print:pb-4 print:text-[8px] print:tracking-widest">Montant</th>
+                            <tr className="border-b border-gray-200">
+                                <th className="pb-3 text-left text-[9px] uppercase tracking-widest text-gray-400 font-black w-[50%]">Article</th>
+                                <th className="pb-3 text-center text-[9px] uppercase tracking-widest text-gray-400 font-black w-[15%]">Qté</th>
+                                <th className="pb-3 text-right text-[9px] uppercase tracking-widest text-gray-400 font-black w-[17%]">Prix Unit.</th>
+                                <th className="pb-3 text-right text-[9px] uppercase tracking-widest text-gray-400 font-black w-[18%]">Total</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+                        <tbody>
                             {data.items.map((item: any, i: number) => (
-                                <tr key={i} className="group print:break-inside-avoid">
-                                    <td className="py-10 print:py-4">
-                                        <p className="text-lg font-sans font-bold text-gray-950 mb-1 print:text-sm">{item.name}</p>
-                                        <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold print:text-[7px]">L'Art de la Coiffure • Vitasilk Privilege</p>
+                                <tr
+                                    key={i}
+                                    className="border-b border-gray-50"
+                                    style={{ backgroundColor: i % 2 !== 0 ? '#FAFAF9' : 'white' }}
+                                >
+                                    <td className="py-4 pr-4">
+                                        <p className="text-sm font-bold text-gray-900 leading-snug">
+                                            {item.product_name || item.name || '—'}
+                                        </p>
                                     </td>
-                                    <td className="py-10 text-center text-sm text-gray-600 print:py-4 print:text-xs">{(item.price ?? 0).toLocaleString()} DH</td>
-                                    <td className="py-10 text-center text-sm font-bold text-gray-900 whitespace-nowrap print:py-4 print:text-xs">× {item.quantity}</td>
-                                    <td className="py-10 text-right text-lg font-sans font-bold text-gray-950 print:py-4 print:text-sm">{((item.price ?? 0) * (item.quantity ?? 0)).toLocaleString()} DH</td>
+                                    <td className="py-4 text-center">
+                                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gray-900 text-white text-xs font-black">
+                                            {item.quantity ?? 1}
+                                        </span>
+                                    </td>
+                                    <td className="py-4 text-right text-sm text-gray-600 font-medium">
+                                        {(item.price ?? 0).toLocaleString()} DH
+                                    </td>
+                                    <td className="py-4 text-right text-sm font-black text-gray-900">
+                                        {((item.price ?? 0) * (item.quantity ?? 1)).toLocaleString()} DH
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
 
-                {/* Footer Section (Totals) */}
-                <div className="p-12 md:p-20 bg-gray-50/50 mt-auto print:p-0 print:bg-transparent print:mt-4 print:border-t print:border-gray-100 print:pt-4">
-                    <div className="flex flex-col md:flex-row justify-between items-end gap-12 print:flex-row print:items-start print:gap-4 print:break-inside-avoid">
-                        <div className="order-2 md:order-1 flex-1 max-w-sm print:order-1">
-                            <h4 className="text-[9px] uppercase tracking-widest text-gray-400 font-black mb-4 print:mb-2 print:text-[7px]">Note d'Artisan</h4>
-                            <p className="text-[10px] text-gray-400 font-light leading-relaxed print:text-[9px]">
-                                Merci d'avoir choisi Vitasilk. Chaque produit est scellé avec le plus grand soin pour garantir une expérience de luxe.
-                            </p>
+                {/* ── TOTALS ── */}
+                <div className="px-12 pt-4 pb-10 md:px-16 flex justify-end">
+                    <div className="w-64 space-y-2">
+                        <div className="flex justify-between text-xs text-gray-400 uppercase tracking-widest font-bold">
+                            <span>Sous-total</span>
+                            <span className="text-gray-700">{(data.subtotal ?? 0).toLocaleString()} DH</span>
                         </div>
-
-                        <div className="order-1 md:order-2 w-full md:w-80 space-y-4 print:order-2 print:w-64 print:space-y-2">
-                            <div className="flex justify-between items-center text-[10px] text-gray-400 uppercase tracking-widest font-bold print:text-[8px]">
-                                <span>Sous-total</span>
-                                <span className="text-gray-900">{(data.subtotal ?? 0).toLocaleString()} DH</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[10px] text-gray-400 uppercase tracking-widest font-bold print:text-[8px]">
-                                <span>Livraison Premium</span>
-                                <span className="text-gray-900">Offerte</span>
-                            </div>
-                            <div className="pt-8 border-t border-gray-200 flex justify-between items-end print:pt-4 print:border-none">
-                                <span className="text-[11px] uppercase tracking-widest text-amber-600 font-black pb-2 print:text-[9px] print:pb-1">Total NET</span>
-                                <span className="text-5xl font-sans font-bold text-gray-950 tracking-tighter print:text-3xl">{(data.total ?? 0).toLocaleString()} <small className="text-xs uppercase tracking-normal font-light">DH</small></span>
-                            </div>
+                        <div className="flex justify-between text-xs text-gray-400 uppercase tracking-widest font-bold">
+                            <span>Livraison</span>
+                            <span className="text-gray-700">Offerte</span>
                         </div>
-                    </div>
-
-                    <div className="mt-20 pt-12 border-t border-gray-100 text-center no-print">
-                        <button
-                            onClick={handlePrint}
-                            className="inline-flex items-center gap-4 px-12 py-5 bg-gray-950 text-white text-[10px] uppercase font-black tracking-widest hover:bg-amber-600 transition-all duration-700 shadow-2xl"
-                        >
-                            <FileText size={16} className="text-amber-200" />
-                            Lancer l'Impression de Luxe
-                        </button>
+                        <div className="flex justify-between items-end pt-4 border-t-2 border-gray-900 mt-2">
+                            <span className="text-[10px] uppercase tracking-widest font-black text-amber-500">Total NET</span>
+                            <span className="text-3xl font-black text-gray-900 tracking-tight">
+                                {(data.total ?? 0).toLocaleString()}&nbsp;<small className="text-xs font-light">DH</small>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Fine Print - Printed Only */}
-                <div className="hidden print:block p-12 text-center text-[8px] text-gray-300 uppercase tracking-widest print:p-4">
+                {/* ── FOOTER NOTE ── */}
+                <div className="px-12 pb-12 md:px-16 border-t border-gray-100 pt-6 flex items-end justify-between gap-8">
+                    <p className="text-[9px] text-gray-300 leading-relaxed max-w-xs">
+                        Merci d'avoir choisi Vitasilk. Chaque produit est préparé avec le plus grand soin pour une expérience d'exception.
+                    </p>
+                    {/* Print button — hidden when printing */}
+                    <button
+                        onClick={() => window.print()}
+                        className="no-print inline-flex items-center gap-3 px-8 py-4 bg-gray-900 text-white text-[10px] uppercase font-black tracking-widest hover:bg-amber-500 transition-all duration-500 shadow-xl whitespace-nowrap"
+                    >
+                        <FileText size={14} />
+                        Imprimer
+                    </button>
+                </div>
+
+                {/* Print-only fine print */}
+                <div className="hidden print:block px-12 pb-6 text-center text-[8px] text-gray-300 uppercase tracking-widest border-t border-gray-50 pt-4">
                     Vitasilk • Meknès, Maroc • +212 662 633 170 • vitasilk.ma
                 </div>
             </div>
@@ -262,4 +218,3 @@ export default function InvoiceView({ data, onClose }: { data: InvoiceData, onCl
 
     return createPortal(invoiceContent, document.body);
 }
-
