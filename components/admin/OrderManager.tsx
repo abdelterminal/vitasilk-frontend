@@ -19,7 +19,9 @@ import {
     User,
     Mail,
     ShoppingBag,
-    Printer
+    Printer,
+    Download,
+    Calendar,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ordersApi, imageUrl, type Order as ApiOrder } from '@/lib/api';
@@ -36,6 +38,8 @@ export default function OrderManager() {
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('all');
+    const [dateFilter, setDateFilter] = useState<'all' | 'today' | 'week' | 'month'>('all');
+    const [checkedIds, setCheckedIds] = useState<Set<number | string>>(new Set());
     const [showInvoice, setShowInvoice] = useState(false);
     const [invoiceData, setInvoiceData] = useState<any>(null);
 
@@ -143,8 +147,84 @@ export default function OrderManager() {
 
         const matchesStatus = statusFilter === 'all' || order.status === statusFilter;
 
-        return matchesSearch && matchesStatus;
+        let matchesDate = true;
+        if (dateFilter !== 'all' && order.created_at) {
+            const orderDate = new Date(order.created_at);
+            const now = new Date();
+            if (dateFilter === 'today') {
+                matchesDate =
+                    orderDate.getFullYear() === now.getFullYear() &&
+                    orderDate.getMonth() === now.getMonth() &&
+                    orderDate.getDate() === now.getDate();
+            } else if (dateFilter === 'week') {
+                const weekAgo = new Date(now);
+                weekAgo.setDate(now.getDate() - 7);
+                matchesDate = orderDate >= weekAgo;
+            } else if (dateFilter === 'month') {
+                matchesDate =
+                    orderDate.getFullYear() === now.getFullYear() &&
+                    orderDate.getMonth() === now.getMonth();
+            }
+        }
+
+        return matchesSearch && matchesStatus && matchesDate;
     });
+
+    const allFilteredChecked =
+        filteredOrders.length > 0 &&
+        filteredOrders.every(o => checkedIds.has(o.id));
+
+    const toggleAll = () => {
+        if (allFilteredChecked) {
+            setCheckedIds(prev => {
+                const next = new Set(prev);
+                filteredOrders.forEach(o => next.delete(o.id));
+                return next;
+            });
+        } else {
+            setCheckedIds(prev => {
+                const next = new Set(prev);
+                filteredOrders.forEach(o => next.add(o.id));
+                return next;
+            });
+        }
+    };
+
+    const toggleOne = (id: number | string) => {
+        setCheckedIds(prev => {
+            const next = new Set(prev);
+            next.has(id) ? next.delete(id) : next.add(id);
+            return next;
+        });
+    };
+
+    const exportCSV = () => {
+        const toExport = orders.filter(o => checkedIds.has(o.id));
+        const headers = ['ID', 'Nom Client', 'Téléphone', 'Ville', 'Articles', 'Total (DH)', 'Date', 'Statut'];
+        const rows = toExport.map(o => [
+            String(o.id),
+            o.user_name || '—',
+            o.phone || '—',
+            o.city || o.address || '—',
+            (o.items ?? []).map(item => `${item.product_name} ×${item.quantity}`).join(' | '),
+            String(o.total_price),
+            o.created_at ? new Date(o.created_at).toLocaleDateString('fr-FR') : '—',
+            getStatusConfig(o.status).label,
+        ]);
+        const csv = [headers, ...rows]
+            .map(row => row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(','))
+            .join('\r\n');
+        const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `commandes-${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast(`${toExport.length} commande(s) exportée(s)`, 'success');
+    };
 
     const getStatusConfig = (status: Order['status']) => {
         switch (status) {
@@ -190,31 +270,54 @@ export default function OrderManager() {
             </div>
 
             {/* Controls */}
-            <div className="flex flex-col md:flex-row gap-4 md:gap-6 bg-white p-6 md:p-8 border border-gray-100 shadow-sm">
-                <div className="relative flex-1">
-                    <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-                    <input
-                        type="text"
-                        placeholder="Rechercher par ID, Nom ou Email..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full pl-14 pr-6 py-4 bg-gray-50/50 border border-transparent focus:bg-white focus:border-primary/20 focus:ring-4 focus:ring-primary/5 transition-all text-sm outline-none rounded-sm"
-                    />
+            <div className="flex flex-col gap-4 bg-white p-6 md:p-8 border border-gray-100 shadow-sm">
+                <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                        <input
+                            type="text"
+                            placeholder="Rechercher par ID, Nom ou Email..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full pl-14 pr-6 py-4 bg-gray-50/50 border border-transparent focus:bg-white focus:border-primary/20 focus:ring-4 focus:ring-primary/5 transition-all text-sm outline-none rounded-sm"
+                        />
+                    </div>
+                    <div className="flex items-center gap-4 bg-gray-50/50 border border-gray-100 px-6 py-4">
+                        <Filter size={14} className="text-gray-400" />
+                        <select
+                            value={statusFilter}
+                            onChange={(e) => setStatusFilter(e.target.value)}
+                            className="bg-transparent text-[10px] uppercase tracking-widest font-black focus:outline-none cursor-pointer"
+                        >
+                            <option value="all">Tous les Statuts</option>
+                            <option value="pending">En attente</option>
+                            <option value="processing">Préparation</option>
+                            <option value="shipped">Expédiée</option>
+                            <option value="delivered">Livrée</option>
+                            <option value="cancelled">Annulée</option>
+                        </select>
+                    </div>
                 </div>
-                <div className="flex items-center gap-4 bg-gray-50/50 border border-gray-100 px-6 py-4">
-                    <Filter size={14} className="text-gray-400" />
-                    <select
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                        className="bg-transparent text-[10px] uppercase tracking-widest font-black focus:outline-none cursor-pointer"
-                    >
-                        <option value="all">Tous les Statuts</option>
-                        <option value="pending">En attente</option>
-                        <option value="processing">Préparation</option>
-                        <option value="shipped">Expédiée</option>
-                        <option value="delivered">Livrée</option>
-                        <option value="cancelled">Annulée</option>
-                    </select>
+                {/* Date filter pills */}
+                <div className="flex items-center gap-3 flex-wrap">
+                    <Calendar size={13} className="text-gray-400 shrink-0" />
+                    {(['all', 'today', 'week', 'month'] as const).map(d => (
+                        <button
+                            key={d}
+                            onClick={() => setDateFilter(d)}
+                            className={cn(
+                                "px-4 py-1.5 text-[9px] uppercase tracking-widest font-black rounded-full border transition-all",
+                                dateFilter === d
+                                    ? "bg-gray-900 text-white border-gray-900"
+                                    : "bg-white text-gray-400 border-gray-100 hover:border-gray-300 hover:text-gray-600"
+                            )}
+                        >
+                            {d === 'all' ? 'Tout' : d === 'today' ? "Aujourd'hui" : d === 'week' ? 'Cette Semaine' : 'Ce Mois'}
+                        </button>
+                    ))}
+                    <span className="ml-auto text-[10px] text-gray-400 font-medium">
+                        {filteredOrders.length} commande{filteredOrders.length !== 1 ? 's' : ''}
+                    </span>
                 </div>
             </div>
 
@@ -223,6 +326,14 @@ export default function OrderManager() {
                 <table className="w-full text-left border-collapse min-w-[900px]">
                     <thead>
                         <tr className="border-b border-gray-50 bg-[#FAF9F6]">
+                            <th className="pl-6 md:pl-10 pr-2 py-4 md:py-6 w-10">
+                                <input
+                                    type="checkbox"
+                                    checked={allFilteredChecked}
+                                    onChange={toggleAll}
+                                    className="w-4 h-4 accent-primary cursor-pointer"
+                                />
+                            </th>
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Identifiant</th>
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Client</th>
                             <th className="px-6 md:px-10 py-4 md:py-6 text-[10px] uppercase tracking-widest text-gray-400 font-bold">Montant</th>
@@ -240,8 +351,19 @@ export default function OrderManager() {
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     key={order.id}
-                                    className="hover:bg-gray-50/50 transition-all duration-500 group"
+                                    className={cn(
+                                        "hover:bg-gray-50/50 transition-all duration-500 group",
+                                        checkedIds.has(order.id) && "bg-primary/5"
+                                    )}
                                 >
+                                    <td className="pl-6 md:pl-10 pr-2 py-6 md:py-8 w-10">
+                                        <input
+                                            type="checkbox"
+                                            checked={checkedIds.has(order.id)}
+                                            onChange={() => toggleOne(order.id)}
+                                            className="w-4 h-4 accent-primary cursor-pointer"
+                                        />
+                                    </td>
                                     <td className="px-6 md:px-10 py-6 md:py-8">
                                         <div className="flex items-center gap-4">
                                             <div className="w-2 h-10 bg-primary/20 group-hover:bg-primary transition-colors rounded-full" />
@@ -345,6 +467,35 @@ export default function OrderManager() {
                     </div>
                 )}
             </div>
+
+            {/* Floating export bar */}
+            <AnimatePresence>
+                {checkedIds.size > 0 && (
+                    <motion.div
+                        initial={{ y: 80, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 80, opacity: 0 }}
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[200] flex items-center gap-6 bg-gray-900 text-white px-8 py-4 shadow-2xl rounded-2xl border border-white/10"
+                    >
+                        <span className="text-[10px] uppercase tracking-widest font-black text-white/70">
+                            {checkedIds.size} sélectionnée{checkedIds.size > 1 ? 's' : ''}
+                        </span>
+                        <button
+                            onClick={exportCSV}
+                            className="flex items-center gap-3 px-6 py-2.5 bg-primary hover:bg-amber-500 text-white text-[10px] uppercase font-black tracking-widest rounded-xl transition-all shadow-lg"
+                        >
+                            <Download size={14} />
+                            Exporter CSV
+                        </button>
+                        <button
+                            onClick={() => setCheckedIds(new Set())}
+                            className="p-2 rounded-full hover:bg-white/10 transition-colors text-white/50 hover:text-white"
+                        >
+                            <X size={16} />
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Sidebar Details Panel */}
             <AnimatePresence>
