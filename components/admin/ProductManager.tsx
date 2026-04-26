@@ -909,7 +909,7 @@ const ProductManager = () => {
                                             </div>
 
                                             <div className="pt-4">
-                                                <button disabled={loading || categories.length === 0} type="submit" className="w-full py-5 bg-primary text-white font-bold uppercase tracking-widest text-xs hover:bg-black transition-all duration-700 flex items-center justify-center space-x-3 shadow-xl shadow-primary/20 disabled:opacity-30 disabled:cursor-not-allowed group rounded-sm">
+                                                <button disabled={loading || categories.length === 0} type="submit" className="w-full py-5 px-8 bg-primary text-white font-bold uppercase tracking-widest text-xs hover:bg-black transition-all duration-700 flex items-center justify-center space-x-3 shadow-xl shadow-primary/20 disabled:opacity-30 disabled:cursor-not-allowed group rounded-sm">
                                                     {loading
                                                         ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                                                         : <><Check size={16} className="group-hover:scale-125 transition-transform" /><span>{isEditing ? 'Confirmer les Modifications' : 'Publier le Produit'}</span></>
