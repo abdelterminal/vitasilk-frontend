@@ -1,37 +1,45 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { TrendingUp, ArrowRight, ShoppingBag } from 'lucide-react';
+import { productsApi, imageUrl } from '@/lib/api';
 
-const BEST_SELLERS = [
-  {
-    id: 1,
-    name: "Filler Glow 1L",
-    subtitle: "Protéine Kératine",
-    price: "À partir de 299 MAD",
-    badge: "#1 Best-seller",
-    badgeBg: "bg-primary text-white",
-    image: "/img/lissage pro/VitaSilk-Filter-Glow-1L.jpg",
-    href: "/boutique",
-    purchases: "+250 achats",
-  },
-  {
-    id: 2,
-    name: "Botox Capillaire 1000ml",
-    subtitle: "Traitement Professionnel Intense",
-    price: "À partir de 349 MAD",
-    badge: "Coup de Cœur",
-    badgeBg: "bg-gray-900 text-white",
-    image: "/img/lissage pro/VitaSilk-Botox-Capillaire-1000ml-shoot.png",
-    href: "/boutique",
-    purchases: "+180 achats",
-  },
+interface FeaturedProduct {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  image: string;
+  href: string;
+}
+
+const BADGES = [
+  { label: '#1 Best-seller', bg: 'bg-primary text-white' },
+  { label: 'Coup de Cœur',  bg: 'bg-gray-900 text-white' },
 ];
 
 export default function BestSellers() {
+  const [products, setProducts] = useState<FeaturedProduct[]>([]);
+
+  useEffect(() => {
+    productsApi.getAll({ featured: true, limit: 4 }).then(res => {
+      const mapped = res.data.slice(0, 4).map(p => ({
+        id: p.id,
+        name: p.name,
+        category: p.category_name || '',
+        price: p.price,
+        image: p.images?.[0] ? imageUrl(p.images[0]) : '/img/placeholder.png',
+        href: `/product/${p.id}`,
+      }));
+      setProducts(mapped);
+    }).catch(console.error);
+  }, []);
+
+  if (products.length === 0) return null;
+
   return (
     <section className="py-20 bg-[#FDFBF7]">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
@@ -61,60 +69,63 @@ export default function BestSellers() {
           </Link>
         </motion.div>
 
-        {/* Two cards side by side */}
+        {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {BEST_SELLERS.map((product, i) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-            >
-              <Link
-                href={product.href}
-                className="group flex flex-col sm:flex-row gap-4 sm:gap-6 bg-white border border-gray-100 rounded-[7px] overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-700 p-4 sm:p-6"
+          {products.map((product, i) => {
+            const badge = BADGES[i] ?? BADGES[BADGES.length - 1];
+            return (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.15 }}
               >
-                {/* Image */}
-                <div className="relative w-36 h-44 flex-shrink-0 bg-gray-50 rounded-[7px] overflow-hidden">
-                  <Image
-                    src={product.image}
-                    alt={product.name}
-                    fill
-                    priority
-                    sizes="144px"
-                    className="object-contain p-3 transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
+                <Link
+                  href={product.href}
+                  className="group flex flex-col sm:flex-row gap-4 sm:gap-6 bg-white border border-gray-100 rounded-[7px] overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-700 p-4 sm:p-6"
+                >
+                  {/* Image */}
+                  <div className="relative w-36 h-44 flex-shrink-0 bg-gray-50 rounded-[7px] overflow-hidden">
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      priority
+                      sizes="144px"
+                      className="object-contain p-3 transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
 
-                {/* Info */}
-                <div className="flex flex-col justify-between py-1 flex-1">
-                  {/* Badge */}
-                  <span className={`self-start ${product.badgeBg} text-[9px] uppercase font-bold px-3 py-1 rounded-full mb-3`}>
-                    {product.badge}
-                  </span>
+                  {/* Info */}
+                  <div className="flex flex-col justify-between py-1 flex-1">
+                    <span className={`self-start ${badge.bg} text-[9px] uppercase font-bold px-3 py-1 rounded-full mb-3`}>
+                      {badge.label}
+                    </span>
 
-                  <div>
-                    <p className="text-[9px] uppercase text-primary font-bold mb-1">{product.subtitle}</p>
-                    <h3 className="text-gray-900 font-sans font-light text-xl mb-3">{product.name}</h3>
+                    <div>
+                      {product.category && (
+                        <p className="text-[9px] uppercase text-primary font-bold mb-1">{product.category}</p>
+                      )}
+                      <h3 className="text-gray-900 font-sans font-light text-xl mb-3">{product.name}</h3>
 
-                    {/* Purchases instead of stars */}
-                    <div className="flex items-center gap-2 mb-4">
-                      <ShoppingBag size={11} className="text-primary" />
-                      <span className="text-[9px] text-gray-400">{product.purchases}</span>
-                    </div>
+                      <div className="flex items-center gap-2 mb-4">
+                        <ShoppingBag size={11} className="text-primary" />
+                        <span className="text-[9px] text-gray-400">Produit vedette</span>
+                      </div>
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-primary font-medium text-sm">{product.price}</span>
-                      <span className="text-[9px] uppercase font-bold text-primary group-hover:text-black transition-colors flex items-center gap-1 ml-auto">
-                        Commander <ArrowRight size={10} />
-                      </span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-primary font-medium text-sm">{product.price.toLocaleString()} DH</span>
+                        <span className="text-[9px] uppercase font-bold text-primary group-hover:text-black transition-colors flex items-center gap-1 ml-auto">
+                          Commander <ArrowRight size={10} />
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>
