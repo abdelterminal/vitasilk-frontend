@@ -14,6 +14,7 @@ interface Product {
  description: string;
  price: number;
  category: string;
+ categorySlug: string;
  stock: number;
  images: string[];
 }
@@ -46,9 +47,6 @@ const CategoryPage = () => {
  const fetchProducts = async () => {
    setLoading(true);
    try {
-     const normalize = (str: string) =>
-       str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-
      const res = await productsApi.getAll({ limit: 500 });
      const mapped: Product[] = res.data.map(p => ({
        id: String(p.id),
@@ -56,10 +54,11 @@ const CategoryPage = () => {
        description: p.description || '',
        price: p.price,
        category: p.category_name || '',
+       categorySlug: p.category_slug || '',
        stock: p.stock,
        images: p.images.map(img => imageUrl(img)),
      }));
-     const filtered = mapped.filter(p => normalize(p.category) === normalize(categoryName));
+     const filtered = mapped.filter(p => p.categorySlug === slug);
      setProducts(filtered);
    } catch (error) {
      console.error("Error fetching products:", error);

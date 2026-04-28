@@ -19,8 +19,14 @@ interface Product {
  description: string;
  price: number;
  category: string;
+ categorySlug: string;
  stock: number;
  images: string[];
+}
+
+interface CategoryOption {
+ name: string;
+ slug: string;
 }
 const SORT_OPTIONS = [
  { label: 'Nouveautés', value: 'newest' },
@@ -31,9 +37,9 @@ const SORT_OPTIONS = [
 
 export default function BoutiquePage() {
  const [allProducts, setAllProducts] = useState<Product[]>([]);
- const [categories, setCategories] = useState<string[]>(['Tous']);
+ const [categories, setCategories] = useState<CategoryOption[]>([{ name: 'Tous', slug: '' }]);
  const [loading, setLoading] = useState(true);
- const [activeCategory, setActiveCategory] = useState('Tous');
+ const [activeSlug, setActiveSlug] = useState('');
  const [searchQuery, setSearchQuery] = useState('');
  const [sortBy, setSortBy] = useState('newest');
  const [priceRange, setPriceRange] = useState<[number, number]>([0, 5000]);
@@ -72,13 +78,17 @@ export default function BoutiquePage() {
        description: p.description || '',
        price: p.price,
        category: p.category_name || '',
+       categorySlug: p.category_slug || '',
        stock: p.stock,
        images: p.images.map(img => imageUrl(img)),
      }));
      setAllProducts(productsData);
 
-     const catNames = ['Tous', ...categoriesRes.data.map(c => c.name)];
-     setCategories(catNames);
+     const cats: CategoryOption[] = [
+       { name: 'Tous', slug: '' },
+       ...categoriesRes.data.map(c => ({ name: c.name, slug: c.slug })),
+     ];
+     setCategories(cats);
 
      const prices = productsData.map(p => p.price);
      setMaxPrice(Math.max(...prices, 1000));
@@ -104,8 +114,8 @@ export default function BoutiquePage() {
  let products = [...allProducts];
 
  // Category filter
- if (activeCategory !== 'Tous') {
- products = products.filter(p => p.category.toLowerCase() === activeCategory.toLowerCase());
+ if (activeSlug !== '') {
+   products = products.filter(p => p.categorySlug === activeSlug);
  }
 
  // Search filter
@@ -135,7 +145,7 @@ export default function BoutiquePage() {
  }
 
  return products;
-  }, [allProducts, activeCategory, searchQuery, sortBy, priceRange, selectedSizes]);
+  }, [allProducts, activeSlug, searchQuery, sortBy, priceRange, selectedSizes]);
 
  const results = filteredProducts();
  const totalPages = Math.ceil(results.length / ITEMS_PER_PAGE);
@@ -152,13 +162,13 @@ export default function BoutiquePage() {
  };
 
  const resetAllFilters = () => {
-   setActiveCategory('Tous');
+   setActiveSlug('');
    setSearchQuery('');
    setSortBy('newest');
    setPriceRange([0, maxPrice]);
    setSelectedSizes([]);
    resetPage();
-   scrollToProducts(); // Scroll to products after reset
+   scrollToProducts();
  };
 
  return (
@@ -219,20 +229,20 @@ export default function BoutiquePage() {
  <div className="flex flex-wrap justify-center gap-3 mb-10 -mt-16 relative z-20">
  {categories.map(cat => (
  <button
- key={cat}
- onClick={() => { 
-   setActiveCategory(cat); 
-   resetPage(); 
-   scrollToProducts(); // Scroll to products when changing category
+ key={cat.slug}
+ onClick={() => {
+   setActiveSlug(cat.slug);
+   resetPage();
+   scrollToProducts();
  }}
  className={cn(
   "px-6 py-3 text-[10px] uppercase font-bold transition-all border rounded-full backdrop-blur-md shadow-lg",
- activeCategory === cat
+ activeSlug === cat.slug
  ? "bg-black text-white border-black scale-105"
  : "bg-white/80 text-gray-600 border-gray-100 hover:border-black hover:text-black hover:bg-white"
  )}
  >
- {cat}
+ {cat.name}
  </button>
  ))}
  </div>
@@ -351,12 +361,12 @@ export default function BoutiquePage() {
           </div>
 
           {/* Active Filters Summary */}
-          {(activeCategory !== 'Tous' || selectedSizes.length > 0 || priceRange[1] < maxPrice) && (
+          {(activeSlug !== '' || selectedSizes.length > 0 || priceRange[1] < maxPrice) && (
             <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-2">
               <span className="text-[9px] uppercase text-gray-400 font-bold mr-2">Filtres actifs:</span>
-              {activeCategory !== 'Tous' && (
+              {activeSlug !== '' && (
                 <span className="px-3 py-1 bg-gray-100 text-gray-700 text-[9px] uppercase font-bold rounded-full">
-                  {activeCategory}
+                  {categories.find(c => c.slug === activeSlug)?.name}
                 </span>
               )}
               {selectedSizes.map(size => (
