@@ -10,7 +10,7 @@ import NoSsr from "@/components/NoSsr";
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const isAuthPage = pathname === "/login" || pathname === "/register";
-    const isAdminPage = pathname?.startsWith("/admin");
+    const isAdminPage = pathname?.startsWith("/admin") || pathname?.startsWith("/agent");
 
     return (
         <>
