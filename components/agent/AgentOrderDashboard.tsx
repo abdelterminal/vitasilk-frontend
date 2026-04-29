@@ -85,7 +85,7 @@ export default function AgentOrderDashboard() {
     <div className="min-h-screen bg-[#FAF9F6] flex flex-col">
 
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 lg:px-12 py-4 lg:py-6 flex items-center justify-between sticky top-0 z-50">
+      <header className="bg-white border-b border-gray-100 px-6 lg:px-12 py-4 flex items-center justify-between sticky top-0 z-50 shadow-sm">
         <div className="flex items-center gap-4">
           <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold text-white ring-4 ring-primary/10">V</div>
           <div>
@@ -95,20 +95,17 @@ export default function AgentOrderDashboard() {
         </div>
         <div className="flex items-center gap-4">
           <div className="text-right hidden sm:block">
-            <p className="text-[10px] uppercase tracking-widest font-bold text-gray-900 leading-none mb-1">{userData?.name}</p>
-            <p className="text-[9px] text-gray-400 font-medium">Agent — Confirmations</p>
+            <p className="text-xs font-bold text-gray-900">{userData?.name}</p>
+            <p className="text-[9px] text-gray-400 uppercase tracking-wider">Agent confirmations</p>
           </div>
-          <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-primary font-bold shadow-inner text-xs">
-            {userData?.name?.slice(0, 2).toUpperCase() || 'AG'}
-          </div>
-          <button onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 text-[10px] uppercase font-bold text-red-400 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors">
+          <button onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 text-[10px] uppercase font-bold text-red-500 hover:bg-red-50 rounded-lg transition-colors">
             <LogOut size={14} />
             <span className="hidden sm:inline">Déconnexion</span>
           </button>
         </div>
       </header>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 lg:px-12 py-8 lg:py-12">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 lg:px-12 py-8">
 
         {/* Title */}
         <div className="mb-8">
