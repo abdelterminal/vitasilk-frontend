@@ -183,6 +183,11 @@ export const usersApi = {
       method: 'PUT', body: JSON.stringify(data),
     }, true),
 
+  create: (data: { name: string; email: string; password: string; role: string }) =>
+    request<{ success: boolean; data: User }>('/users', {
+      method: 'POST', body: JSON.stringify(data),
+    }, true),
+
   updateRole: (id: number | string, role: string) =>
     request<{ success: boolean; data: User }>(`/users/${id}/role`, {
       method: 'PATCH', body: JSON.stringify({ role }),

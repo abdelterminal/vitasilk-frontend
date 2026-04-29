@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { usersApi, ordersApi } from '@/lib/api';
-import { User as UserIcon, Shield, ShieldAlert, Trash2, Mail, Calendar, Search, Filter, MoreHorizontal, UserCheck, UserX, PackageOpen, Loader2, X, Package, Download, Users } from 'lucide-react';
+import { User as UserIcon, Shield, ShieldAlert, Trash2, Mail, Calendar, Search, Filter, MoreHorizontal, UserCheck, UserX, PackageOpen, Loader2, X, Package, Download, Users, UserPlus, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Toast, { ToastType } from './ui/Toast';
 import ConfirmModal from './ui/ConfirmModal';
@@ -14,6 +14,12 @@ const UserManager = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [roleFilter, setRoleFilter] = useState('all');
     const [checkedIds, setCheckedIds] = useState<Set<number | string>>(new Set());
+
+    // Create user modal
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [createForm, setCreateForm] = useState({ name: '', email: '', password: '', role: 'provider' });
+    const [createLoading, setCreateLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     // Modal state
     const [selectedUser, setSelectedUser] = useState<any>(null);
@@ -174,6 +180,21 @@ const UserManager = () => {
 
     const exportClients   = () => { downloadCSV(buildCSV(clients),   `clients-${new Date().toISOString().slice(0,10)}.csv`);   showToast(`${clients.length} client(s) exporté(s)`, 'success'); };
     const exportEmployees = () => { downloadCSV(buildCSV(employees), `employes-${new Date().toISOString().slice(0,10)}.csv`); showToast(`${employees.length} employé(s) exporté(s)`, 'success'); };
+
+    const handleCreateUser = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setCreateLoading(true);
+        try {
+            const res = await usersApi.create(createForm);
+            setUsers(prev => [res.data, ...prev]);
+            setShowCreateModal(false);
+            showToast(`Compte créé avec succès — ${res.data.email}`, 'success');
+        } catch (err: any) {
+            showToast(err.message || 'Erreur lors de la création du compte', 'error');
+        } finally {
+            setCreateLoading(false);
+        }
+    };
     const exportSelected  = () => {
         const list = users.filter(u => checkedIds.has(u.id));
         downloadCSV(buildCSV(list), `selection-utilisateurs-${new Date().toISOString().slice(0,10)}.csv`);
@@ -201,12 +222,11 @@ const UserManager = () => {
                         <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-1">Total Effectif</p>
                         <p className="text-3xl font-sans font-light text-gray-900">{users.length}</p>
                     </div>
-                    {/* Quick-export buttons */}
-                    <div className="flex gap-3">
+                    {/* Quick-export buttons + create */}
+                    <div className="flex gap-3 flex-wrap">
                         <button
                             onClick={exportClients}
                             className="flex items-center gap-2 px-5 py-3 bg-primary text-white text-[9px] uppercase font-black tracking-widest hover:bg-black transition-all rounded-sm shadow-md"
-                            title={`Exporter ${clients.length} clients`}
                         >
                             <Download size={13} />
                             Clients ({clients.length})
@@ -214,10 +234,16 @@ const UserManager = () => {
                         <button
                             onClick={exportEmployees}
                             className="flex items-center gap-2 px-5 py-3 bg-gray-900 text-white text-[9px] uppercase font-black tracking-widest hover:bg-black transition-all rounded-sm shadow-md"
-                            title={`Exporter ${employees.length} employés`}
                         >
                             <Download size={13} />
                             Employés ({employees.length})
+                        </button>
+                        <button
+                            onClick={() => { setCreateForm({ name: '', email: '', password: '', role: 'provider' }); setShowCreateModal(true); }}
+                            className="flex items-center gap-2 px-5 py-3 bg-emerald-600 text-white text-[9px] uppercase font-black tracking-widest hover:bg-emerald-700 transition-all rounded-sm shadow-md"
+                        >
+                            <UserPlus size={13} />
+                            Nouvel Agent
                         </button>
                     </div>
                 </div>
@@ -491,6 +517,96 @@ const UserManager = () => {
                 onConfirm={confirmModal.onConfirm}
                 onClose={() => setConfirmModal(prev => ({ ...prev, isOpen: false }))}
             />
+
+            {/* Create User Modal */}
+            <AnimatePresence>
+                {showCreateModal && (
+                    <div className="fixed inset-0 z-[300] flex items-center justify-center px-4">
+                        <motion.div
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                            onClick={() => setShowCreateModal(false)}
+                        />
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                            className="relative bg-white w-full max-w-md rounded-xl shadow-2xl"
+                        >
+                            <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+                                <div>
+                                    <h3 className="text-lg font-sans font-semibold text-gray-900">Créer un compte</h3>
+                                    <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mt-0.5">Accès équipe interne</p>
+                                </div>
+                                <button onClick={() => setShowCreateModal(false)} className="p-2 hover:bg-gray-100 rounded-full transition-colors"><X size={16} /></button>
+                            </div>
+
+                            <form onSubmit={handleCreateUser} className="p-6 space-y-4">
+                                <div>
+                                    <label className="block text-[9px] uppercase tracking-widest font-bold text-gray-500 mb-1.5">Nom complet</label>
+                                    <input
+                                        required
+                                        value={createForm.name}
+                                        onChange={e => setCreateForm(f => ({ ...f, name: e.target.value }))}
+                                        placeholder="Prénom Nom"
+                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[9px] uppercase tracking-widest font-bold text-gray-500 mb-1.5">Email</label>
+                                    <input
+                                        required
+                                        type="email"
+                                        value={createForm.email}
+                                        onChange={e => setCreateForm(f => ({ ...f, email: e.target.value }))}
+                                        placeholder="agent@vitasilk.com"
+                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[9px] uppercase tracking-widest font-bold text-gray-500 mb-1.5">Mot de passe</label>
+                                    <div className="relative">
+                                        <input
+                                            required
+                                            type={showPassword ? 'text' : 'password'}
+                                            value={createForm.password}
+                                            onChange={e => setCreateForm(f => ({ ...f, password: e.target.value }))}
+                                            placeholder="Minimum 6 caractères"
+                                            className="w-full px-4 py-3 pr-10 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors"
+                                        />
+                                        <button type="button" onClick={() => setShowPassword(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                                            {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="block text-[9px] uppercase tracking-widest font-bold text-gray-500 mb-1.5">Rôle</label>
+                                    <select
+                                        value={createForm.role}
+                                        onChange={e => setCreateForm(f => ({ ...f, role: e.target.value }))}
+                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary transition-colors bg-white"
+                                    >
+                                        <option value="provider">Agent (confirmation commandes)</option>
+                                        <option value="admin">Administrateur</option>
+                                    </select>
+                                </div>
+
+                                <div className="pt-2 flex gap-3">
+                                    <button type="button" onClick={() => setShowCreateModal(false)}
+                                        className="flex-1 py-3 border border-gray-200 text-gray-600 text-[10px] uppercase font-bold tracking-widest rounded-lg hover:bg-gray-50 transition-colors">
+                                        Annuler
+                                    </button>
+                                    <button type="submit" disabled={createLoading}
+                                        className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] uppercase font-bold tracking-widest rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+                                        {createLoading ? <Loader2 size={14} className="animate-spin" /> : <UserPlus size={14} />}
+                                        Créer le compte
+                                    </button>
+                                </div>
+                            </form>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
