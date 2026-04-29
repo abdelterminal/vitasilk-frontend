@@ -67,9 +67,9 @@ const UserManager = () => {
             `Confirmer l'attribution du rôle ${newRole.toUpperCase()} à l'ambassadeur ${userEmail} ?`,
             async () => {
                 try {
-                    // Role update not yet in API — show success for now
+                    const res = await usersApi.updateRole(userId, newRole);
+                    setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: res.data.role } : u));
                     showToast("Privilèges mis à jour avec distinction");
-                    setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole as any } : u));
                 } catch (e) {
                     console.error(e);
                     showToast("Échec de la mutation des privilèges", "error");

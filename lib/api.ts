@@ -183,6 +183,11 @@ export const usersApi = {
       method: 'PUT', body: JSON.stringify(data),
     }, true),
 
+  updateRole: (id: number | string, role: string) =>
+    request<{ success: boolean; data: User }>(`/users/${id}/role`, {
+      method: 'PATCH', body: JSON.stringify({ role }),
+    }, true),
+
   delete: (id: number | string) =>
     request<{ success: boolean }>(`/users/${id}`, { method: 'DELETE' }, true),
 
