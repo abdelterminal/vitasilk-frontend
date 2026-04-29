@@ -43,11 +43,6 @@ const AdminDashboard = () => {
     const [unreadMessages, setUnreadMessages] = useState(0);
     const router = useRouter();
 
-    useEffect(() => {
-        if (userData?.role === 'provider' && activeTab === 'dashboard') {
-            setActiveTab('products');
-        }
-    }, [userData, activeTab]);
 
     const menuGroups = [
         {
@@ -176,10 +171,7 @@ const AdminDashboard = () => {
                     <nav className={cn("flex-1 overflow-y-auto scrollbar-hide transition-all duration-300", sidebarCollapsed ? "py-4 px-2" : "py-8 px-6")}>
                         <div className={cn(sidebarCollapsed ? "space-y-1" : "space-y-10")}>
                             {menuGroups.map((group, idx) => {
-                                const visibleItems = group.items.filter(item => {
-                                    if (userData?.role === 'provider' && !['products', 'categories'].includes(item.id)) return false;
-                                    return true;
-                                });
+                                const visibleItems = group.items;
                                 if (visibleItems.length === 0) return null;
                                 return (
                                     <div key={idx} className={cn(sidebarCollapsed ? "" : "space-y-4")}>
@@ -265,7 +257,7 @@ const AdminDashboard = () => {
                         <div className="flex items-center space-x-3 lg:space-x-6">
                             <div className="text-right hidden sm:block">
                                 <p className="text-[10px] uppercase tracking-widest font-bold text-gray-900 leading-none mb-1">Directeur</p>
-                                <p className="text-[9px] text-gray-400 font-medium">{userData?.role === 'super-admin' ? 'Super Administrateur' : userData?.role === 'provider' ? 'Organisateur' : 'Administrateur'}</p>
+                                <p className="text-[9px] text-gray-400 font-medium">{userData?.role === 'super-admin' ? 'Super Administrateur' : 'Administrateur'}</p>
                             </div>
                             <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center text-primary font-bold shadow-inner text-xs lg:text-base">
                                 {userData?.name?.slice(0, 2).toUpperCase() || 'AD'}

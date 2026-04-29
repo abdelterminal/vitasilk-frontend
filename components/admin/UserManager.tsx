@@ -244,7 +244,7 @@ const UserManager = () => {
                     >
                         <option value="all">Tous les rôles</option>
                         <option value="admin">Administrateurs</option>
-                        <option value="provider">Organisateurs (Providers)</option>
+                        <option value="provider">Agents</option>
                         <option value="customer">Clients</option>
                     </select>
                 </div>
@@ -346,7 +346,7 @@ const UserManager = () => {
                                                 )}
                                             >
                                                 <option value="admin">Administrateur</option>
-                                                <option value="provider">Organisateur</option>
+                                                <option value="provider">Agent</option>
                                             </select>
                                         )}
                                     </td>

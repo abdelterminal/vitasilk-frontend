@@ -9,10 +9,10 @@ const AdminGuard = ({ children }: { children: React.ReactNode }) => {
  const router = useRouter();
 
  useEffect(() => {
- const allowedRoles = ['admin', 'super-admin', 'provider'];
- if (!loading && (!userData || !allowedRoles.includes(userData.role))) {
- router.push('/login');
- }
+ if (loading) return;
+ if (!userData) { router.push('/login'); return; }
+ if (userData.role === 'provider') { router.push('/agent'); return; }
+ if (!['admin', 'super-admin'].includes(userData.role)) router.push('/login');
  }, [userData, loading, router]);
 
  if (loading) {
@@ -23,7 +23,7 @@ const AdminGuard = ({ children }: { children: React.ReactNode }) => {
  );
  }
 
- const allowedRoles = ['admin', 'super-admin', 'provider'];
+ const allowedRoles = ['admin', 'super-admin'];
  if (userData && allowedRoles.includes(userData.role)) {
  return <>{children}</>;
  }

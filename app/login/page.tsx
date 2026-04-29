@@ -21,8 +21,10 @@ const LoginPage = () => {
         setIsLoading(true);
         setError('');
         try {
-            await login(email.trim(), password);
-            router.push('/');
+            const user = await login(email.trim(), password);
+            if (user.role === 'provider') router.push('/agent');
+            else if (['admin', 'super-admin'].includes(user.role)) router.push('/admin');
+            else router.push('/');
         } catch (err: any) {
             if (err.status === 401) {
                 setError("Email ou mot de passe incorrect.");

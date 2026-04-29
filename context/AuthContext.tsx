@@ -7,7 +7,7 @@ interface AuthContextType {
   user: User | null;
   userData: User | null; // alias for backward compatibility
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   refreshUser: () => Promise<void>;
@@ -39,10 +39,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<User> => {
     const res = await authApi.login(email, password);
     setToken(res.data.token);
     setUser(res.data.user);
+    return res.data.user;
   };
 
   const register = async (name: string, email: string, password: string) => {
