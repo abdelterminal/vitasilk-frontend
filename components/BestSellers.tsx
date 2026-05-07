@@ -83,23 +83,26 @@ export default function BestSellers() {
               >
                 <Link
                   href={product.href}
-                  className="group flex flex-col sm:flex-row gap-4 sm:gap-6 bg-white border border-gray-100 rounded-[7px] overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-700 p-4 sm:p-6"
+                  className="group flex flex-col sm:flex-row gap-4 sm:gap-6 bg-white border border-gray-100 rounded-[7px] overflow-hidden hover:shadow-xl hover:border-primary/20 transition-all duration-700 sm:p-6"
                 >
-                  {/* Image */}
-                  <div className="relative w-36 h-44 flex-shrink-0 bg-gray-50 rounded-[7px] overflow-hidden">
+                  {/* Image — full-width centered on mobile, fixed sidebar on desktop */}
+                  <div className="relative w-full h-56 sm:w-36 sm:h-44 sm:flex-shrink-0 bg-gray-50 sm:rounded-[7px] sm:overflow-hidden">
                     <Image
                       src={product.image}
                       alt={product.name}
                       fill
                       priority
-                      sizes="144px"
-                      className="object-contain p-3 transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 640px) 100vw, 144px"
+                      className="object-contain p-6 sm:p-3 transition-transform duration-700 group-hover:scale-105"
                     />
+                    <span className={`absolute top-4 left-4 sm:hidden ${badge.bg} text-[9px] uppercase font-bold px-3 py-1 rounded-full`}>
+                      {badge.label}
+                    </span>
                   </div>
 
                   {/* Info */}
-                  <div className="flex flex-col justify-between py-1 flex-1">
-                    <span className={`self-start ${badge.bg} text-[9px] uppercase font-bold px-3 py-1 rounded-full mb-3`}>
+                  <div className="flex flex-col justify-between py-1 flex-1 px-4 pb-4 sm:px-0 sm:pb-0">
+                    <span className={`hidden sm:inline-flex self-start ${badge.bg} text-[9px] uppercase font-bold px-3 py-1 rounded-full mb-3`}>
                       {badge.label}
                     </span>
 
