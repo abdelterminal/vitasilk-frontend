@@ -88,7 +88,7 @@ const AdminDashboard = () => {
             try {
                 const [statsRes, prodsRes, pendingRes, msgsRes] = await Promise.all([
                     adminApi.getStats(),
-                    productsApi.getAll({ limit: 50 }),
+                    productsApi.getAll({ limit: 500 }),
                     ordersApi.getAll({ status: 'pending', limit: 1 }),
                     messagesApi.getAll(1),
                 ]);
@@ -100,7 +100,10 @@ const AdminDashboard = () => {
                 });
                 const allProds = prodsRes.data || [];
                 setLowStock(allProds.filter(p => p.stock < 10).slice(0, 5));
-                setTopProducts(allProds.slice(0, 3));
+                const sorted = [...allProds].sort((a, b) =>
+                    new Date(b.created_at ?? 0).getTime() - new Date(a.created_at ?? 0).getTime()
+                );
+                setTopProducts(sorted.slice(0, 3));
                 setPendingOrders(pendingRes.pagination?.total ?? 0);
                 const msgs = msgsRes.data || [];
                 setUnreadMessages(msgs.filter((m: any) => !m.is_read).length);
@@ -373,7 +376,7 @@ const AdminDashboard = () => {
                                                             <div className="flex-1 min-w-0">
                                                                 <div className="flex items-baseline gap-2 mb-0.5">
                                                                     <span className="text-xs font-bold text-gray-900">{log.admin_name}</span>
-                                                                    <span className="text-[10px] text-gray-400">{log.created_at ? new Date(log.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+                                                                    <span className="text-[10px] text-gray-400">{log.created_at ? (() => { const d = new Date(log.created_at); const isToday = d.toDateString() === new Date().toDateString(); return isToday ? d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }) : d.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }); })() : ''}</span>
                                                                 </div>
                                                                 <p className="text-[12px] text-gray-500 leading-relaxed truncate">{log.details}</p>
                                                             </div>
