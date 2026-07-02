@@ -144,13 +144,13 @@ export default function LivraisonPage() {
                         </h2>
                         <p className="text-gray-400 text-sm">Notre équipe est disponible du lundi au samedi de 9h à 18h pour toute question relative à votre livraison ou commande.</p>
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <a href="https://wa.me/212662633170" target="_blank" rel="noopener noreferrer"
+                            <a href="https://wa.me/212661086837" target="_blank" rel="noopener noreferrer"
                                className="inline-flex items-center justify-center gap-3 px-6 py-3 bg-[#25D366] text-white text-[10px] uppercase tracking-widest font-black rounded-xl hover:opacity-90 transition-opacity">
-                                WhatsApp : +212 662 633 170
+                                WhatsApp : +212 661 086 837
                             </a>
-                            <a href="mailto:sales@vitasilk.ma"
+                            <a href="mailto:contact@vitasilkbs.ma"
                                className="inline-flex items-center justify-center gap-3 px-6 py-3 bg-white/10 text-white text-[10px] uppercase tracking-widest font-black rounded-xl hover:bg-white/20 transition-colors">
-                                sales@vitasilk.ma
+                                contact@vitasilkbs.ma
                             </a>
                         </div>
                     </section>

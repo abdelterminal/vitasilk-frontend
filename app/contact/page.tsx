@@ -26,9 +26,9 @@ const SUBJECTS = [
 ];
 
 const CONTACT_ITEMS = [
-  { icon: Phone,         label: 'Téléphone',      value: '+212 662 633 170',    href: 'tel:+212662633170' },
-  { icon: Mail,          label: 'Email',           value: 'sales@vitasilk.ma',   href: 'mailto:sales@vitasilk.ma' },
-  { icon: MessageCircle, label: 'WhatsApp',        value: 'Écrire sur WhatsApp', href: 'https://wa.me/212662633170' },
+  { icon: Phone,         label: 'Téléphone',      value: '+212 661 086 837',    href: 'tel:+212661086837' },
+  { icon: Mail,          label: 'Email',           value: 'contact@vitasilkbs.ma',   href: 'mailto:contact@vitasilkbs.ma' },
+  { icon: MessageCircle, label: 'WhatsApp',        value: 'Écrire sur WhatsApp', href: 'https://wa.me/212661086837' },
   { icon: MapPin,        label: 'Adresse',         value: 'Meknès, Maroc',       href: '#' },
 ];
 
@@ -148,7 +148,7 @@ const ContactPage = () => {
                 <Instagram size={12} /> Instagram
               </a>
               <a
-                href="https://wa.me/212662633170"
+                href="https://wa.me/212661086837"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2.5 border border-white/15 text-[9px] uppercase tracking-[0.15em] font-bold text-white/55 hover:border-green-400/70 hover:text-green-400 transition-all"

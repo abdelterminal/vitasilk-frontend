@@ -95,8 +95,8 @@ export default function InvoiceView({ data, onClose }: { data: InvoiceData; onCl
                             />
                             <div className="mt-4 space-y-0.5 text-[10px] text-gray-400 leading-relaxed">
                                 <p>Meknès, Maroc</p>
-                                <p>+212 662 633 170</p>
-                                <p>sales@vitasilk.ma</p>
+                                <p>+212 661 086 837</p>
+                                <p>contact@vitasilkbs.ma</p>
                             </div>
                         </div>
 
@@ -210,7 +210,7 @@ export default function InvoiceView({ data, onClose }: { data: InvoiceData; onCl
 
                 {/* Print-only fine print */}
                 <div className="hidden print:block px-12 pb-6 text-center text-[8px] text-gray-300 uppercase tracking-widest border-t border-gray-50 pt-4">
-                    Vitasilk • Meknès, Maroc • +212 662 633 170 • vitasilk.ma
+                    Vitasilk • Meknès, Maroc • +212 661 086 837 • vitasilk.ma
                 </div>
             </div>
         </div>

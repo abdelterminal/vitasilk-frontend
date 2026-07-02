@@ -89,11 +89,11 @@ const Navbar = () => {
                     )}>
                         <div className="flex items-center space-x-2 group cursor-pointer hover:text-primary transition-colors">
                             <Phone size={11} className="text-primary/70" />
-                            <span>+212 662 633 170</span>
+                            <span>+212 661 086 837</span>
                         </div>
                         <div className="hidden sm:flex items-center space-x-2 group cursor-pointer hover:text-primary transition-colors">
                             <Mail size={11} className="text-primary/70" />
-                            <span>contact@vitasilk.ma</span>
+                            <span>contact@vitasilkbs.ma</span>
                         </div>
                     </div>
 

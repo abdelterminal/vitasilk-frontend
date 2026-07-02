@@ -62,7 +62,7 @@ export default function CGVPage() {
                             <li><span className="font-semibold text-gray-800">Zones éloignées :</span> 3 à 5 jours ouvrés</li>
                         </ul>
                         <p>Ces délais sont donnés à titre indicatif et peuvent varier en période de forte demande ou lors de jours fériés. Vitasilk ne saurait être tenu responsable des retards imputables au transporteur.</p>
-                        <p>Vous pouvez suivre votre commande via la page <Link href="/track-order" className="text-primary hover:underline">Suivi de commande</Link> ou en nous contactant sur WhatsApp au <a href="https://wa.me/212662633170" className="text-primary hover:underline">+212 662 633 170</a>.</p>
+                        <p>Vous pouvez suivre votre commande via la page <Link href="/track-order" className="text-primary hover:underline">Suivi de commande</Link> ou en nous contactant sur WhatsApp au <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a>.</p>
                     </section>
 
                     <section className="space-y-3">
@@ -75,7 +75,7 @@ export default function CGVPage() {
                         <p>À la réception de votre commande, nous vous invitons à vérifier l'état du colis et des produits en présence du livreur. En cas d'anomalie (colis endommagé, produit manquant ou défectueux), veuillez :</p>
                         <ul className="space-y-2 pl-4 border-l border-gray-200">
                             <li>Refuser le colis ou émettre des réserves écrites sur le bon de livraison</li>
-                            <li>Nous contacter immédiatement via WhatsApp au <a href="https://wa.me/212662633170" className="text-primary hover:underline">+212 662 633 170</a></li>
+                            <li>Nous contacter immédiatement via WhatsApp au <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a></li>
                             <li>Nous envoyer des photos du colis et du produit concerné</li>
                         </ul>
                     </section>
@@ -85,8 +85,8 @@ export default function CGVPage() {
                         <p>Pour des raisons d'hygiène et de sécurité, les produits capillaires ne peuvent être retournés ou échangés une fois ouverts ou utilisés, sauf en cas de défaut avéré ou d'erreur de notre part.</p>
                         <p>Tout retour doit être signalé dans les <strong className="font-semibold text-gray-800">48 heures</strong> suivant la réception, en nous contactant via :</p>
                         <ul className="space-y-1 pl-4 border-l border-gray-200">
-                            <li>WhatsApp : <a href="https://wa.me/212662633170" className="text-primary hover:underline">+212 662 633 170</a></li>
-                            <li>Email : <a href="mailto:sales@vitasilk.ma" className="text-primary hover:underline">sales@vitasilk.ma</a></li>
+                            <li>WhatsApp : <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a></li>
+                            <li>Email : <a href="mailto:contact@vitasilkbs.ma" className="text-primary hover:underline">contact@vitasilkbs.ma</a></li>
                         </ul>
                         <p>Les frais de retour sont à la charge du client sauf en cas d'erreur de notre part ou de produit défectueux.</p>
                     </section>
@@ -105,8 +105,8 @@ export default function CGVPage() {
                         <h2 className="text-[11px] uppercase tracking-[0.3em] font-black text-gray-900">12. Service Client</h2>
                         <p>Notre équipe est disponible pour répondre à toutes vos questions :</p>
                         <ul className="space-y-1 pl-4 border-l border-gray-200">
-                            <li><span className="font-semibold text-gray-800">WhatsApp :</span> <a href="https://wa.me/212662633170" className="text-primary hover:underline">+212 662 633 170</a></li>
-                            <li><span className="font-semibold text-gray-800">Email :</span> <a href="mailto:sales@vitasilk.ma" className="text-primary hover:underline">sales@vitasilk.ma</a></li>
+                            <li><span className="font-semibold text-gray-800">WhatsApp :</span> <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a></li>
+                            <li><span className="font-semibold text-gray-800">Email :</span> <a href="mailto:contact@vitasilkbs.ma" className="text-primary hover:underline">contact@vitasilkbs.ma</a></li>
                             <li><span className="font-semibold text-gray-800">Adresse :</span> Meknès, Maroc</li>
                         </ul>
                         <p className="text-xs text-gray-400">Du lundi au samedi, de 9h à 18h (heure du Maroc)</p>

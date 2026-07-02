@@ -22,8 +22,8 @@ export default function MentionsLegalesPage() {
                         <ul className="space-y-1 pl-4 border-l border-gray-200">
                             <li><span className="font-semibold text-gray-800">Dénomination :</span> Vitasilk</li>
                             <li><span className="font-semibold text-gray-800">Adresse :</span> Meknès, Maroc</li>
-                            <li><span className="font-semibold text-gray-800">Téléphone / WhatsApp :</span> +212 662 633 170</li>
-                            <li><span className="font-semibold text-gray-800">Email :</span> sales@vitasilk.ma</li>
+                            <li><span className="font-semibold text-gray-800">Téléphone / WhatsApp :</span> +212 661 086 837</li>
+                            <li><span className="font-semibold text-gray-800">Email :</span> contact@vitasilkbs.ma</li>
                         </ul>
                     </section>
 
@@ -53,8 +53,8 @@ export default function MentionsLegalesPage() {
                         <h2 className="text-[11px] uppercase tracking-[0.3em] font-black text-gray-900">6. Contact</h2>
                         <p>Pour toute question relative aux présentes mentions légales, vous pouvez nous contacter :</p>
                         <ul className="space-y-1 pl-4 border-l border-gray-200">
-                            <li>Par WhatsApp : <a href="https://wa.me/212662633170" className="text-primary hover:underline">+212 662 633 170</a></li>
-                            <li>Par email : <a href="mailto:sales@vitasilk.ma" className="text-primary hover:underline">sales@vitasilk.ma</a></li>
+                            <li>Par WhatsApp : <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a></li>
+                            <li>Par email : <a href="mailto:contact@vitasilkbs.ma" className="text-primary hover:underline">contact@vitasilkbs.ma</a></li>
                         </ul>
                     </section>
 

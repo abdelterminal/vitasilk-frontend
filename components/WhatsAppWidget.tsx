@@ -11,7 +11,7 @@ export default function WhatsAppWidget() {
             className="fixed bottom-20 md:bottom-10 right-6 md:right-10 z-40"
         >
             <a
-                href="https://wa.me/212662633170"
+                href="https://wa.me/212661086837"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-[0_20px_40px_-10px_rgba(0,0,0,0.4)] hover:scale-105 transition-transform duration-300 relative group"

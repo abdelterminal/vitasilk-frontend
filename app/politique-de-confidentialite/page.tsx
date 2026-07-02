@@ -19,7 +19,7 @@ export default function PolitiqueConfidentialitePage() {
                     <section className="space-y-3">
                         <h2 className="text-[11px] uppercase tracking-[0.3em] font-black text-gray-900">1. Responsable du Traitement</h2>
                         <p>Vitasilk, dont le siège social est situé à <strong className="font-semibold text-gray-800">Meknès, Maroc</strong>, est responsable du traitement de vos données personnelles collectées via le site vitasilk.ma.</p>
-                        <p>Contact : <a href="mailto:sales@vitasilk.ma" className="text-primary hover:underline">sales@vitasilk.ma</a> — WhatsApp : <a href="https://wa.me/212662633170" className="text-primary hover:underline">+212 662 633 170</a></p>
+                        <p>Contact : <a href="mailto:contact@vitasilkbs.ma" className="text-primary hover:underline">contact@vitasilkbs.ma</a> — WhatsApp : <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a></p>
                     </section>
 
                     <section className="space-y-3">
@@ -80,7 +80,7 @@ export default function PolitiqueConfidentialitePage() {
                             <li><span className="font-semibold text-gray-800">Droit de suppression :</span> demander l'effacement de vos données</li>
                             <li><span className="font-semibold text-gray-800">Droit d'opposition :</span> vous opposer à certains traitements</li>
                         </ul>
-                        <p>Pour exercer ces droits, contactez-nous par email à <a href="mailto:sales@vitasilk.ma" className="text-primary hover:underline">sales@vitasilk.ma</a> ou via WhatsApp au <a href="https://wa.me/212662633170" className="text-primary hover:underline">+212 662 633 170</a>.</p>
+                        <p>Pour exercer ces droits, contactez-nous par email à <a href="mailto:contact@vitasilkbs.ma" className="text-primary hover:underline">contact@vitasilkbs.ma</a> ou via WhatsApp au <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a>.</p>
                     </section>
 
                     <section className="space-y-3">
