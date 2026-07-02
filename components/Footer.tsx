@@ -103,7 +103,7 @@ const Footer = () => {
                             <span className="text-[13px] font-light">Casablanca, Maroc</span>
                         </li>
                     </ul>
-                    <p className="text-[11px] text-gray-600 mt-6 font-light">Lun – Sam, 9h – 18h</p>
+                    <p className="text-[11px] text-gray-600 mt-6 font-light">7j/7 — Service après-vente inclus</p>
                 </div>
             </div>
 

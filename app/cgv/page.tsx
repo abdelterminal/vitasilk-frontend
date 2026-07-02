@@ -109,7 +109,7 @@ export default function CGVPage() {
                             <li><span className="font-semibold text-gray-800">Email :</span> <a href="mailto:contact@vitasilkbs.ma" className="text-primary hover:underline">contact@vitasilkbs.ma</a></li>
                             <li><span className="font-semibold text-gray-800">Adresse :</span> 46, bd Zerktouni, 2ème étage, appt 6, Casablanca, Maroc</li>
                         </ul>
-                        <p className="text-xs text-gray-400">Du lundi au samedi, de 9h à 18h (heure du Maroc)</p>
+                        <p className="text-xs text-gray-400">Disponible 7j/7 — Service après-vente inclus</p>
                     </section>
 
                     <section className="space-y-3">

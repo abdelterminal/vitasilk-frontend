@@ -33,8 +33,8 @@ const CONTACT_ITEMS = [
 ];
 
 const HOURS = [
-  { day: 'Lundi – Vendredi', hours: '9h00 – 19h00' },
-  { day: 'Samedi',           hours: '10h00 – 17h00' },
+  { day: '7 jours sur 7', hours: 'Service disponible en continu' },
+  { day: 'Service après-vente', hours: 'Inclus avec chaque commande' },
   { day: 'Dimanche',         hours: 'Fermé' },
 ];
 
@@ -297,7 +297,7 @@ const ContactPage = () => {
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-6 border-t border-gray-100">
                   <p className="text-[9px] text-gray-400 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-                    Service disponible · Lun–Sam, 9h–19h
+                    Service disponible 7j/7 · SAV inclus
                   </p>
                   <button
                     type="submit"

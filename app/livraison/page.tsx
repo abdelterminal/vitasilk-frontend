@@ -142,7 +142,7 @@ export default function LivraisonPage() {
                             <Phone size={16} className="text-primary" />
                             Besoin d'Aide ?
                         </h2>
-                        <p className="text-gray-400 text-sm">Notre équipe est disponible du lundi au samedi de 9h à 18h pour toute question relative à votre livraison ou commande.</p>
+                        <p className="text-gray-400 text-sm">Notre équipe est disponible 7j/7 pour toute question relative à votre livraison ou commande. Service après-vente inclus.</p>
                         <div className="flex flex-col sm:flex-row gap-4">
                             <a href="https://wa.me/212661086837" target="_blank" rel="noopener noreferrer"
                                className="inline-flex items-center justify-center gap-3 px-6 py-3 bg-[#25D366] text-white text-[10px] uppercase tracking-widest font-black rounded-xl hover:opacity-90 transition-opacity">
