@@ -56,7 +56,7 @@ export default function CGVPage() {
                         <h2 className="text-[11px] uppercase tracking-[0.3em] font-black text-gray-900">6. Livraison</h2>
                         <p>Vitasilk livre dans <strong className="font-semibold text-gray-800">tout le Maroc</strong> via des transporteurs partenaires. Les délais de livraison sont estimatifs :</p>
                         <ul className="space-y-2 pl-4 border-l border-gray-200">
-                            <li><span className="font-semibold text-gray-800">Meknès et région :</span> 24 à 48 heures ouvrées</li>
+                            <li><span className="font-semibold text-gray-800">Casablanca et région :</span> 24 à 48 heures ouvrées</li>
                             <li><span className="font-semibold text-gray-800">Grandes villes (Casablanca, Rabat, Fès, Marrakech…) :</span> 24 à 48 heures ouvrées</li>
                             <li><span className="font-semibold text-gray-800">Autres régions :</span> 48 à 72 heures ouvrées</li>
                             <li><span className="font-semibold text-gray-800">Zones éloignées :</span> 3 à 5 jours ouvrés</li>
@@ -107,7 +107,7 @@ export default function CGVPage() {
                         <ul className="space-y-1 pl-4 border-l border-gray-200">
                             <li><span className="font-semibold text-gray-800">WhatsApp :</span> <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a></li>
                             <li><span className="font-semibold text-gray-800">Email :</span> <a href="mailto:contact@vitasilkbs.ma" className="text-primary hover:underline">contact@vitasilkbs.ma</a></li>
-                            <li><span className="font-semibold text-gray-800">Adresse :</span> Meknès, Maroc</li>
+                            <li><span className="font-semibold text-gray-800">Adresse :</span> 46, bd Zerktouni, 2ème étage, appt 6, Casablanca, Maroc</li>
                         </ul>
                         <p className="text-xs text-gray-400">Du lundi au samedi, de 9h à 18h (heure du Maroc)</p>
                     </section>

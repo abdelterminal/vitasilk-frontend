@@ -29,7 +29,7 @@ const CONTACT_ITEMS = [
   { icon: Phone,         label: 'Téléphone',      value: '+212 661 086 837',    href: 'tel:+212661086837' },
   { icon: Mail,          label: 'Email',           value: 'contact@vitasilkbs.ma',   href: 'mailto:contact@vitasilkbs.ma' },
   { icon: MessageCircle, label: 'WhatsApp',        value: 'Écrire sur WhatsApp', href: 'https://wa.me/212661086837' },
-  { icon: MapPin,        label: 'Adresse',         value: 'Meknès, Maroc',       href: '#' },
+  { icon: MapPin,        label: 'Adresse',         value: '46, bd Zerktouni, 2ème étage, appt 6, Casablanca', href: '#' },
 ];
 
 const HOURS = [

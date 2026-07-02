@@ -21,7 +21,7 @@ export default function MentionsLegalesPage() {
                         <p>Le présent site <strong className="font-semibold text-gray-800">vitasilk.ma</strong> est édité par la société <strong className="font-semibold text-gray-800">Vitasilk</strong>, spécialisée dans la vente de produits capillaires professionnels.</p>
                         <ul className="space-y-1 pl-4 border-l border-gray-200">
                             <li><span className="font-semibold text-gray-800">Dénomination :</span> Vitasilk</li>
-                            <li><span className="font-semibold text-gray-800">Adresse :</span> Meknès, Maroc</li>
+                            <li><span className="font-semibold text-gray-800">Adresse :</span> 46, bd Zerktouni, 2ème étage, appt 6, Casablanca, Maroc</li>
                             <li><span className="font-semibold text-gray-800">Téléphone / WhatsApp :</span> +212 661 086 837</li>
                             <li><span className="font-semibold text-gray-800">Email :</span> contact@vitasilkbs.ma</li>
                         </ul>

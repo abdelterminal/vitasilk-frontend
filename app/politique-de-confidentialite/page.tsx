@@ -18,7 +18,7 @@ export default function PolitiqueConfidentialitePage() {
 
                     <section className="space-y-3">
                         <h2 className="text-[11px] uppercase tracking-[0.3em] font-black text-gray-900">1. Responsable du Traitement</h2>
-                        <p>Vitasilk, dont le siège social est situé à <strong className="font-semibold text-gray-800">Meknès, Maroc</strong>, est responsable du traitement de vos données personnelles collectées via le site vitasilk.ma.</p>
+                        <p>Vitasilk, dont le siège social est situé à <strong className="font-semibold text-gray-800">46, bd Zerktouni, 2ème étage, appt 6, Casablanca, Maroc</strong>, est responsable du traitement de vos données personnelles collectées via le site vitasilk.ma.</p>
                         <p>Contact : <a href="mailto:contact@vitasilkbs.ma" className="text-primary hover:underline">contact@vitasilkbs.ma</a> — WhatsApp : <a href="https://wa.me/212661086837" className="text-primary hover:underline">+212 661 086 837</a></p>
                     </section>
 

@@ -20,7 +20,7 @@ const Footer = () => {
                         <Image src="/img/logo.png" alt="Vitasilk" width={140} height={40} className="brightness-0 invert object-contain" />
                     </Link>
                     <p className="text-[13px] text-gray-500 leading-relaxed font-light">
-                        Produits de lissage et soins capillaires livrés partout au Maroc depuis Meknès.
+                        Produits de lissage et soins capillaires livrés partout au Maroc depuis Casablanca.
                     </p>
                     <div className="flex gap-4">
                         <a href="https://instagram.com/vitasilk.bs" target="_blank" rel="noopener noreferrer"
@@ -100,7 +100,7 @@ const Footer = () => {
                         </li>
                         <li className="flex items-start gap-3 text-gray-500">
                             <MapPin size={14} className="mt-0.5 shrink-0" />
-                            <span className="text-[13px] font-light">Meknès, Maroc</span>
+                            <span className="text-[13px] font-light">Casablanca, Maroc</span>
                         </li>
                     </ul>
                     <p className="text-[11px] text-gray-600 mt-6 font-light">Lun – Sam, 9h – 18h</p>

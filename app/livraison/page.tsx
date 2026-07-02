@@ -51,7 +51,7 @@ export default function LivraisonPage() {
                                 </thead>
                                 <tbody className="divide-y divide-gray-50">
                                     <tr>
-                                        <td className="p-4 font-semibold text-gray-800">Meknès et région</td>
+                                        <td className="p-4 font-semibold text-gray-800">Casablanca et région</td>
                                         <td className="p-4 text-gray-500">24 à 48 heures ouvrées</td>
                                     </tr>
                                     <tr className="bg-gray-50/50">
