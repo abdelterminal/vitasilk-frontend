@@ -302,6 +302,7 @@ export default function CheckoutPage() {
                                                     label="Nom Complet"
                                                     icon={<User size={14} />}
                                                     error={errors.firstName}
+                                                    required
                                                 >
                                                     <input
                                                         type="text"
@@ -312,7 +313,7 @@ export default function CheckoutPage() {
                                                     />
                                                 </FormField>
 
-                                                <FormField label="Ville" icon={<MapPin size={14} />} error={errors.city}>
+                                                <FormField label="Ville" icon={<MapPin size={14} />} error={errors.city} required>
                                                     <div className="relative">
                                                         <input
                                                             type="text"
@@ -350,6 +351,7 @@ export default function CheckoutPage() {
                                                     label="Numéro de Téléphone"
                                                     icon={<Phone size={14} />}
                                                     error={errors.phone}
+                                                    required
                                                 >
                                                     <input
                                                         type="tel"
@@ -582,18 +584,20 @@ function FormField({
     label,
     icon,
     error,
+    required,
     children,
 }: {
     label: string;
     icon?: React.ReactNode;
     error?: string;
+    required?: boolean;
     children: React.ReactNode;
 }) {
     return (
         <div className="space-y-2">
             <label className="text-[9px] uppercase tracking-[0.25em] font-bold text-gray-500 flex items-center gap-2">
                 {icon && <span className="text-primary">{icon}</span>}
-                {label}
+                {label}{required && <span className="text-red-400 ml-0.5">*</span>}
             </label>
             {children}
             {error && <p className="text-[9px] text-red-400 font-medium">{error}</p>}
