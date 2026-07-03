@@ -146,7 +146,6 @@ const CategoryPage = () => {
  </div>
  </div>
  </div>
- </div>
 
  {/* Subcategory tabs — only for Lissage Pro collection */}
  {isCollection && (
