@@ -1,10 +1,8 @@
 "use client";
 
-// Registration disabled — client accounts not offered. Page preserved for reference.
-import { redirect } from 'next/navigation';
-export default function RegisterPage() { redirect('/'); }
+// Registration disabled — client accounts not offered.
+// To re-enable: rename _RegisterPageDisabled → RegisterPage and remove the redirect export.
 
-/*
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,7 +11,14 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 
-const RegisterPage = () => {
+export default function RegisterPage() {
+    const router = useRouter();
+    React.useEffect(() => { router.replace('/'); }, [router]);
+    return null;
+}
+
+// ─── Preserved — rename to RegisterPage and re-export to restore ─────────────
+function _RegisterPageDisabled() {
     const router = useRouter();
     const { register } = useAuth();
     const [formData, setFormData] = useState({
@@ -77,14 +82,13 @@ const RegisterPage = () => {
 
             {/* Right Side: Form */}
             <div className="w-full lg:w-[55%] flex items-center justify-center p-8 md:p-12 lg:p-16 relative z-0">
-                {/* Background Decoration */}
                 <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none select-none">
                     <div className="luxury-text text-[15rem] leading-none">V</div>
                 </div>
 
                 <div className="absolute top-8 left-8 lg:top-12 lg:left-12">
                     <Link href="/" className="group flex items-center space-x-3 text-gray-400 hover:text-primary transition-all duration-500">
-                        <div className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm group-hover:shadow-golden-shadow group-hover:-translate-x-1 transition-all">
+                        <div className="w-10 h-10 rounded-full border border-gray-100 flex items-center justify-center bg-white shadow-sm group-hover:-translate-x-1 transition-all">
                             <ArrowLeft size={18} />
                         </div>
                         <span className="text-[10px] uppercase tracking-[0.2em] font-medium opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Vitasilk Accueil</span>
@@ -228,7 +232,4 @@ const RegisterPage = () => {
             </div>
         </div>
     );
-};
-*/
-
-export default RegisterPage;
+}
