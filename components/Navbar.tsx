@@ -69,8 +69,8 @@ const Navbar = () => {
     const bottomNavLinks = [
         { name: 'Accueil', href: '/', icon: Home },
         { name: 'Boutique', href: '/boutique', icon: Store },
-        { name: 'Commandes', href: '/account?tab=orders', icon: FileText },
-        { name: 'Profil', href: '/account', icon: User },
+        // { name: 'Commandes', href: '/account?tab=orders', icon: FileText }, // hidden — no client accounts
+        // { name: 'Profil', href: '/account', icon: User }, // hidden — no client accounts
     ];
 
     return (
@@ -236,9 +236,11 @@ const Navbar = () => {
                                     </span>
                                 )}
                             </Link>
+                            {/* notifications hidden — no client accounts
                             <Link href="/account?tab=notifications" className="relative group hover:text-primary transition-all duration-300 transform hover:scale-110 p-1" style={{color: forceSolid ? '#1A1A1A' : '#FFFFFF'}}>
                                 <Bell size={18} strokeWidth={1.8} />
                             </Link>
+                            */}
                         </div>
 
                         {/* Mobile Search Button */}
@@ -252,7 +254,7 @@ const Navbar = () => {
 
                         {/* Mobile: Burger Menu + Profile Picture */}
                         <div className="flex items-center space-x-2 md:hidden">
-                            {/* Profile Picture/Avatar */}
+                            {/* account avatar hidden — no client accounts
                             <Link href="/account" className="relative">
                                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs overflow-hidden border-2 border-primary/30" style={{backgroundColor: '#C9A14A'}}>
                                     {user?.photoURL ? (
@@ -262,6 +264,7 @@ const Navbar = () => {
                                     )}
                                 </div>
                             </Link>
+                            */}
 
                             {/* Burger Menu - 3 Lines */}
                             <button
@@ -332,26 +335,7 @@ const Navbar = () => {
                                     </div>
                                 </div>
                             </div>
-                        ) : (
-                            <div className="hidden lg:flex items-center space-x-6">
-                                <Link
-                                    href="/login"
-                                    className={cn(
-                                        "text-[10px] uppercase tracking-[0.3em] font-medium transition-colors px-2",
-                                        forceSolid ? "text-gray-950 hover:text-primary" : "text-white hover:text-primary"
-                                    )}
-                                >
-                                    Login
-                                </Link>
-                                <Link
-                                    href="/register"
-                                    className="px-6 py-2.5 text-white text-[10px] uppercase tracking-[0.3em] font-medium hover:opacity-90 transition-all duration-500 shadow-lg rounded-[2px]"
-                                    style={{backgroundColor: '#C9A14A'}}
-                                >
-                                    Join
-                                </Link>
-                            </div>
-                        )}
+                        ) : null /* login/register hidden — no client accounts */}
                     </div>
                 </div>
             </nav>
@@ -508,26 +492,19 @@ const Navbar = () => {
                                 ))}
                             </div>
 
-                            {/* Auth Buttons - إذا لم يكن مسجل الدخول */}
+                            {/* auth buttons hidden — no client accounts
                             {!user && (
                                 <div className="pt-6 mt-6 border-t border-gray-100 flex flex-col space-y-3">
-                                    <Link 
-                                        href="/login" 
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="w-full py-3 text-center text-gray-800 font-medium tracking-wider uppercase border border-gray-800 hover:bg-gray-50 transition-colors text-xs rounded-lg flex items-center justify-center space-x-2"
-                                    >
+                                    <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-3 text-center text-gray-800 font-medium tracking-wider uppercase border border-gray-800 hover:bg-gray-50 transition-colors text-xs rounded-lg flex items-center justify-center space-x-2">
                                         <LogIn size={14} />
                                         <span>Connexion</span>
                                     </Link>
-                                    <Link 
-                                        href="/register" 
-                                        onClick={() => setIsMobileMenuOpen(false)}
-                                        className="w-full py-3 text-center bg-primary text-white font-medium tracking-wider uppercase hover:bg-black transition-all text-xs rounded-lg shadow-md"
-                                    >
+                                    <Link href="/register" onClick={() => setIsMobileMenuOpen(false)} className="w-full py-3 text-center bg-primary text-white font-medium tracking-wider uppercase hover:bg-black transition-all text-xs rounded-lg shadow-md">
                                         S'inscrire
                                     </Link>
                                 </div>
                             )}
+                            */}
 
                             {/* Social Links */}
                             <div className="pt-6 mt-6 border-t border-gray-100 flex justify-center space-x-6">

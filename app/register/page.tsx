@@ -1,5 +1,10 @@
 "use client";
 
+// Registration disabled — client accounts not offered. Page preserved for reference.
+import { redirect } from 'next/navigation';
+export default function RegisterPage() { redirect('/'); }
+
+/*
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -224,5 +229,6 @@ const RegisterPage = () => {
         </div>
     );
 };
+*/
 
 export default RegisterPage;
