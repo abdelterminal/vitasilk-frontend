@@ -23,7 +23,7 @@ export default function InstagramSection() {
                         @vitasilk<span className="text-primary">.bs</span>
                     </h2>
                     <a
-                        href="https://instagram.com/vitasilk.bs"
+                        href="https://www.instagram.com/vitasilk.bs/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-[11px] uppercase font-bold text-primary hover:text-black transition-colors"
@@ -37,7 +37,7 @@ export default function InstagramSection() {
                     {INSTA_POSTS.map((post, i) => (
                         <motion.a
                             key={post.id}
-                            href="https://instagram.com/vitasilk.bs"
+                            href="https://www.instagram.com/vitasilk.bs/"
                             target="_blank"
                             rel="noopener noreferrer"
                             initial={{ opacity: 0, y: 20 }}

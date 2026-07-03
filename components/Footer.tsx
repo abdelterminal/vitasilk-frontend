@@ -23,14 +23,16 @@ const Footer = () => {
                         Produits de lissage et soins capillaires livrés partout au Maroc depuis Casablanca.
                     </p>
                     <div className="flex gap-4">
-                        <a href="https://instagram.com/vitasilk.bs" target="_blank" rel="noopener noreferrer"
+                        <a href="https://www.instagram.com/vitasilk.bs/" target="_blank" rel="noopener noreferrer"
                             className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all">
                             <Instagram size={15} />
                         </a>
+                        {/* Facebook hidden
                         <a href="https://www.facebook.com/p/VitaSilk-61571932881028/" target="_blank" rel="noopener noreferrer"
                             className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all">
                             <Facebook size={15} />
                         </a>
+                        */}
                         <a href="https://wa.me/212661086837" target="_blank" rel="noopener noreferrer"
                             className="w-8 h-8 rounded-lg bg-white/5 hover:bg-[#25D366]/20 flex items-center justify-center text-gray-400 hover:text-[#25D366] transition-all">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor" width="15" height="15">

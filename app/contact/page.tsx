@@ -140,7 +140,7 @@ const ContactPage = () => {
 
             <div className="flex gap-3">
               <a
-                href="https://instagram.com/vitasilk.bs"
+                href="https://www.instagram.com/vitasilk.bs/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2.5 border border-white/15 text-[9px] uppercase tracking-[0.15em] font-bold text-white/55 hover:border-primary/70 hover:text-primary transition-all"
