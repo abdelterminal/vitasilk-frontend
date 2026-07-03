@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, useEffect } from 'react';
 import { productsApi, categoriesApi, imageUrl, type Category } from '@/lib/api';
@@ -9,7 +9,7 @@ export interface HomepageSection {
   title: string;
   subtitle: string;
   visible: boolean;
-  layout: 'featured' | 'carousel';
+  layout: 'featured' | 'carousel' | 'grid';
   mode: 'category' | 'manual';
   categorySlug: string;
   productIds: number[];
@@ -133,6 +133,7 @@ export default function HomepageManager() {
       <div className="flex items-center gap-6 text-[10px] uppercase font-bold text-gray-400 px-1">
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-primary/20 border border-primary/40" /> Vedette = grande carte + grille</span>
         <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-gray-200 border border-gray-300" /> Carrousel = ligne de produits</span>
+        <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-full bg-amber-100 border border-amber-300" /> Vitrine = grille centrée, images complètes</span>
       </div>
 
       {/* Sections */}
@@ -169,7 +170,7 @@ export default function HomepageManager() {
               <span className={`text-[9px] uppercase font-bold px-2 py-0.5 rounded-full ${
                 section.layout === 'featured' ? 'bg-primary/10 text-primary' : 'bg-gray-100 text-gray-500'
               }`}>
-                {section.layout === 'featured' ? 'Vedette' : 'Carrousel'}
+                {section.layout === 'featured' ? 'Vedette' : section.layout === 'carousel' ? 'Carrousel' : 'Vitrine'}
               </span>
               <button
                 onClick={() => updateSection(section.id, { visible: !section.visible })}
@@ -213,7 +214,7 @@ export default function HomepageManager() {
                 <div>
                   <label className="text-[9px] uppercase tracking-widest font-bold text-gray-400 block mb-1.5">Type d'affichage</label>
                   <div className="flex border border-gray-200 rounded-sm overflow-hidden">
-                    {(['featured', 'carousel'] as const).map(l => (
+                    {(['featured', 'carousel', 'grid'] as const).map(l => (
                       <button
                         key={l}
                         onClick={() => updateSection(section.id, { layout: l })}
@@ -221,7 +222,7 @@ export default function HomepageManager() {
                           section.layout === l ? 'bg-primary text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
                         }`}
                       >
-                        {l === 'featured' ? 'Vedette' : 'Carrousel'}
+                        {l === 'featured' ? 'Vedette' : l === 'carousel' ? 'Carrousel' : 'Vitrine'}
                       </button>
                     ))}
                   </div>
@@ -394,3 +395,5 @@ export default function HomepageManager() {
     </div>
   );
 }
+
+

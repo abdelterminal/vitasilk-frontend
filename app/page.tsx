@@ -60,6 +60,43 @@ const AnimatedQuoteBand = () => {
     );
 };
 
+// Centered grid card — full image visible, no cropping
+const GridProductCard = ({ product }: { product: Product }) => {
+    const { discount } = useDiscount();
+    const hasDiscount = !!discount?.percentage;
+    const discountedPrice = hasDiscount
+        ? product.price * (1 - discount.percentage / 100)
+        : product.price;
+    const imgSrc = product.images?.[0] || '/img/logo.png';
+
+    return (
+        <Link href={`/product/${product.id}`} className="group flex flex-col items-center text-center">
+            <div className="relative w-full aspect-square bg-[#FDFBF7] rounded-lg overflow-hidden mb-4 flex items-center justify-center">
+                <Image
+                    src={imgSrc}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                    className="object-contain p-5 group-hover:scale-105 transition-transform duration-500"
+                />
+                {hasDiscount && (
+                    <div className="absolute top-3 left-3 bg-primary text-white text-[9px] uppercase font-bold px-2 py-1">
+                        -{discount.percentage}%
+                    </div>
+                )}
+            </div>
+            <p className="text-[9px] uppercase tracking-[0.15em] font-bold text-primary mb-1">{product.category_name}</p>
+            <h3 className="text-sm font-light text-gray-900 leading-snug mb-2 px-2">{product.name}</h3>
+            <div className="flex items-center gap-2 justify-center">
+                {hasDiscount && (
+                    <span className="text-xs text-gray-400 line-through">{product.price.toLocaleString()} DH</span>
+                )}
+                <span className="text-sm font-bold text-primary">{discountedPrice.toLocaleString()} DH</span>
+            </div>
+        </Link>
+    );
+};
+
 // Large featured product card with image overlay
 const FeaturedProductCard = ({ product }: { product: Product }) => {
     const { discount } = useDiscount();
@@ -258,6 +295,30 @@ export default function Home() {
                         </section>
                     );
                 }
+                if (sec.layout === 'grid') {
+                    return (
+                        <section className="py-16 px-6 lg:px-12 bg-[#FDFBF7]">
+                            <div className="max-w-[1400px] mx-auto">
+                                <div className="text-center mb-12">
+                                    <p className="text-[10px] uppercase font-bold text-primary mb-2">{sec.subtitle}</p>
+                                    <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">{sec.title}</h2>
+                                </div>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
+                                    {secProducts.map((product, i) => (
+                                        <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.06 }} className="w-full">
+                                            <GridProductCard product={product} />
+                                        </motion.div>
+                                    ))}
+                                </div>
+                                <div className="text-center mt-10">
+                                    <Link href={href} className="inline-flex items-center gap-2 text-[10px] uppercase font-bold text-primary hover:text-black transition-colors group">
+                                        <span>Voir tout</span><ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                }
                 return (
                     <section className="py-16 px-6 lg:px-12 bg-[#FDFBF7]">
                         <div className="max-w-[1600px] mx-auto">
@@ -319,6 +380,31 @@ export default function Home() {
                                             </motion.div>
                                         ))}
                                     </motion.div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                }
+
+                if (sec.layout === 'grid') {
+                    return (
+                        <section key={sec.id} className={`py-16 px-6 lg:px-12 ${bg}`}>
+                            <div className="max-w-[1400px] mx-auto">
+                                <div className="text-center mb-12">
+                                    <p className="text-[10px] uppercase font-bold text-primary mb-2">{sec.subtitle}</p>
+                                    <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">{sec.title}</h2>
+                                </div>
+                                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
+                                    {secProducts.map((product, i) => (
+                                        <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.06 }} className="w-full">
+                                            <GridProductCard product={product} />
+                                        </motion.div>
+                                    ))}
+                                </div>
+                                <div className="text-center mt-10">
+                                    <Link href={href} className="inline-flex items-center gap-2 text-[10px] uppercase font-bold text-primary hover:text-black transition-colors group">
+                                        <span>Voir tout</span><ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                                    </Link>
                                 </div>
                             </div>
                         </section>
