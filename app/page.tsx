@@ -8,8 +8,8 @@ import BrandBenefits from "@/components/BrandBenefits";
 import TestimonialSection from "@/components/TestimonialSection";
 import FeaturedShowcase from "@/components/FeaturedShowcase";
 import NewsletterBanner from "@/components/NewsletterBanner";
-import BestSellers from "@/components/BestSellers";
 import { productsApi, type Product as ApiProduct, imageUrl } from "@/lib/api";
+import type { HomepageSection } from '@/components/admin/HomepageManager';
 import { motion, AnimatePresence } from "framer-motion";
 import Link from 'next/link';
 import { ArrowRight, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -176,27 +176,32 @@ const ProductCarousel = ({ products, title, href }: { products: Product[]; title
     );
 };
 
+function getSectionProducts(section: HomepageSection, allProducts: Product[]): Product[] {
+    if (section.mode === 'manual') {
+        const ids = new Set(section.productIds);
+        return allProducts.filter(p => ids.has(Number(p.id)));
+    }
+    return allProducts.filter(p => p.category_slug === section.categorySlug).slice(0, section.count);
+}
+
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([]);
-    const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+    const [homepageConfig, setHomepageConfig] = useState<{ sections: HomepageSection[] } | null>(null);
     const [loading, setLoading] = useState(true);
     const [selectedEvent, setSelectedEvent] = useState<any>(null);
 
     useEffect(() => {
         Promise.all([
-            productsApi.getAll({ limit: 50 }),
-            productsApi.getAll({ featured: true, limit: 6 }),
-        ]).then(([allRes, featuredRes]) => {
+            productsApi.getAll({ limit: 500 }),
+            fetch('/api/admin/homepage').then(r => r.json()),
+        ]).then(([allRes, config]) => {
             setProducts(allRes.data);
-            setFeaturedProducts(featuredRes.data);
+            setHomepageConfig(config);
         }).catch(console.error)
         .finally(() => setLoading(false));
     }, []);
 
-    const categoriesOrder = ['Lissage Pro', 'Soins de Cheveux', 'Matériel', 'Nos Packs'];
-    const categories = categoriesOrder.filter(cat =>
-        products.some(p => p.category_name === cat)
-    );
+    const visibleSections = (homepageConfig?.sections ?? []).filter(s => s.visible);
 
     return (
         <div className="flex flex-col min-h-screen bg-white">
@@ -218,10 +223,51 @@ export default function Home() {
             {/* Animated Quote Band */}
             <AnimatedQuoteBand />
 
-            {/* Best Sellers Scrolling Strip */}
-            <BestSellers />
+            {/* Dynamic homepage sections — Section 1 (featured layout typically) */}
+            {!loading && visibleSections[0] && (() => {
+                const sec = visibleSections[0];
+                const secProducts = getSectionProducts(sec, products);
+                if (secProducts.length === 0) return null;
+                const href = sec.mode === 'category' ? `/category/${sec.categorySlug}` : '/boutique';
+                if (sec.layout === 'featured') {
+                    return (
+                        <section className="py-20 bg-[#FDFBF7]">
+                            <div className="max-w-[1600px] mx-auto px-6 lg:px-12">
+                                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-end justify-between mb-12">
+                                    <div>
+                                        <p className="text-[10px] uppercase font-bold text-primary mb-2">{sec.subtitle}</p>
+                                        <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">{sec.title}</h2>
+                                    </div>
+                                    <Link href={href} className="hidden md:flex items-center gap-2 text-[10px] uppercase font-bold text-primary hover:text-black transition-colors group">
+                                        <span>Voir tout</span><ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </motion.div>
+                                <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                                    <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="lg:col-span-2">
+                                        <FeaturedProductCard product={secProducts[0]} />
+                                    </motion.div>
+                                    <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="lg:col-span-3 grid grid-cols-2 gap-4">
+                                        {secProducts.slice(1, 5).map((product, i) => (
+                                            <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}>
+                                                <ProductCardCompact product={product} />
+                                            </motion.div>
+                                        ))}
+                                    </motion.div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                }
+                return (
+                    <section className="py-16 px-6 lg:px-12 bg-[#FDFBF7]">
+                        <div className="max-w-[1600px] mx-auto">
+                            <ProductCarousel products={secProducts} title={sec.title} href={href} />
+                        </div>
+                    </section>
+                );
+            })()}
 
-            {/* Second marquee - reversed direction */}
+            {/* Ingredient marquee strip */}
             <div className="w-full overflow-hidden bg-[#FDFBF7] border-y border-gray-100 py-3">
                 <motion.div
                     className="flex gap-0 whitespace-nowrap"
@@ -242,127 +288,53 @@ export default function Home() {
                 </motion.div>
             </div>
 
-            {/* Featured Products Showcase */}
-            {!loading && featuredProducts.length > 0 && (
-                <section className="py-16 px-6 lg:px-12 bg-white">
-                    <div className="max-w-[1600px] mx-auto">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-100"
-                        >
-                            <div>
-                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Sélection du Moment</p>
-                                <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">
-                                    Nos Produits <span className="text-primary">Vedettes</span>
-                                </h2>
-                            </div>
-                            <Link
-                                href="/boutique"
-                                className="inline-flex items-center gap-2 mt-4 md:mt-0 text-[10px] uppercase font-bold text-gray-500 hover:text-primary transition-colors group"
-                            >
-                                <span>Voir la Boutique</span>
-                                <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                        </motion.div>
+            {/* Dynamic homepage sections 2–5 */}
+            {!loading && visibleSections.slice(1).map((sec, idx) => {
+                const secProducts = getSectionProducts(sec, products);
+                if (secProducts.length === 0) return null;
+                const href = sec.mode === 'category' ? `/category/${sec.categorySlug}` : '/boutique';
+                const bg = idx % 2 === 0 ? 'bg-white' : 'bg-[#FDFBF7]';
 
-                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6 }}
-                                className="lg:col-span-2"
-                            >
-                                <FeaturedProductCard product={featuredProducts[0]} />
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.1 }}
-                                className="lg:col-span-3 grid grid-cols-2 gap-4"
-                            >
-                                {featuredProducts.slice(1, 5).map((product, i) => (
-                                    <motion.div
-                                        key={product.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}
-                                    >
-                                        <ProductCardCompact product={product} />
+                if (sec.layout === 'featured') {
+                    return (
+                        <section key={sec.id} className={`py-16 px-6 lg:px-12 ${bg}`}>
+                            <div className="max-w-[1600px] mx-auto">
+                                <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-100">
+                                    <div>
+                                        <p className="text-[10px] uppercase font-bold text-primary mb-2">{sec.subtitle}</p>
+                                        <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">{sec.title}</h2>
+                                    </div>
+                                    <Link href={href} className="inline-flex items-center gap-2 mt-4 md:mt-0 text-[10px] uppercase font-bold text-gray-500 hover:text-primary transition-colors group">
+                                        <span>Voir tout</span><ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </motion.div>
+                                <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                                    <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="lg:col-span-2">
+                                        <FeaturedProductCard product={secProducts[0]} />
                                     </motion.div>
-                                ))}
+                                    <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="lg:col-span-3 grid grid-cols-2 gap-4">
+                                        {secProducts.slice(1, 5).map((product, i) => (
+                                            <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}>
+                                                <ProductCardCompact product={product} />
+                                            </motion.div>
+                                        ))}
+                                    </motion.div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                }
+
+                return (
+                    <section key={sec.id} className={`py-12 px-6 lg:px-12 ${bg}`}>
+                        <div className="max-w-[1600px] mx-auto">
+                            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+                                <ProductCarousel products={secProducts} title={sec.title} href={href} />
                             </motion.div>
                         </div>
-                    </div>
-                </section>
-            )}
-
-            {/* Products Section */}
-            <section className="py-16 px-6 lg:px-12 bg-[#FDFBF7]">
-                <div className="max-w-[1600px] mx-auto">
-                    <div>
-                        {/* Header */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-gray-200"
-                        >
-                            <div>
-                                <p className="text-[10px] uppercase font-bold text-primary mb-2">Tous Nos Produits</p>
-                                <h2 className="text-3xl md:text-5xl font-sans font-light text-gray-900">
-                                    Notre <span className="text-primary">Catalogue</span>
-                                </h2>
-                            </div>
-                            <Link
-                                href="/boutique"
-                                className="inline-flex items-center gap-2 mt-4 md:mt-0 px-8 py-3 bg-primary text-white text-[10px] uppercase font-bold hover:bg-black transition-all rounded-sm group"
-                            >
-                                <span>Voir la Boutique</span>
-                                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                        </motion.div>
-
-                        {loading ? (
-                            <div className="flex items-center justify-center py-24">
-                                <Loader2 className="w-8 h-8 animate-spin text-primary" />
-                            </div>
-                        ) : products.length === 0 ? (
-                            <div className="text-center py-24 text-gray-400">
-                                Notre collection arrive bientôt.
-                            </div>
-                        ) : (
-                            <div className="space-y-16">
-                                {categories.map((category) => {
-                                    const categoryProducts = products.filter(p => p.category_name === category);
-                                    if (categoryProducts.length === 0) return null;
-                                    const slug = (products.find(p => p.category_name === category)?.category_slug) || category.toLowerCase().replace(/ /g, '-');
-                                    return (
-                                        <motion.div
-                                            key={category}
-                                            initial={{ opacity: 0, y: 30 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.6 }}
-                                            className="pb-12 border-b border-gray-100 last:border-0 last:pb-0"
-                                        >
-                                            <ProductCarousel
-                                                products={categoryProducts}
-                                                title={category}
-                                                href={`/category/${slug}`}
-                                            />
-                                        </motion.div>
-                                    );
-                                })}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </section>
+                    </section>
+                );
+            })}
 
             {/* Brand Benefits Section */}
             <BrandBenefits />

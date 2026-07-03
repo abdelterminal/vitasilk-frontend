@@ -25,8 +25,10 @@ export default function BestSellers() {
   const [products, setProducts] = useState<FeaturedProduct[]>([]);
 
   useEffect(() => {
-    productsApi.getAll({ featured: true, limit: 4 }).then(res => {
-      const mapped = res.data.slice(0, 4).map(p => ({
+    productsApi.getAll({ limit: 500 }).then(res => {
+      const soinsCapillaires = res.data.filter(p => p.category_slug === 'soins-capillaires');
+      const source = soinsCapillaires.length > 0 ? soinsCapillaires : res.data.filter(p => p.featured);
+      const mapped = source.slice(0, 4).map(p => ({
         id: p.id,
         name: p.name,
         category: p.category_name || '',
