@@ -62,7 +62,7 @@ const Navbar = () => {
         },
         { name: 'À Propos', href: '/about' },
         { name: 'Contact', href: '/contact' },
-        { name: 'Suivre Commande', href: '/track-order' },
+        // { name: 'Suivre Commande', href: '/track-order' }, // hidden from nav
     ];
 
     // روابط النافبار السفلية للهاتف
@@ -459,10 +459,12 @@ const Navbar = () => {
                                         <span className="text-[8px] text-primary">{cartCount}</span>
                                     )}
                                 </Link>
+                                {/* track-order hidden from mobile nav
                                 <Link href="/track-order" onClick={() => setIsMobileMenuOpen(false)} className="flex flex-col items-center p-3 bg-gray-50 rounded-xl">
                                     <Package size={20} className="text-primary mb-1" />
                                     <span className="text-[9px] uppercase font-medium">Suivi</span>
                                 </Link>
+                                */}
                             </div>
 
                             {/* Navigation Links */}

@@ -111,10 +111,12 @@ export default function LivraisonPage() {
 
                     <section className="space-y-3">
                         <h2 className="text-[11px] uppercase tracking-[0.3em] font-black text-gray-900">Suivi de Commande</h2>
-                        <p>Un numéro de suivi vous sera communiqué par WhatsApp dès l'expédition de votre colis. Vous pouvez également suivre votre commande directement sur notre site :</p>
+                        <p>Un numéro de suivi vous sera communiqué par WhatsApp dès l'expédition de votre colis.</p>
+                        {/* track-order button hidden
                         <Link href="/track-order" className="inline-flex items-center gap-3 px-6 py-3 bg-gray-900 text-white text-[10px] uppercase tracking-widest font-black rounded-xl hover:bg-black transition-colors">
                             Suivre ma commande
                         </Link>
+                        */}
                     </section>
 
                     <section className="space-y-3">

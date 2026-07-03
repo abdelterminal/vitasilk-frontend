@@ -65,7 +65,7 @@ const Footer = () => {
                     <p className="text-[10px] uppercase tracking-[0.3em] font-black text-gray-500 mb-4">Aide</p>
                     <ul className="space-y-2">
                         {[
-                            { href: '/track-order', label: 'Suivre ma commande' },
+                            // { href: '/track-order', label: 'Suivre ma commande' }, // hidden from footer
                             { href: '/livraison', label: 'Livraison & Retours' },
                             { href: '/cgv', label: 'Conditions de vente' },
                             { href: '/contact', label: 'Nous contacter' },
