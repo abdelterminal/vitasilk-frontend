@@ -115,8 +115,12 @@ const Navbar = () => {
                         forceSolid ? "text-gray-600" : "text-gray-500"
                     )}>
                         <div className="hidden md:flex items-center space-x-4 border-r pr-6" style={{borderColor: 'rgba(201, 161, 74, 0.1)'}}>
-                            <Instagram size={12} className="hover:text-primary cursor-pointer transition-colors" style={{color: '#C9A14A'}} />
+                            <a href="https://www.instagram.com/vitasilk.bs/" target="_blank" rel="noopener noreferrer">
+                                <Instagram size={12} className="hover:text-primary cursor-pointer transition-colors" style={{color: '#C9A14A'}} />
+                            </a>
+                            {/* Facebook hidden
                             <Facebook size={12} className="hover:text-primary cursor-pointer transition-colors" style={{color: '#C9A14A'}} />
+                            */}
                         </div>
                     </div>
                 </div>
@@ -544,8 +548,12 @@ const Navbar = () => {
 
                             {/* Social Links */}
                             <div className="pt-6 mt-6 border-t border-gray-100 flex justify-center space-x-6">
-                                <Instagram size={18} className="text-gray-400 hover:text-primary cursor-pointer transition-colors" />
+                                <a href="https://www.instagram.com/vitasilk.bs/" target="_blank" rel="noopener noreferrer">
+                                    <Instagram size={18} className="text-gray-400 hover:text-primary cursor-pointer transition-colors" />
+                                </a>
+                                {/* Facebook hidden
                                 <Facebook size={18} className="text-gray-400 hover:text-primary cursor-pointer transition-colors" />
+                                */}
                             </div>
                         </motion.div>
                     </>
