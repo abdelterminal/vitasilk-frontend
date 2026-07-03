@@ -47,7 +47,7 @@ const Footer = () => {
                         {[
                             { href: '/boutique', label: 'Tous les produits' },
                             { href: '/category/lissage-pro', label: 'Lissage Pro' },
-                            { href: '/category/soins-cheveux', label: 'Soins Capillaires' },
+                            { href: '/category/soins-capillaires', label: 'Soins Capillaires' },
                             { href: '/category/nos-coffrets', label: 'Coffrets & Kits' },
                             { href: '/category/materiel', label: 'Matériel Pro' },
                         ].map(({ href, label }) => (

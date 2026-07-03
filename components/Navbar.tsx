@@ -25,7 +25,7 @@ const Navbar = () => {
     const { cartCount } = useCart();
     const { wishlistCount } = useWishlist();
     const { userData: user, logout } = useAuth();
-    const [dynamicCategories, setDynamicCategories] = useState<{name: string, href: string}[]>([]);
+    const [dynamicCategories, setDynamicCategories] = useState<{name: string, href: string, sub?: {name: string, href: string}[]}[]>([]);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
 
     const isHome = pathname === '/';
@@ -41,11 +41,17 @@ const Navbar = () => {
 
     useEffect(() => {
         categoriesApi.getAll().then(res => {
-            const cats = res.data.map(cat => ({
+            const all = res.data.map(cat => ({
                 name: cat.name.split(' ').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
-                href: `/category/${cat.slug}`
+                href: `/category/${cat.slug}`,
+                slug: cat.slug,
             }));
-            setDynamicCategories(cats);
+            const lissageSubs = all.filter(c => c.slug === 'lissage-personnel-250ml' || c.slug === 'lissage-professionnel-1l');
+            const others = all.filter(c => c.slug !== 'lissage-personnel-250ml' && c.slug !== 'lissage-professionnel-1l' && c.slug !== 'lissage-pro');
+            setDynamicCategories([
+                { name: 'Lissage Pro', href: '/category/lissage-pro', sub: lissageSubs },
+                ...others,
+            ]);
         }).catch(console.error);
     }, []);
 
@@ -170,16 +176,31 @@ const Navbar = () => {
 
                                         {/* Dropdown Menu */}
                                         <div className="absolute top-full left-0 pt-4 opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-300 transform translate-y-2 group-hover/nav:translate-y-0">
-                                            <div className="w-56 bg-white/90 backdrop-blur-xl border shadow-xl p-4 flex flex-col space-y-3 rounded-sm" style={{borderColor: 'rgba(201, 161, 74, 0.1)'}}>
-                                                {link.categories.map((cat) => (
-                                                    <Link
-                                                        key={cat.name}
-                                                        href={cat.href}
-                                                        className="text-[10px] uppercase font-medium text-gray-700 hover:text-primary transition-colors py-1"
-                                                        style={{fontFamily: "'Poppins', sans-serif"}}
-                                                    >
-                                                        {cat.name}
-                                                    </Link>
+                                            <div className="w-60 bg-white/90 backdrop-blur-xl border shadow-xl p-4 flex flex-col space-y-2 rounded-sm" style={{borderColor: 'rgba(201, 161, 74, 0.1)'}}>
+                                                {link.categories.map((cat: any) => (
+                                                    <div key={cat.name}>
+                                                        <Link
+                                                            href={cat.href}
+                                                            className="text-[10px] uppercase font-bold text-gray-800 hover:text-primary transition-colors py-1 block"
+                                                            style={{fontFamily: "'Poppins', sans-serif"}}
+                                                        >
+                                                            {cat.name}
+                                                        </Link>
+                                                        {cat.sub && (
+                                                            <div className="pl-3 mt-1 mb-1 space-y-1 border-l-2 border-primary/20">
+                                                                {cat.sub.map((sub: any) => (
+                                                                    <Link
+                                                                        key={sub.name}
+                                                                        href={sub.href}
+                                                                        className="text-[9px] uppercase font-medium text-gray-500 hover:text-primary transition-colors py-0.5 block"
+                                                                        style={{fontFamily: "'Poppins', sans-serif"}}
+                                                                    >
+                                                                        {sub.name}
+                                                                    </Link>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
                                                 ))}
                                             </div>
                                         </div>
@@ -467,15 +488,30 @@ const Navbar = () => {
                                                     <ChevronDown size={14} className="text-primary" />
                                                 </div>
                                                 <div className="pl-4 space-y-2 border-l-2 border-primary/20">
-                                                    {link.categories.map((cat) => (
-                                                        <Link
-                                                            key={cat.name}
-                                                            href={cat.href}
-                                                            onClick={() => setIsMobileMenuOpen(false)}
-                                                            className="block text-gray-600 hover:text-primary transition-colors text-xs uppercase py-1"
-                                                        >
-                                                            {cat.name}
-                                                        </Link>
+                                                    {link.categories.map((cat: any) => (
+                                                        <div key={cat.name}>
+                                                            <Link
+                                                                href={cat.href}
+                                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                                className="block text-gray-700 hover:text-primary transition-colors text-xs uppercase py-1 font-semibold"
+                                                            >
+                                                                {cat.name}
+                                                            </Link>
+                                                            {cat.sub && (
+                                                                <div className="pl-3 space-y-1 border-l border-primary/20 mt-1">
+                                                                    {cat.sub.map((sub: any) => (
+                                                                        <Link
+                                                                            key={sub.name}
+                                                                            href={sub.href}
+                                                                            onClick={() => setIsMobileMenuOpen(false)}
+                                                                            className="block text-gray-500 hover:text-primary transition-colors text-[10px] uppercase py-0.5"
+                                                                        >
+                                                                            {sub.name}
+                                                                        </Link>
+                                                                    ))}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     ))}
                                                 </div>
                                             </div>

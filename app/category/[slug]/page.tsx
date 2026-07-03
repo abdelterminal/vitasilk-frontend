@@ -26,13 +26,17 @@ const SORT_OPTIONS = [
  { label: 'Nom A-Z', value: 'name_asc' },
 ];
 
+const LISSAGE_PRO_SUBS = [
+  { slug: 'lissage-personnel-250ml', label: 'Personnel 250ml' },
+  { slug: 'lissage-professionnel-1l', label: 'Professionnel 1L' },
+];
+
 const CategoryPage = () => {
   const params = useParams();
   const slug = params.slug ? decodeURIComponent(params.slug as string) : '';
+  const isCollection = slug === 'lissage-pro';
   const categoryName = slug ? slug.replace(/-/g, ' ') : '';
-  
-  // Format display name from slug: capitalize first letters
-  const displayName = categoryName
+  const displayName = isCollection ? 'Lissage Pro' : categoryName
     .split(' ')
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
@@ -41,6 +45,7 @@ const CategoryPage = () => {
  const [loading, setLoading] = useState(true);
  const [sortBy, setSortBy] = useState('newest');
  const [currentPage, setCurrentPage] = useState(1);
+ const [activeTab, setActiveTab] = useState<string | null>(null);
  const ITEMS_PER_PAGE = 10;
 
  useEffect(() => {
@@ -58,7 +63,10 @@ const CategoryPage = () => {
        stock: p.stock,
        images: p.images.map(img => imageUrl(img)),
      }));
-     const filtered = mapped.filter(p => p.categorySlug === slug);
+     const subSlugs = LISSAGE_PRO_SUBS.map(s => s.slug);
+     const filtered = isCollection
+       ? mapped.filter(p => subSlugs.includes(p.categorySlug))
+       : mapped.filter(p => p.categorySlug === slug);
      setProducts(filtered);
    } catch (error) {
      console.error("Error fetching products:", error);
@@ -69,7 +77,11 @@ const CategoryPage = () => {
  if (categoryName) fetchProducts();
  }, [categoryName]);
 
- const sortedProducts = [...products].sort((a, b) => {
+ const tabFiltered = isCollection && activeTab
+   ? products.filter(p => p.categorySlug === activeTab)
+   : products;
+
+ const sortedProducts = [...tabFiltered].sort((a, b) => {
  switch (sortBy) {
  case 'price_asc': return a.price - b.price;
  case 'price_desc': return b.price - a.price;
@@ -134,6 +146,28 @@ const CategoryPage = () => {
  </div>
  </div>
  </div>
+ </div>
+
+ {/* Subcategory tabs — only for Lissage Pro collection */}
+ {isCollection && (
+   <div className="flex gap-2 mt-6">
+     <button
+       onClick={() => { setActiveTab(null); setCurrentPage(1); }}
+       className={`px-5 py-2 text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all ${activeTab === null ? 'bg-primary text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-primary hover:text-primary'}`}
+     >
+       Tous
+     </button>
+     {LISSAGE_PRO_SUBS.map(sub => (
+       <button
+         key={sub.slug}
+         onClick={() => { setActiveTab(sub.slug); setCurrentPage(1); }}
+         className={`px-5 py-2 text-[10px] uppercase tracking-widest font-bold rounded-sm transition-all ${activeTab === sub.slug ? 'bg-primary text-white' : 'bg-white border border-gray-200 text-gray-500 hover:border-primary hover:text-primary'}`}
+       >
+         {sub.label}
+       </button>
+     ))}
+   </div>
+ )}
  </div>
  </div>
 
