@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Hero from "@/components/Hero";
 import ProductCardCompact from "@/components/ProductCardCompact";
@@ -221,6 +221,78 @@ function getSectionProducts(section: HomepageSection, allProducts: Product[]): P
     return allProducts.filter(p => p.category_slug === section.categorySlug).slice(0, section.count);
 }
 
+// Vitrine grid: centered row, expands to 4 columns, then horizontal scroll
+const VITRINE_CARD_W: Record<string, number> = { sm: 180, md: 230, lg: 300 };
+
+const VitrineGrid = ({ section, allProducts, bg }: { section: HomepageSection; allProducts: Product[]; bg: string }) => {
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const secProducts = getSectionProducts(section, allProducts);
+    if (secProducts.length === 0) return null;
+
+    const href = section.mode === 'category' ? `/category/${section.categorySlug}` : '/boutique';
+    const cardW = VITRINE_CARD_W[section.gridSize ?? 'md'];
+    const needsScroll = secProducts.length > 4;
+
+    const scroll = (dir: 'left' | 'right') => {
+        if (!scrollRef.current) return;
+        scrollRef.current.scrollBy({ left: dir === 'left' ? -(cardW * 2 + 32) : (cardW * 2 + 32), behavior: 'smooth' });
+    };
+
+    return (
+        <section className={`py-16 px-6 lg:px-12 ${bg}`}>
+            <div className="max-w-[1400px] mx-auto">
+                <div className="text-center mb-12">
+                    <p className="text-[10px] uppercase font-bold text-primary mb-2">{section.subtitle}</p>
+                    <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">{section.title}</h2>
+                </div>
+
+                <div className="relative">
+                    {needsScroll && (
+                        <>
+                            <button
+                                onClick={() => scroll('left')}
+                                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 w-9 h-9 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-sm hover:border-black hover:shadow-md transition-all"
+                            >
+                                <ChevronLeft size={14} />
+                            </button>
+                            <button
+                                onClick={() => scroll('right')}
+                                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 w-9 h-9 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-sm hover:border-black hover:shadow-md transition-all"
+                            >
+                                <ChevronRight size={14} />
+                            </button>
+                        </>
+                    )}
+                    <div
+                        ref={scrollRef}
+                        className={`flex gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden ${needsScroll ? 'scroll-smooth' : 'justify-center flex-wrap'}`}
+                        style={{ scrollbarWidth: 'none' }}
+                    >
+                        {secProducts.map((product, i) => (
+                            <motion.div
+                                key={product.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.4, delay: Math.min(i * 0.06, 0.4) }}
+                                style={{ width: cardW, flexShrink: 0 }}
+                            >
+                                <GridProductCard product={product} />
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="text-center mt-10">
+                    <Link href={href} className="inline-flex items-center gap-2 text-[10px] uppercase font-bold text-primary hover:text-black transition-colors group">
+                        <span>Voir tout</span><ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                </div>
+            </div>
+        </section>
+    );
+};
+
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([]);
     const [homepageConfig, setHomepageConfig] = useState<{ sections: HomepageSection[] } | null>(null);
@@ -277,33 +349,7 @@ export default function Home() {
         }
 
         if (sec.layout === 'grid') {
-            const gridCols = {
-                sm: 'grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3',
-                md: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6',
-                lg: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8',
-            }[sec.gridSize ?? 'md'];
-            return (
-                <section key={sec.id} className={`py-16 px-6 lg:px-12 ${bg}`}>
-                    <div className="max-w-[1400px] mx-auto">
-                        <div className="text-center mb-12">
-                            <p className="text-[10px] uppercase font-bold text-primary mb-2">{sec.subtitle}</p>
-                            <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">{sec.title}</h2>
-                        </div>
-                        <div className={`grid ${gridCols} justify-items-center`}>
-                            {secProducts.map((product, i) => (
-                                <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.06 }} className="w-full">
-                                    <GridProductCard product={product} />
-                                </motion.div>
-                            ))}
-                        </div>
-                        <div className="text-center mt-10">
-                            <Link href={href} className="inline-flex items-center gap-2 text-[10px] uppercase font-bold text-primary hover:text-black transition-colors group">
-                                <span>Voir tout</span><ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                        </div>
-                    </div>
-                </section>
-            );
+            return <VitrineGrid key={sec.id} section={sec} allProducts={products} bg={bg} />;
         }
 
         return (
