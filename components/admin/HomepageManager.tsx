@@ -26,6 +26,7 @@ export interface HomepageSection {
   productIds: number[];
   count: number;
   slot: HomepageSlot;
+  gridSize?: 'sm' | 'md' | 'lg';
 }
 
 interface HomepageConfig {
@@ -256,6 +257,26 @@ export default function HomepageManager() {
                   </div>
                 </div>
               </div>
+
+              {/* Grid size toggle — only for Vitrine layout */}
+              {section.layout === 'grid' && (
+                <div>
+                  <label className="text-[9px] uppercase tracking-widest font-bold text-gray-400 block mb-1.5">Taille des cases</label>
+                  <div className="flex border border-gray-200 rounded-sm overflow-hidden">
+                    {(['sm', 'md', 'lg'] as const).map(size => (
+                      <button
+                        key={size}
+                        onClick={() => updateSection(section.id, { gridSize: size })}
+                        className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-widest transition-all ${
+                          (section.gridSize ?? 'md') === size ? 'bg-amber-500 text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+                        }`}
+                      >
+                        {size === 'sm' ? 'Petites' : size === 'md' ? 'Moyennes' : 'Grandes'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Slot / Position on page */}
               <div>
