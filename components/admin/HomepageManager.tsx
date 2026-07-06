@@ -4,6 +4,17 @@ import React, { useState, useEffect } from 'react';
 import { productsApi, categoriesApi, imageUrl, type Category } from '@/lib/api';
 import { Save, Eye, EyeOff, Search, X, Check, ChevronUp, ChevronDown, CheckCircle2 } from 'lucide-react';
 
+export type HomepageSlot = 'after-hero' | 'after-quote' | 'after-marquee' | 'after-benefits' | 'after-showcase' | 'after-testimonials';
+
+export const SLOT_LABELS: Record<HomepageSlot, string> = {
+  'after-hero': 'Après le héros',
+  'after-quote': 'Après la bande de slogans',
+  'after-marquee': "Après la bande d'ingrédients (défaut)",
+  'after-benefits': 'Après les bénéfices',
+  'after-showcase': 'Après la vitrine de marque',
+  'after-testimonials': 'Après les témoignages',
+};
+
 export interface HomepageSection {
   id: string;
   title: string;
@@ -14,6 +25,7 @@ export interface HomepageSection {
   categorySlug: string;
   productIds: number[];
   count: number;
+  slot: HomepageSlot;
 }
 
 interface HomepageConfig {
@@ -22,11 +34,11 @@ interface HomepageConfig {
 
 const DEFAULT_CONFIG: HomepageConfig = {
   sections: [
-    { id: 's1', title: 'Soins Capillaires', subtitle: 'Botox & Filler', visible: true, layout: 'featured', mode: 'category', categorySlug: 'soins-capillaires', productIds: [], count: 5 },
-    { id: 's2', title: 'Lissage Professionnel', subtitle: 'Protéines 1L', visible: true, layout: 'featured', mode: 'category', categorySlug: 'lissage-professionnel-1l', productIds: [], count: 5 },
-    { id: 's3', title: 'Soins de Cheveux', subtitle: 'Shampooings & Soins', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'soins-de-cheveux', productIds: [], count: 6 },
-    { id: 's4', title: 'Matériel Pro', subtitle: 'Équipements professionnels', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'materiel', productIds: [], count: 6 },
-    { id: 's5', title: 'Coffrets & Kits', subtitle: 'Nos packs exclusifs', visible: false, layout: 'carousel', mode: 'category', categorySlug: 'nos-coffrets', productIds: [], count: 6 },
+    { id: 's1', title: 'Soins Capillaires', subtitle: 'Botox & Filler', visible: true, layout: 'featured', mode: 'category', categorySlug: 'soins-capillaires', productIds: [], count: 5, slot: 'after-marquee' },
+    { id: 's2', title: 'Lissage Professionnel', subtitle: 'Protéines 1L', visible: true, layout: 'featured', mode: 'category', categorySlug: 'lissage-professionnel-1l', productIds: [], count: 5, slot: 'after-marquee' },
+    { id: 's3', title: 'Soins de Cheveux', subtitle: 'Shampooings & Soins', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'soins-de-cheveux', productIds: [], count: 6, slot: 'after-marquee' },
+    { id: 's4', title: 'Matériel Pro', subtitle: 'Équipements professionnels', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'materiel', productIds: [], count: 6, slot: 'after-marquee' },
+    { id: 's5', title: 'Coffrets & Kits', subtitle: 'Nos packs exclusifs', visible: false, layout: 'carousel', mode: 'category', categorySlug: 'nos-coffrets', productIds: [], count: 6, slot: 'after-marquee' },
   ],
 };
 
@@ -245,6 +257,20 @@ export default function HomepageManager() {
                 </div>
               </div>
 
+              {/* Slot / Position on page */}
+              <div>
+                <label className="text-[9px] uppercase tracking-widest font-bold text-gray-400 block mb-1">Position sur la page</label>
+                <select
+                  value={section.slot ?? 'after-marquee'}
+                  onChange={e => updateSection(section.id, { slot: e.target.value as HomepageSlot })}
+                  className="w-full px-3 py-2 text-sm border border-gray-200 focus:outline-none focus:border-primary/50 rounded-sm bg-white"
+                >
+                  {(Object.entries(SLOT_LABELS) as [HomepageSlot, string][]).map(([value, label]) => (
+                    <option key={value} value={value}>{label}</option>
+                  ))}
+                </select>
+              </div>
+
               {/* Category or manual product picker */}
               {section.mode === 'category' ? (
                 <div className="grid grid-cols-2 gap-3">
@@ -395,5 +421,9 @@ export default function HomepageManager() {
     </div>
   );
 }
+
+
+
+
 
 

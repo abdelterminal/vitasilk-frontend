@@ -9,7 +9,8 @@
       "mode": "category",
       "categorySlug": "soins-capillaires",
       "productIds": [],
-      "count": 5
+      "count": 5,
+      "slot": "after-marquee"
     },
     {
       "id": "s2",
@@ -20,7 +21,8 @@
       "mode": "category",
       "categorySlug": "lissage-professionnel-1l",
       "productIds": [],
-      "count": 5
+      "count": 5,
+      "slot": "after-marquee"
     },
     {
       "id": "s3",
@@ -31,7 +33,8 @@
       "mode": "category",
       "categorySlug": "soins-de-cheveux",
       "productIds": [],
-      "count": 6
+      "count": 6,
+      "slot": "after-marquee"
     },
     {
       "id": "s4",
@@ -42,7 +45,8 @@
       "mode": "category",
       "categorySlug": "materiel",
       "productIds": [],
-      "count": 6
+      "count": 6,
+      "slot": "after-marquee"
     },
     {
       "id": "s5",
@@ -53,7 +57,8 @@
       "mode": "category",
       "categorySlug": "nos-coffrets",
       "productIds": [],
-      "count": 6
+      "count": 6,
+      "slot": "after-marquee"
     }
   ]
 }
