@@ -53,18 +53,12 @@ export default function BrandBenefits() {
  className="absolute inset-0"
  >
  <Image
- src="/img/pub1.png"
+ src="/img/campagnes/plage-4-bottles.jpg"
  alt="Résultat Vitasilk"
  fill
  sizes="(max-width: 1024px) 100vw, 50vw"
- className="object-contain object-center group-hover:scale-105 transition-transform duration-[1.5s]"
+ className="object-cover object-center group-hover:scale-105 transition-transform duration-[1.5s]"
  />
- {/* Overlay elements */}
- <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
- <div className="absolute bottom-8 left-8 right-8 text-white">
- <h3 className="text-2xl font-light mb-2">Résultats immédiats</h3>
- <p className="text-white/80 text-sm font-light">Dès la première utilisation.</p>
- </div>
  </motion.div>
 
  {/* Floating badge */}
