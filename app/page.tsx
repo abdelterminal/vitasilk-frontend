@@ -324,14 +324,14 @@ const ImageTextBanner = ({
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
-                        className={`relative aspect-[4/5] md:aspect-[4/3] rounded-lg overflow-hidden bg-[#111] ${reverse ? 'md:order-2' : ''}`}
+                        className={`relative aspect-[4/5] rounded-lg overflow-hidden bg-[#111] ${reverse ? 'md:order-2' : ''}`}
                     >
                         <Image
                             src={image}
                             alt={imageAlt}
                             fill
                             sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover"
+                            className="object-contain"
                         />
                     </motion.div>
                     <motion.div
