@@ -20,7 +20,7 @@ export interface HomepageSection {
   title: string;
   subtitle: string;
   visible: boolean;
-  layout: 'featured' | 'carousel' | 'grid';
+  layout: 'featured' | 'carousel' | 'grid' | 'imageGrid';
   mode: 'category' | 'manual';
   categorySlug: string;
   productIds: number[];
@@ -36,7 +36,7 @@ interface HomepageConfig {
 const DEFAULT_CONFIG: HomepageConfig = {
   sections: [
     { id: 's1', title: 'Soins Capillaires', subtitle: 'Botox & Filler', visible: true, layout: 'featured', mode: 'category', categorySlug: 'soins-capillaires', productIds: [], count: 5, slot: 'after-marquee' },
-    { id: 's2', title: 'Lissage Professionnel', subtitle: 'Protéines 1L', visible: true, layout: 'featured', mode: 'category', categorySlug: 'lissage-professionnel-1l', productIds: [], count: 5, slot: 'after-marquee' },
+    { id: 's2', title: 'Lissage Professionnel', subtitle: 'Protéines 1L', visible: true, layout: 'imageGrid', mode: 'category', categorySlug: 'lissage-professionnel-1l', productIds: [], count: 4, slot: 'after-marquee' },
     { id: 's3', title: 'Soins de Cheveux', subtitle: 'Shampooings & Soins', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'soins-de-cheveux', productIds: [], count: 6, slot: 'after-marquee' },
     { id: 's4', title: 'Matériel Pro', subtitle: 'Équipements professionnels', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'materiel', productIds: [], count: 6, slot: 'after-marquee' },
     { id: 's5', title: 'Coffrets & Kits', subtitle: 'Nos packs exclusifs', visible: false, layout: 'carousel', mode: 'category', categorySlug: 'nos-coffrets', productIds: [], count: 6, slot: 'after-marquee' },
@@ -183,7 +183,7 @@ export default function HomepageManager() {
               <span className={`text-[9px] uppercase font-bold px-2 py-0.5 rounded-full ${
                 section.layout === 'featured' ? 'bg-primary/10 text-primary' : 'bg-gray-100 text-gray-500'
               }`}>
-                {section.layout === 'featured' ? 'Vedette' : section.layout === 'carousel' ? 'Carrousel' : 'Vitrine'}
+                {section.layout === 'featured' ? 'Vedette' : section.layout === 'carousel' ? 'Carrousel' : section.layout === 'imageGrid' ? 'Image + Grille' : 'Vitrine'}
               </span>
               <button
                 onClick={() => updateSection(section.id, { visible: !section.visible })}
@@ -227,7 +227,7 @@ export default function HomepageManager() {
                 <div>
                   <label className="text-[9px] uppercase tracking-widest font-bold text-gray-400 block mb-1.5">Type d'affichage</label>
                   <div className="flex border border-gray-200 rounded-sm overflow-hidden">
-                    {(['featured', 'carousel', 'grid'] as const).map(l => (
+                    {(['featured', 'carousel', 'grid', 'imageGrid'] as const).map(l => (
                       <button
                         key={l}
                         onClick={() => updateSection(section.id, { layout: l })}
@@ -235,7 +235,7 @@ export default function HomepageManager() {
                           section.layout === l ? 'bg-primary text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
                         }`}
                       >
-                        {l === 'featured' ? 'Vedette' : l === 'carousel' ? 'Carrousel' : 'Vitrine'}
+                        {l === 'featured' ? 'Vedette' : l === 'carousel' ? 'Carrousel' : l === 'imageGrid' ? 'Image' : 'Vitrine'}
                       </button>
                     ))}
                   </div>

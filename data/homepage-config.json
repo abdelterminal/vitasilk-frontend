@@ -17,11 +17,11 @@
       "title": "Lissage Professionnel",
       "subtitle": "Protéines 1L",
       "visible": true,
-      "layout": "featured",
+      "layout": "imageGrid",
       "mode": "category",
       "categorySlug": "lissage-professionnel-1l",
       "productIds": [],
-      "count": 5,
+      "count": 4,
       "slot": "after-marquee"
     },
     {

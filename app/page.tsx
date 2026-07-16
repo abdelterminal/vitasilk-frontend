@@ -376,6 +376,10 @@ export default function Home() {
     }, []);
 
     const visibleSections = (homepageConfig?.sections ?? []).filter(s => s.visible);
+    const afterMarqueeSections = visibleSections.filter(s => (s.slot ?? 'after-marquee') === 'after-marquee');
+    const soinsIdx = afterMarqueeSections.findIndex(s => s.categorySlug === 'soins-de-cheveux');
+    const beforeSoinsSections = soinsIdx === -1 ? afterMarqueeSections : afterMarqueeSections.slice(0, soinsIdx);
+    const fromSoinsSections = soinsIdx === -1 ? [] : afterMarqueeSections.slice(soinsIdx);
 
     const renderSection = (sec: HomepageSection, idx: number) => {
         const secProducts = getSectionProducts(sec, products);
@@ -402,6 +406,42 @@ export default function Home() {
                             </motion.div>
                             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="lg:col-span-3 grid grid-cols-2 gap-4">
                                 {secProducts.slice(1, 5).map((product, i) => (
+                                    <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}>
+                                        <ProductCardCompact product={product} />
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        if (sec.layout === 'imageGrid') {
+            return (
+                <section key={sec.id} className={`py-16 px-6 lg:px-12 ${bg}`}>
+                    <div className="max-w-[1600px] mx-auto">
+                        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex flex-col md:flex-row md:items-end justify-between mb-10 pb-6 border-b border-gray-100">
+                            <div>
+                                <p className="text-[10px] uppercase font-bold text-primary mb-2">{sec.subtitle}</p>
+                                <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900">{sec.title}</h2>
+                            </div>
+                            <Link href={href} className="inline-flex items-center gap-2 mt-4 md:mt-0 text-[10px] uppercase font-bold text-gray-500 hover:text-primary transition-colors group">
+                                <span>Voir tout</span><ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </motion.div>
+                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="lg:col-span-2 relative min-h-[420px] overflow-hidden bg-[#111]">
+                                <Image
+                                    src="/img/campagnes/plage-4-bottles-icons.jpg"
+                                    alt={sec.title}
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 40vw"
+                                    className="object-cover"
+                                />
+                            </motion.div>
+                            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="lg:col-span-3 grid grid-cols-2 grid-rows-2 gap-4">
+                                {secProducts.slice(0, 4).map((product, i) => (
                                     <motion.div key={product.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.2 + i * 0.08 }}>
                                         <ProductCardCompact product={product} />
                                     </motion.div>
@@ -481,16 +521,12 @@ export default function Home() {
                 </motion.div>
             </div>
 
-            {/* Slot: after-marquee (default) */}
-            {renderSlot('after-marquee')}
+            {/* Slot: after-marquee, part 1 (before Soins de Cheveux) */}
+            {!loading && beforeSoinsSections.map(sec => (
+                <React.Fragment key={sec.id}>{renderSection(sec, afterMarqueeSections.indexOf(sec))}</React.Fragment>
+            ))}
 
-            {/* Brand Benefits Section */}
-            <BrandBenefits />
-
-            {/* Slot: after-benefits */}
-            {renderSlot('after-benefits')}
-
-            {/* Gamme complète banner */}
+            {/* Gamme complète banner — moved above Soins de Cheveux */}
             <ImageTextBanner
                 image="/img/campagnes/gamme-complete.jpg"
                 imageAlt="Gamme complète Vitasilk Professional"
@@ -501,6 +537,17 @@ export default function Home() {
                 buttonLabel="Voir la boutique"
                 bg="bg-white"
             />
+
+            {/* Slot: after-marquee, part 2 (Soins de Cheveux onward) */}
+            {!loading && fromSoinsSections.map(sec => (
+                <React.Fragment key={sec.id}>{renderSection(sec, afterMarqueeSections.indexOf(sec))}</React.Fragment>
+            ))}
+
+            {/* Brand Benefits Section */}
+            <BrandBenefits />
+
+            {/* Slot: after-benefits */}
+            {renderSlot('after-benefits')}
 
             {/* Featured Showcase */}
             <FeaturedShowcase />
