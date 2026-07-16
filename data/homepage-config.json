@@ -35,7 +35,8 @@
       "categorySlug": "soins-de-cheveux",
       "productIds": [],
       "count": 6,
-      "slot": "after-marquee"
+      "slot": "after-marquee",
+      "centered": true
     },
     {
       "id": "s4",

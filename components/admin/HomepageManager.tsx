@@ -29,6 +29,7 @@ export interface HomepageSection {
   slot: HomepageSlot;
   gridSize?: 'sm' | 'md' | 'lg';
   image?: string;
+  centered?: boolean;
 }
 
 interface HomepageConfig {
@@ -39,7 +40,7 @@ const DEFAULT_CONFIG: HomepageConfig = {
   sections: [
     { id: 's1', title: 'Soins Capillaires', subtitle: 'Botox & Filler', visible: true, layout: 'featured', mode: 'category', categorySlug: 'soins-capillaires', productIds: [], count: 5, slot: 'after-marquee' },
     { id: 's2', title: 'Lissage Professionnel', subtitle: 'Protéines 1L', visible: true, layout: 'imageGrid', mode: 'category', categorySlug: 'lissage-professionnel-1l', productIds: [], count: 4, slot: 'after-marquee', image: '/img/campagnes/plage-4-bottles-icons.jpg' },
-    { id: 's3', title: 'Soins de Cheveux', subtitle: 'Shampooings & Soins', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'soins-de-cheveux', productIds: [], count: 6, slot: 'after-marquee' },
+    { id: 's3', title: 'Soins de Cheveux', subtitle: 'Shampooings & Soins', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'soins-de-cheveux', productIds: [], count: 6, slot: 'after-marquee', centered: true },
     { id: 's4', title: 'Matériel Pro', subtitle: 'Équipements professionnels', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'materiel', productIds: [], count: 6, slot: 'after-marquee' },
     { id: 's5', title: 'Coffrets & Kits', subtitle: 'Nos packs exclusifs', visible: false, layout: 'carousel', mode: 'category', categorySlug: 'nos-coffrets', productIds: [], count: 6, slot: 'after-marquee' },
   ],
@@ -290,6 +291,32 @@ export default function HomepageManager() {
                       </button>
                     ))}
                   </div>
+                </div>
+              )}
+
+              {/* Centering toggle — only for Carrousel layout */}
+              {section.layout === 'carousel' && (
+                <div>
+                  <label className="text-[9px] uppercase tracking-widest font-bold text-gray-400 block mb-1.5">Alignement</label>
+                  <div className="flex border border-gray-200 rounded-sm overflow-hidden">
+                    <button
+                      onClick={() => updateSection(section.id, { centered: false })}
+                      className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-widest transition-all ${
+                        !section.centered ? 'bg-primary text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+                      }`}
+                    >
+                      Standard
+                    </button>
+                    <button
+                      onClick={() => updateSection(section.id, { centered: true })}
+                      className={`flex-1 py-2 text-[10px] font-bold uppercase tracking-widest transition-all ${
+                        section.centered ? 'bg-primary text-white' : 'bg-white text-gray-400 hover:bg-gray-50'
+                      }`}
+                    >
+                      Centré
+                    </button>
+                  </div>
+                  <p className="text-[9px] text-gray-400 mt-1">Centré évite un alignement à gauche quand il y a peu de produits.</p>
                 </div>
               )}
 

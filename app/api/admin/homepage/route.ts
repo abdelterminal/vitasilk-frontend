@@ -8,7 +8,7 @@ const DEFAULT_CONFIG = {
   sections: [
     { id: 's1', title: 'Soins Capillaires', subtitle: 'Botox & Filler', visible: true, layout: 'featured', mode: 'category', categorySlug: 'soins-capillaires', productIds: [], count: 5, slot: 'after-marquee' },
     { id: 's2', title: 'Lissage Professionnel', subtitle: 'Protéines 1L', visible: true, layout: 'imageGrid', mode: 'category', categorySlug: 'lissage-professionnel-1l', productIds: [], count: 4, slot: 'after-marquee', image: '/img/campagnes/plage-4-bottles-icons.jpg' },
-    { id: 's3', title: 'Soins de Cheveux', subtitle: 'Shampooings & Soins', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'soins-de-cheveux', productIds: [], count: 6, slot: 'after-marquee' },
+    { id: 's3', title: 'Soins de Cheveux', subtitle: 'Shampooings & Soins', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'soins-de-cheveux', productIds: [], count: 6, slot: 'after-marquee', centered: true },
     { id: 's4', title: 'Matériel Pro', subtitle: 'Équipements professionnels', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'materiel', productIds: [], count: 6, slot: 'after-marquee' },
     { id: 's5', title: 'Coffrets & Kits', subtitle: 'Nos packs exclusifs', visible: false, layout: 'carousel', mode: 'category', categorySlug: 'nos-coffrets', productIds: [], count: 6, slot: 'after-marquee' },
   ],

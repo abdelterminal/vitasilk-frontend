@@ -142,7 +142,7 @@ const FeaturedProductCard = ({ product }: { product: Product }) => {
 };
 
 // Product carousel with navigation
-const ProductCarousel = ({ products, title, href }: { products: Product[]; title: string; href: string }) => {
+const ProductCarousel = ({ products, title, href, centered }: { products: Product[]; title: string; href: string; centered?: boolean }) => {
     const [page, setPage] = useState(0);
     const itemsPerPage = 6;
     const totalPages = Math.ceil(products.length / itemsPerPage);
@@ -189,10 +189,16 @@ const ProductCarousel = ({ products, title, href }: { products: Product[]; title
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
+                className={centered ? 'flex flex-wrap justify-center gap-4' : 'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4'}
             >
                 {visible.map(product => (
-                    <ProductCardCompact key={product.id} product={product} />
+                    centered ? (
+                        <div key={product.id} className="w-[45%] sm:w-[30%] lg:w-[210px] flex-shrink-0">
+                            <ProductCardCompact product={product} />
+                        </div>
+                    ) : (
+                        <ProductCardCompact key={product.id} product={product} />
+                    )
                 ))}
             </motion.div>
 
@@ -468,7 +474,7 @@ export default function Home() {
             <section key={sec.id} className={`py-12 px-6 lg:px-12 ${bg}`}>
                 <div className="max-w-[1600px] mx-auto">
                     <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-                        <ProductCarousel products={secProducts} title={sec.title} href={href} />
+                        <ProductCarousel products={secProducts} title={sec.title} href={href} centered={sec.centered} />
                     </motion.div>
                 </div>
             </section>
