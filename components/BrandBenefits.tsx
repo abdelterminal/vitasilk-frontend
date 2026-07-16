@@ -53,11 +53,11 @@ export default function BrandBenefits() {
  className="absolute inset-0"
  >
  <Image
- src="/img/campagnes/plage-4-bottles.jpg"
+ src="/img/campagnes/plage-4-bottles-icons.jpg"
  alt="Résultat Vitasilk"
  fill
  sizes="(max-width: 1024px) 100vw, 50vw"
- className="object-cover object-center group-hover:scale-105 transition-transform duration-[1.5s]"
+ className="object-contain object-center group-hover:scale-105 transition-transform duration-[1.5s]"
  />
  </motion.div>
 
