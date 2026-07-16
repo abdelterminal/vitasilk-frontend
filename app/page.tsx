@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Hero from "@/components/Hero";
 import ProductCardCompact from "@/components/ProductCardCompact";
-import BrandBenefits from "@/components/BrandBenefits";
 import TestimonialSection from "@/components/TestimonialSection";
 import FeaturedShowcase from "@/components/FeaturedShowcase";
 import NewsletterBanner from "@/components/NewsletterBanner";
@@ -542,9 +541,6 @@ export default function Home() {
             {!loading && fromSoinsSections.map(sec => (
                 <React.Fragment key={sec.id}>{renderSection(sec, afterMarqueeSections.indexOf(sec))}</React.Fragment>
             ))}
-
-            {/* Brand Benefits Section */}
-            <BrandBenefits />
 
             {/* Slot: after-benefits */}
             {renderSlot('after-benefits')}
