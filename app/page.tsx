@@ -436,7 +436,7 @@ export default function Home() {
                                     alt={sec.title}
                                     fill
                                     sizes="(max-width: 1024px) 100vw, 40vw"
-                                    className="object-cover"
+                                    className="object-contain"
                                 />
                             </motion.div>
                             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="lg:col-span-3 grid grid-cols-2 grid-rows-2 gap-4">
