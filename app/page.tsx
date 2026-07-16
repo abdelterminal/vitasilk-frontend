@@ -432,7 +432,7 @@ export default function Home() {
                         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
                             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="lg:col-span-2 relative min-h-[420px] overflow-hidden bg-[#111]">
                                 <Image
-                                    src="/img/campagnes/plage-4-bottles-icons.jpg"
+                                    src={sec.image || '/img/campagnes/plage-4-bottles-icons.jpg'}
                                     alt={sec.title}
                                     fill
                                     sizes="(max-width: 1024px) 100vw, 40vw"

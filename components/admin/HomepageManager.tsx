@@ -1,8 +1,9 @@
 ﻿"use client";
 
 import React, { useState, useEffect } from 'react';
-import { productsApi, categoriesApi, imageUrl, type Category } from '@/lib/api';
-import { Save, Eye, EyeOff, Search, X, Check, ChevronUp, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { productsApi, categoriesApi, uploadsApi, imageUrl, type Category } from '@/lib/api';
+import { Save, Eye, EyeOff, Search, X, Check, ChevronUp, ChevronDown, CheckCircle2, Upload, Loader2 } from 'lucide-react';
+import Image from 'next/image';
 
 export type HomepageSlot = 'after-hero' | 'after-quote' | 'after-marquee' | 'after-benefits' | 'after-showcase' | 'after-testimonials';
 
@@ -27,6 +28,7 @@ export interface HomepageSection {
   count: number;
   slot: HomepageSlot;
   gridSize?: 'sm' | 'md' | 'lg';
+  image?: string;
 }
 
 interface HomepageConfig {
@@ -36,7 +38,7 @@ interface HomepageConfig {
 const DEFAULT_CONFIG: HomepageConfig = {
   sections: [
     { id: 's1', title: 'Soins Capillaires', subtitle: 'Botox & Filler', visible: true, layout: 'featured', mode: 'category', categorySlug: 'soins-capillaires', productIds: [], count: 5, slot: 'after-marquee' },
-    { id: 's2', title: 'Lissage Professionnel', subtitle: 'Protéines 1L', visible: true, layout: 'imageGrid', mode: 'category', categorySlug: 'lissage-professionnel-1l', productIds: [], count: 4, slot: 'after-marquee' },
+    { id: 's2', title: 'Lissage Professionnel', subtitle: 'Protéines 1L', visible: true, layout: 'imageGrid', mode: 'category', categorySlug: 'lissage-professionnel-1l', productIds: [], count: 4, slot: 'after-marquee', image: '/img/campagnes/plage-4-bottles-icons.jpg' },
     { id: 's3', title: 'Soins de Cheveux', subtitle: 'Shampooings & Soins', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'soins-de-cheveux', productIds: [], count: 6, slot: 'after-marquee' },
     { id: 's4', title: 'Matériel Pro', subtitle: 'Équipements professionnels', visible: true, layout: 'carousel', mode: 'category', categorySlug: 'materiel', productIds: [], count: 6, slot: 'after-marquee' },
     { id: 's5', title: 'Coffrets & Kits', subtitle: 'Nos packs exclusifs', visible: false, layout: 'carousel', mode: 'category', categorySlug: 'nos-coffrets', productIds: [], count: 6, slot: 'after-marquee' },
@@ -51,6 +53,7 @@ export default function HomepageManager() {
   const [saved, setSaved] = useState(false);
   const [pickerSection, setPickerSection] = useState<string | null>(null);
   const [search, setSearch] = useState('');
+  const [uploadingId, setUploadingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetch('/api/admin/homepage')
@@ -83,6 +86,18 @@ export default function HomepageManager() {
       [sections[idx], sections[newIdx]] = [sections[newIdx], sections[idx]];
       return { ...prev, sections };
     });
+  };
+
+  const handleImageUpload = async (sectionId: string, file: File) => {
+    setUploadingId(sectionId);
+    try {
+      const url = await uploadsApi.uploadSingle(file);
+      updateSection(sectionId, { image: url });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setUploadingId(null);
+    }
   };
 
   const toggleProduct = (sectionId: string, productId: number) => {
@@ -274,6 +289,53 @@ export default function HomepageManager() {
                         {size === 'sm' ? 'Petites' : size === 'md' ? 'Moyennes' : 'Grandes'}
                       </button>
                     ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Image picker — only for Image + Grille layout */}
+              {section.layout === 'imageGrid' && (
+                <div>
+                  <label className="text-[9px] uppercase tracking-widest font-bold text-gray-400 block mb-1.5">Image (côté gauche)</label>
+                  <div className="flex items-center gap-4">
+                    <div className="relative w-28 h-20 flex-shrink-0 bg-gray-50 border border-gray-200 rounded-sm overflow-hidden">
+                      {section.image ? (
+                        <Image src={imageUrl(section.image)} alt="" fill className="object-cover" />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-300">
+                          <Upload size={16} />
+                        </div>
+                      )}
+                      {uploadingId === section.id && (
+                        <div className="absolute inset-0 bg-white/70 flex items-center justify-center">
+                          <Loader2 size={16} className="animate-spin text-primary" />
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-[9px] uppercase font-bold tracking-widest rounded-sm cursor-pointer hover:bg-primary transition-all w-fit">
+                        <Upload size={12} />
+                        <span>{section.image ? 'Changer l\'image' : 'Choisir une image'}</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={e => {
+                            const file = e.target.files?.[0];
+                            if (file) handleImageUpload(section.id, file);
+                            e.target.value = '';
+                          }}
+                        />
+                      </label>
+                      {section.image && (
+                        <button
+                          onClick={() => updateSection(section.id, { image: '' })}
+                          className="text-[9px] uppercase font-bold text-red-500 hover:text-red-700 transition-colors w-fit"
+                        >
+                          Retirer l'image
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
