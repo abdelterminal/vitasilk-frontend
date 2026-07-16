@@ -278,7 +278,7 @@ const Navbar = () => {
                         </button>
 
                         {/* Mobile: Burger Menu + Profile Picture */}
-                        <div className="flex items-center space-x-2 md:hidden">
+                        <div className="flex items-center space-x-2 xl:hidden">
                             {/* account avatar hidden — no client accounts
                             <Link href="/account" className="relative">
                                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs overflow-hidden border-2 border-primary/30" style={{backgroundColor: '#C9A14A'}}>
@@ -406,14 +406,14 @@ const Navbar = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsMobileMenuOpen(false)}
-                            className="fixed inset-0 bg-black/40 backdrop-blur-sm md:hidden pointer-events-auto z-[9999]"
+                            className="fixed inset-0 bg-black/40 backdrop-blur-sm xl:hidden pointer-events-auto z-[9999]"
                         />
                         <motion.div
                             initial={{ x: '100%' }}
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                            className="fixed top-0 right-0 h-full w-[85%] max-w-md bg-white z-[10000] md:hidden p-6 flex flex-col shadow-2xl"
+                            className="fixed top-0 right-0 h-full w-[85%] max-w-md bg-white z-[10000] xl:hidden p-6 flex flex-col shadow-2xl"
                         >
                             <div className="flex justify-between items-center mb-8">
                                 <Image src="/img/logo.png" alt="Vitasilk" width={100} height={30} className="object-contain" />
