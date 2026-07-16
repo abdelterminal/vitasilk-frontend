@@ -430,13 +430,21 @@ export default function Home() {
                             </Link>
                         </motion.div>
                         <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-                            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="lg:col-span-2 relative min-h-[420px] overflow-hidden bg-[#111]">
+                            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="lg:col-span-2 relative min-h-[420px] overflow-hidden bg-[#FDFBF7]">
+                                <Image
+                                    src={sec.image || '/img/campagnes/plage-4-bottles-icons.jpg'}
+                                    alt=""
+                                    aria-hidden="true"
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 40vw"
+                                    className="object-cover scale-110 blur-2xl opacity-60"
+                                />
                                 <Image
                                     src={sec.image || '/img/campagnes/plage-4-bottles-icons.jpg'}
                                     alt={sec.title}
                                     fill
                                     sizes="(max-width: 1024px) 100vw, 40vw"
-                                    className="object-contain"
+                                    className="relative object-contain"
                                 />
                             </motion.div>
                             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="lg:col-span-3 grid grid-cols-2 grid-rows-2 gap-4">
