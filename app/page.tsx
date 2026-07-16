@@ -293,6 +293,71 @@ const VitrineGrid = ({ section, allProducts, bg }: { section: HomepageSection; a
     );
 };
 
+// Marketing banner: photo on one side, title/text/button on the other
+const ImageTextBanner = ({
+    image,
+    imageAlt,
+    subtitle,
+    title,
+    text,
+    href,
+    buttonLabel,
+    reverse,
+    bg,
+}: {
+    image: string;
+    imageAlt: string;
+    subtitle: string;
+    title: string;
+    text: string;
+    href: string;
+    buttonLabel: string;
+    reverse?: boolean;
+    bg: string;
+}) => {
+    return (
+        <section className={`py-16 px-6 lg:px-12 ${bg}`}>
+            <div className="max-w-[1400px] mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+                    <motion.div
+                        initial={{ opacity: 0, x: reverse ? 20 : -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className={`relative aspect-[4/5] md:aspect-[4/3] rounded-lg overflow-hidden bg-[#111] ${reverse ? 'md:order-2' : ''}`}
+                    >
+                        <Image
+                            src={image}
+                            alt={imageAlt}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover"
+                        />
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, x: reverse ? -20 : 20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className={reverse ? 'md:order-1' : ''}
+                    >
+                        <p className="text-[10px] uppercase font-bold text-primary mb-2">{subtitle}</p>
+                        <h2 className="text-3xl md:text-4xl font-sans font-light text-gray-900 mb-4">{title}</h2>
+                        <p className="text-gray-500 text-sm leading-relaxed mb-8 max-w-md">{text}</p>
+                        <Link
+                            href={href}
+                            className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white text-[10px] uppercase font-bold tracking-widest hover:bg-black transition-all duration-300 group"
+                        >
+                            <span>{buttonLabel}</span>
+                            <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
 export default function Home() {
     const [products, setProducts] = useState<Product[]>([]);
     const [homepageConfig, setHomepageConfig] = useState<{ sections: HomepageSection[] } | null>(null);
@@ -425,11 +490,36 @@ export default function Home() {
             {/* Slot: after-benefits */}
             {renderSlot('after-benefits')}
 
+            {/* Gamme complète banner */}
+            <ImageTextBanner
+                image="/img/campagnes/gamme-complete.jpg"
+                imageAlt="Gamme complète Vitasilk Professional"
+                subtitle="La Collection"
+                title="Toute la gamme Vitasilk, réunie"
+                text="Botox Capillaire, Filler Glow, 24K Gold, Coffee Extract, Blue Silk... Découvrez l'ensemble de nos soins professionnels sans acide glyoxylique, conçus pour un lissage parfait et durable."
+                href="/boutique"
+                buttonLabel="Voir la boutique"
+                bg="bg-white"
+            />
+
             {/* Featured Showcase */}
             <FeaturedShowcase />
 
             {/* Slot: after-showcase */}
             {renderSlot('after-showcase')}
+
+            {/* Trio essentiels banner */}
+            <ImageTextBanner
+                image="/img/campagnes/trio-essentiels.jpg"
+                imageAlt="Trio essentiel Vitasilk : Coffee Extract, Filler Glow, 24K Gold"
+                subtitle="Nos Essentiels"
+                title="Le trio incontournable"
+                text="Coffee Extract, Filler Glow et 24K Gold : trois soins signature pour préparer, lisser et sublimer chaque chevelure."
+                href="/boutique"
+                buttonLabel="Découvrir"
+                reverse
+                bg="bg-[#FDFBF7]"
+            />
 
             {/* Testimonials */}
             <TestimonialSection />
