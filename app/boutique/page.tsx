@@ -86,7 +86,9 @@ export default function BoutiquePage() {
 
      const cats: CategoryOption[] = [
        { name: 'Tous', slug: '' },
-       ...categoriesRes.data.map(c => ({ name: c.name, slug: c.slug })),
+       ...categoriesRes.data
+         .filter(c => c.slug !== 'lissage-pro')
+         .map(c => ({ name: c.name, slug: c.slug })),
      ];
      setCategories(cats);
 
