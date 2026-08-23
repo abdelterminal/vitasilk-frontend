@@ -136,7 +136,7 @@ export default function OrderManager() {
 
 
     const filteredOrders = orders.filter(order => {
-        const cName = (order.user_name || '').toLowerCase();
+        const cName = (order.customer_name || order.user_name || '').toLowerCase();
         const cEmail = (order.user_email || '').toLowerCase();
         const sTerm = searchTerm.toLowerCase();
 
@@ -203,7 +203,7 @@ export default function OrderManager() {
         const headers = ['ID', 'Nom Client', 'Téléphone', 'Ville', 'Articles', 'Total (DH)', 'Date', 'Statut'];
         const rows = toExport.map(o => [
             String(o.id),
-            o.user_name || '—',
+            o.customer_name || o.user_name || '—',
             o.phone || '—',
             o.city || o.address || '—',
             (o.items ?? []).map(item => `${item.product_name} ×${item.quantity}`).join(' | '),
@@ -384,7 +384,7 @@ export default function OrderManager() {
                                     </td>
                                     <td className="px-6 md:px-10 py-6 md:py-8">
                                         <div>
-                                            <p className="text-[13px] font-bold text-gray-900 group-hover:text-primary transition-colors">{order.user_name || 'Hôte'}</p>
+                                            <p className="text-[13px] font-bold text-gray-900 group-hover:text-primary transition-colors">{order.customer_name || order.user_name || 'Hôte'}</p>
                                             <p className="text-[10px] text-gray-400 lowercase ">{order.user_email || '—'}</p>
                                         </div>
                                     </td>
@@ -411,7 +411,7 @@ export default function OrderManager() {
                                                     setInvoiceData({
                                                         orderId: order.id,
                                                         date: order.created_at,
-                                                        customerName: order.user_name,
+                                                        customerName: order.customer_name || order.user_name,
                                                         customerEmail: order.user_email,
                                                         customerPhone: order.phone || '—',
                                                         customerAddress: order.city || order.address || 'Adresse non renseignée',
@@ -533,11 +533,11 @@ export default function OrderManager() {
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                         <div className="flex items-center gap-4 bg-white rounded-xl p-4 border border-primary/10 shadow-sm">
                                             <div className="w-10 h-10 shrink-0 bg-primary/10 rounded-full flex items-center justify-center text-primary font-bold text-lg">
-                                                {(selectedOrder.user_name || '?')[0].toUpperCase()}
+                                                {(selectedOrder.customer_name || selectedOrder.user_name || '?')[0].toUpperCase()}
                                             </div>
                                             <div className="min-w-0">
                                                 <p className="text-[9px] uppercase tracking-widest text-gray-400 font-bold mb-0.5">Nom Client</p>
-                                                <p className="text-base font-black text-gray-900 truncate">{selectedOrder.user_name || 'Client Inconnu'}</p>
+                                                <p className="text-base font-black text-gray-900 truncate">{selectedOrder.customer_name || selectedOrder.user_name || 'Client Inconnu'}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-4 bg-white rounded-xl p-4 border border-primary/10 shadow-sm">
@@ -718,7 +718,7 @@ export default function OrderManager() {
                                             setInvoiceData({
                                                 orderId: selectedOrder.id,
                                                 date: selectedOrder.created_at,
-                                                customerName: selectedOrder.user_name,
+                                                customerName: selectedOrder.customer_name || selectedOrder.user_name,
                                                 customerEmail: selectedOrder.user_email,
                                                 customerPhone: selectedOrder.phone || '—',
                                                 customerAddress: selectedOrder.city || selectedOrder.address || 'Adresse non renseignée',

@@ -412,6 +412,7 @@ export interface Category {
 export interface Order {
   id: number;
   user_id?: number;
+  customer_name?: string;
   user_name?: string;
   user_email?: string;
   total_price: number;

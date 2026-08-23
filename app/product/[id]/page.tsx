@@ -840,7 +840,8 @@ const DirectCheckoutForm = ({ product, quantity, discount }: { product: Product,
                 address: `${city} — Achat Rapide depuis la page produit`,
                 phone,
                 city,
-                notes: `Client: ${name}${appliedPromo ? ` | Promo: ${appliedPromo.code}` : ''}`,
+                customer_name: name.trim(),
+                notes: appliedPromo ? `Promo: ${appliedPromo.code}` : undefined,
                 discount_percentage: discountPct,
             });
 

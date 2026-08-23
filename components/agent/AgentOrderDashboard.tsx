@@ -62,7 +62,7 @@ export default function AgentOrderDashboard() {
     const q = search.toLowerCase();
     return (
       String(o.id).includes(q) ||
-      (o.user_name || '').toLowerCase().includes(q) ||
+      (o.customer_name || o.user_name || '').toLowerCase().includes(q) ||
       (o.phone || '').includes(q) ||
       (o.city || '').toLowerCase().includes(q)
     );
@@ -177,7 +177,7 @@ export default function AgentOrderDashboard() {
                       <tr key={order.id} className="hover:bg-gray-50/50 transition-colors cursor-pointer" onClick={() => setSelectedOrder(order)}>
                         <td className="px-5 py-4 text-xs font-mono text-gray-400">#{order.id}</td>
                         <td className="px-5 py-4">
-                          <span className="text-sm font-semibold text-gray-900">{order.user_name || '—'}</span>
+                          <span className="text-sm font-semibold text-gray-900">{order.customer_name || order.user_name || '—'}</span>
                         </td>
                         <td className="px-5 py-4 text-sm text-gray-600 font-mono">{order.phone || '—'}</td>
                         <td className="px-5 py-4 text-sm text-gray-600">{order.city || '—'}</td>
@@ -259,7 +259,7 @@ export default function AgentOrderDashboard() {
                     <div className="bg-white rounded-lg p-4 text-center">
                       <User size={16} className="text-gray-400 mx-auto mb-2" />
                       <p className="text-[9px] uppercase text-gray-400 font-bold mb-1">Nom</p>
-                      <p className="text-sm font-bold text-gray-900 leading-tight">{selectedOrder.user_name || '—'}</p>
+                      <p className="text-sm font-bold text-gray-900 leading-tight">{selectedOrder.customer_name || selectedOrder.user_name || '—'}</p>
                     </div>
                     <div className="bg-white rounded-lg p-4 text-center">
                       <Phone size={16} className="text-emerald-500 mx-auto mb-2" />
