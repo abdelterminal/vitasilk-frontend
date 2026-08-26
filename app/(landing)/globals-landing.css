@@ -1,0 +1,394 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Shared gold / metal ramp ────────────────────────────────────────────
+     Default values work for blue-silk, coffee, filler (and most of 24k/coconut).
+     Botox overrides --color-gold to #d4af37. 24k/coconut override --color-gold-deep.
+     All per-product token conflicts are resolved in the [data-product] blocks below. */
+  --color-gold: #c9a227;
+  --color-gold-light: #e8c86a;
+  --color-gold-deep: #a8862a;
+
+  /* ── vitasilk (botox) — dark ink palette ────────────────────────────── */
+  --color-ink: #0a0a08;
+  --color-coal: #14120e;
+  --color-charcoal: #1d1a14;
+  --color-olive: #a3a83b;
+  --color-cream-dim: #cfc7b4;
+
+  /* ── vitasilk_24k — ivory / champagne palette ───────────────────────── */
+  --color-ivory: #fbf8f2;
+  --color-pearl: #f3ede1;
+  --color-champagne: #e3d3b0;
+  --color-champagne-dim: #d6c39a;
+  --color-espresso: #2a2118;
+  --color-espresso-deep: #1d160f;
+  --color-mocha: #6b5d4a;
+
+  /* ── vitasilk_blue_silk — midnight blue palette ──────────────────────── */
+  --color-midnight: #0a1020;
+  --color-navy: #101c33;
+  --color-navy-deep: #060b16;
+  --color-navy-light: #16233c;
+  --color-royal: #1e3a8a;
+  --color-azure: #7ea8e8;
+  --color-silk: #eef2fa;
+  --color-silk-dim: #b9c4d8;
+
+  /* ── vitasilk_coconut — cream / palm palette ─────────────────────────── */
+  --color-cream: #faf6ef;
+  --color-shell: #f2ebdf;
+  --color-sand: #e7dcc9;
+  --color-sand-deep: #d9cbb0;
+  --color-palm: #1f4d3d;
+  --color-palm-deep: #12332a;
+  --color-palm-dark: #0b211b;
+  --color-frond: #8fc4a8;
+  --color-bark: #241d16;
+  --color-husk: #6b5b45;
+  --color-coconut: #f7f2e8;
+
+  /* ── vitasilk_coffee_extract & vitasilk_filler_glow ─────────────────── */
+  --color-bean: #1d1710;
+  --color-bean-deep: #0c0906;
+  --color-bean-light: #2a2118;
+  --color-caramel: #c7a878;
+  --color-caramel-dim: #a98a5f;
+  --color-crema: #f5efe2;
+  --color-crema-dim: #cfc0aa;
+
+  /* ── Font stacks (defaults for Marcellus products) ───────────────────── */
+  --font-display: var(--font-marcellus), var(--font-cairo), serif;
+  --font-body: var(--font-jost), var(--font-cairo), sans-serif;
+
+  /* ── Animations ──────────────────────────────────────────────────────── */
+  --animate-shimmer: shimmer 2.8s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-glow: glow-dark 2.4s ease-in-out infinite;
+
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position:  200% center; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-14px); }
+  }
+  /* Dark theme glow — default (botox, blue-silk, coffee, filler) */
+  @keyframes glow-dark {
+    0%, 100% {
+      box-shadow: 0 0 22px -6px rgba(201,162,39,.55), 0 0 0 0 rgba(201,162,39,.4);
+    }
+    50% {
+      box-shadow: 0 0 38px -4px rgba(232,200,106,.75), 0 0 0 12px rgba(201,162,39,0);
+    }
+  }
+  /* 24k — warm drop shadow + expanding champagne ring on ivory */
+  @keyframes glow-light-24k {
+    0%, 100% {
+      box-shadow: 0 10px 30px -8px rgba(154,123,30,.35), 0 0 0 0 rgba(201,162,39,.45);
+    }
+    50% {
+      box-shadow: 0 14px 40px -8px rgba(154,123,30,.5), 0 0 0 12px rgba(201,162,39,0);
+    }
+  }
+  /* coconut — palm-green glow */
+  @keyframes glow-coconut {
+    0%, 100% {
+      box-shadow: 0 10px 30px -8px rgba(31,77,61,.45), 0 0 0 0 rgba(31,77,61,.4);
+    }
+    50% {
+      box-shadow: 0 16px 42px -8px rgba(31,77,61,.6), 0 0 0 12px rgba(31,77,61,0);
+    }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+}
+
+/* ── Per-product token overrides ────────────────────────────────────────── */
+
+/* botox differs on gold, champagne, cream */
+[data-product="botox"] {
+  --color-gold: #d4af37;
+  --color-champagne: #c9a227;
+  --color-cream: #f5efe2;
+  --animate-glow: glow-dark 2.4s ease-in-out infinite;
+}
+/* 24k uses cormorant, lighter gold-deep, and espresso = dark-brown body text */
+[data-product="24k"] {
+  --font-display: var(--font-cormorant), var(--font-cairo), serif;
+  --color-gold-deep: #9a7b1e;
+  --animate-glow: glow-light-24k 2.8s ease-in-out infinite;
+}
+/* coconut uses cormorant, lighter gold-deep, palm glow */
+[data-product="coconut"] {
+  --font-display: var(--font-cormorant), var(--font-cairo), serif;
+  --color-gold-deep: #9a7b1e;
+  --animate-glow: glow-coconut 2.8s ease-in-out infinite;
+}
+/* coffee and filler: espresso = near-black page bg */
+[data-product="coffee"],
+[data-product="filler"] {
+  --color-espresso: #14100c;
+  --color-espresso-deep: #0c0906;
+}
+
+/* ── Base styles ─────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+/* ── Arabic mode: Cairo leads ────────────────────────────────────────────── */
+[dir="rtl"] {
+  --font-body: var(--font-cairo), var(--font-jost), sans-serif;
+  --font-display: var(--font-cairo), var(--font-marcellus), sans-serif;
+}
+[data-product="24k"][dir="rtl"],
+[data-product="coconut"][dir="rtl"] {
+  --font-display: var(--font-cairo), var(--font-cormorant), sans-serif;
+}
+
+.font-display { font-family: var(--font-display); }
+
+/* ── Shared gold text utilities ──────────────────────────────────────────── */
+
+/* Dark-background default: full-brightness ramp */
+.text-gold-gradient {
+  background: linear-gradient(100deg, #a8862a 0%, #e8c86a 35%, #f6e3a1 50%, #e8c86a 65%, #a8862a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.text-gold-shimmer {
+  background: linear-gradient(100deg, #a8862a 0%, #e8c86a 30%, #fff3c4 50%, #e8c86a 70%, #a8862a 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: var(--animate-shimmer);
+}
+
+/* Light-background (24k / coconut): capped at #9a7b1e for WCAG large-text */
+[data-product="24k"] .text-gold-gradient,
+[data-product="coconut"] .text-gold-gradient {
+  background: linear-gradient(100deg, #6a5210 0%, #85680f 35%, #9a7b1e 50%, #85680f 65%, #6a5210 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+[data-product="24k"] .text-gold-shimmer,
+[data-product="coconut"] .text-gold-shimmer {
+  background: linear-gradient(100deg, #6a5210 0%, #85680f 30%, #9a7b1e 50%, #85680f 70%, #6a5210 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: var(--animate-shimmer);
+}
+
+.text-gold-gradient-on-dark {
+  background: linear-gradient(100deg, #a8862a 0%, #e8c86a 35%, #f6e3a1 50%, #e8c86a 65%, #a8862a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.text-gold-shimmer-on-dark {
+  background: linear-gradient(100deg, #a8862a 0%, #e8c86a 35%, #fff3c4 50%, #e8c86a 65%, #a8862a 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: var(--animate-shimmer);
+}
+
+/* ── Hairline borders ────────────────────────────────────────────────────── */
+.border-gold-hairline        { border: 1px solid rgba(232,200,106,.28); }
+.border-gold-hairline-on-dark{ border: 1px solid rgba(232,200,106,.28); }
+[data-product="botox"] .border-gold-hairline { border: 1px solid rgba(212,175,55,.25); }
+[data-product="24k"] .border-gold-hairline   { border: 1px solid rgba(201,162,39,.30); }
+[data-product="coconut"] .border-gold-hairline { border: 1px solid rgba(201,162,39,.32); }
+[data-product="coconut"] .border-gold-hairline-on-dark { border: 1px solid rgba(232,200,106,.28); }
+
+/* ── Gold halo (shared dark-theme default) ───────────────────────────────── */
+.gold-halo {
+  background: radial-gradient(closest-side, rgba(201,162,39,.3), rgba(201,162,39,.1) 55%, transparent 78%);
+}
+[data-product="botox"] .gold-halo {
+  background: radial-gradient(closest-side, rgba(212,175,55,.28), rgba(212,175,55,.08) 55%, transparent 75%);
+}
+[data-product="24k"] .gold-halo {
+  background: radial-gradient(closest-side, rgba(227,211,176,.75), rgba(201,162,39,.16) 55%, transparent 78%);
+}
+[data-product="blue-silk"] .gold-halo {
+  background: radial-gradient(closest-side, rgba(30,58,138,.55), rgba(201,162,39,.16) 52%, transparent 78%);
+}
+
+/* coconut uses .product-halo instead */
+.product-halo {
+  background: radial-gradient(closest-side, rgba(31,77,61,.22), rgba(201,162,39,.14) 52%, transparent 78%);
+}
+
+/* ── Shadow ──────────────────────────────────────────────────────────────── */
+.shadow-luxe {
+  box-shadow: 0 18px 45px -20px rgba(0,0,0,.55), 0 2px 8px -4px rgba(0,0,0,.4);
+}
+[data-product="24k"] .shadow-luxe,
+[data-product="coconut"] .shadow-luxe {
+  box-shadow: 0 18px 45px -20px rgba(42,33,24,.28), 0 2px 8px -4px rgba(42,33,24,.12);
+}
+
+/* ── ::selection ─────────────────────────────────────────────────────────── */
+::selection { background: rgba(201,162,39,.32); color: var(--color-crema); }
+[data-product="botox"]  ::selection { color: #fff; }
+[data-product="24k"]    ::selection { color: var(--color-espresso); }
+[data-product="blue-silk"] ::selection { color: var(--color-silk); }
+[data-product="coconut"] ::selection { background: rgba(31,77,61,.2); color: var(--color-bark); }
+
+/* ── Coconut-only CTA ────────────────────────────────────────────────────── */
+.cta-primary {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(100deg, #1f4d3d 0%, #2b6a54 50%, #1f4d3d 100%);
+  color: var(--color-cream);
+  border: 1px solid rgba(201,162,39,.45);
+}
+.cta-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 35%, rgba(232,200,106,.28) 50%, transparent 65%);
+  background-size: 250% auto;
+  animation: shimmer 3.6s linear infinite;
+  pointer-events: none;
+}
+.cta-on-dark {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(100deg, #c9a227 0%, #e8c86a 50%, #c9a227 100%);
+  color: var(--color-bark);
+}
+.cta-on-dark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.35) 50%, transparent 65%);
+  background-size: 250% auto;
+  animation: shimmer 3.6s linear infinite;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cta-primary::after,
+  .cta-on-dark::after { animation: none; }
+}
+
+/* ── Spectrum glass title (per-product conic gradient) ───────────────────── */
+@property --hb-ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes hb-spin { to { --hb-ang: 360deg; } }
+
+.hero-title-wrap {
+  display: inline-block;
+  padding: 2px;
+  border-radius: 12px;
+  animation: hb-spin 7s linear infinite;
+  box-shadow: 0 0 28px rgba(201,162,39,.18);
+  margin-bottom: 22px;
+  max-width: 90%;
+}
+.hero-title-inner {
+  border-radius: 10px;
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  padding: clamp(12px,1.8vw,18px) clamp(28px,4vw,52px);
+  position: relative;
+  overflow: hidden;
+}
+.hero-title-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-title-inner h1 {
+  color: #fff !important;
+  margin: 0;
+  max-width: none;
+  white-space: nowrap;
+  font-size: clamp(1.05rem,5.2vw,2.4rem);
+  line-height: 1.1;
+}
+.hero-title-inner h1 span {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+
+/* Per-product conic ring + inner bg */
+[data-product="botox"] .hero-title-wrap {
+  background: conic-gradient(from var(--hb-ang),
+    #D4AF37 0%,#E8C86A 15%,#A8862A 30%,#D4AF37 50%,#C9A227 65%,#F6E3A1 80%,#D4AF37 100%);
+}
+[data-product="botox"] .hero-title-inner {
+  background: rgba(10,10,8,.72);
+}
+[data-product="botox"] .hero-title-inner h1 {
+  text-shadow: 0 2px 18px rgba(0,0,0,.38), 0 0 38px rgba(246,227,161,.22);
+}
+
+[data-product="24k"] .hero-title-wrap {
+  background: conic-gradient(from var(--hb-ang),
+    #C9A227 0%,#E3D3B0 15%,#A86A1E 30%,#C9A227 50%,#9A7B1E 65%,#F0E0B0 80%,#C9A227 100%);
+}
+[data-product="24k"] .hero-title-inner {
+  background: rgba(10,15,38,.88);
+}
+[data-product="24k"] .hero-title-inner h1 {
+  text-shadow: 0 2px 18px rgba(0,0,0,.38), 0 0 38px rgba(240,224,176,.22);
+}
+
+[data-product="blue-silk"] .hero-title-wrap {
+  background: conic-gradient(from var(--hb-ang),
+    #C9A227 0%,#7EA8E8 18%,#1E3A8A 28%,#5A80D0 48%,#7EA8E8 62%,#E8C86A 78%,#C9A227 100%);
+  box-shadow: 0 0 28px rgba(30,58,138,.18);
+}
+[data-product="blue-silk"] .hero-title-inner {
+  background: rgba(10,16,32,.72);
+}
+[data-product="blue-silk"] .hero-title-inner h1 {
+  text-shadow: 0 2px 18px rgba(0,0,0,.38), 0 0 38px rgba(126,168,232,.22);
+}
+
+[data-product="coconut"] .hero-title-wrap {
+  background: conic-gradient(from var(--hb-ang),
+    #C9A227 0%,#8FC4A8 18%,#1F4D3D 28%,#4A9070 48%,#2A6858 62%,#B8E0CC 78%,#C9A227 100%);
+  box-shadow: 0 0 28px rgba(31,77,61,.18);
+}
+[data-product="coconut"] .hero-title-inner {
+  background: rgba(10,15,38,.88);
+}
+[data-product="coconut"] .hero-title-inner h1 {
+  text-shadow: 0 2px 18px rgba(0,0,0,.38), 0 0 38px rgba(184,224,204,.22);
+}
+
+[data-product="coffee"] .hero-title-wrap,
+[data-product="filler"] .hero-title-wrap {
+  background: conic-gradient(from var(--hb-ang),
+    #C9A227 0%,#C7A878 18%,#8B6840 28%,#A8862A 48%,#C9A227 62%,#E8C86A 78%,#C9A227 100%);
+  box-shadow: 0 0 28px rgba(199,168,120,.18);
+}
+[data-product="coffee"] .hero-title-inner,
+[data-product="filler"] .hero-title-inner {
+  background: rgba(20,16,12,.72);
+}
+[data-product="coffee"] .hero-title-inner h1,
+[data-product="filler"] .hero-title-inner h1 {
+  text-shadow: 0 2px 18px rgba(0,0,0,.38), 0 0 38px rgba(232,200,106,.22);
+}
