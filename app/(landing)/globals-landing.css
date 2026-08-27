@@ -143,6 +143,13 @@ body {
   overflow-x: hidden;
 }
 
+[data-product="botox"]     body { background: var(--color-ink);      color: var(--color-cream); }
+[data-product="24k"]       body { background: var(--color-ivory);    color: var(--color-espresso); }
+[data-product="blue-silk"] body { background: var(--color-midnight); color: var(--color-silk); }
+[data-product="coconut"]   body { background: var(--color-cream);    color: var(--color-bark); }
+[data-product="coffee"]    body { background: var(--color-espresso); color: var(--color-crema); }
+[data-product="filler"]    body { background: var(--color-espresso); color: var(--color-crema); }
+
 /* ── Arabic mode: Cairo leads ────────────────────────────────────────────── */
 [dir="rtl"] {
   --font-body: var(--font-cairo), var(--font-jost), sans-serif;
