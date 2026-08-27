@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { PRICE_DH } from "@/app/(landing)/botox/lib/config";
+import { saveOrder } from "@/lib/lp-orders";
 
 /**
  * COD order intake.
@@ -66,6 +67,8 @@ export async function POST(request: Request) {
     lang: body.lang === "fr" ? "fr" : "ar",
     at: new Date().toISOString(),
   };
+
+  await saveOrder("botox", { name, phone, city, qty, total: order.total, lang: order.lang, at: order.at });
 
   const endpoint = process.env.SHEETS_ENDPOINT_BOTOX;
 
