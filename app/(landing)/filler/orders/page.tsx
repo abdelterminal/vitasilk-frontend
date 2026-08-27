@@ -1,10 +1,14 @@
-import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { isValidSession } from "@/lib/lp-auth";
 import { getOrders } from "@/lib/lp-orders";
 import { OrdersDashboard } from "../../orders/OrdersDashboard";
+import { LoginForm } from "../../orders/LoginForm";
 
-export default async function Page({ searchParams }: { searchParams: Promise<{ token?: string }> }) {
-  const { token } = await searchParams;
-  if (token !== process.env.LP_DASHBOARD_TOKEN) redirect("/");
-  const orders = await getOrders("filler");
-  return <OrdersDashboard product="filler" orders={orders} />;
+export default async function Page({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+  const store = await cookies();
+  if (!isValidSession(store.get("lp_session")?.value)) {
+    const { error } = await searchParams;
+    return <LoginForm product="filler" error={!!error} />;
+  }
+  return <OrdersDashboard product="filler" orders={await getOrders("filler")} />;
 }

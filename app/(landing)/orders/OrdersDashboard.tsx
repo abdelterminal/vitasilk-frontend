@@ -1,4 +1,5 @@
 import type { LpOrder } from "@/lib/lp-orders";
+import { logoutAction } from "./actions";
 
 const LABELS: Record<string, string> = {
   botox: "Botox Capillaire",
@@ -14,9 +15,16 @@ export function OrdersDashboard({ product, orders }: { product: string; orders: 
 
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", padding: "2rem", maxWidth: 1100, margin: "0 auto" }}>
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.25rem" }}>
-        {LABELS[product] ?? product} — Commandes
-      </h1>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.25rem" }}>
+        <h1 style={{ fontSize: "1.5rem", fontWeight: 700 }}>
+          {LABELS[product] ?? product} — Commandes
+        </h1>
+        <form action={logoutAction.bind(null, product)}>
+          <button type="submit" style={{ fontSize: "0.8rem", color: "#888", background: "none", border: "1px solid #ddd", borderRadius: 6, padding: "0.3rem 0.75rem", cursor: "pointer" }}>
+            Déconnexion
+          </button>
+        </form>
+      </div>
       <p style={{ color: "#666", marginBottom: "1.5rem", fontSize: "0.875rem" }}>
         {orders.length} commande{orders.length !== 1 ? "s" : ""} · Total:{" "}
         <strong>{totalRevenue.toLocaleString("fr-MA")} DH</strong>
