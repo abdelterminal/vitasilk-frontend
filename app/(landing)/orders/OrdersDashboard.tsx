@@ -14,7 +14,9 @@ export function OrdersDashboard({ product, orders }: { product: string; orders: 
   const totalRevenue = orders.reduce((s, o) => s + o.total, 0);
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", padding: "2rem", maxWidth: 1100, margin: "0 auto" }}>
+    <>
+    <style>{`html,body{background:#fff!important;color:#111!important}`}</style>
+    <div style={{ fontFamily: "system-ui, sans-serif", padding: "2rem", maxWidth: 1100, margin: "0 auto", background: "#fff", color: "#111", minHeight: "100vh" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.25rem" }}>
         <h1 style={{ fontSize: "1.5rem", fontWeight: 700 }}>
           {LABELS[product] ?? product} — Commandes
@@ -63,5 +65,6 @@ export function OrdersDashboard({ product, orders }: { product: string; orders: 
         </div>
       )}
     </div>
+    </>
   );
 }
