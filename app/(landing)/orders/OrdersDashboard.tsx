@@ -51,7 +51,7 @@ export function OrdersDashboard({ product, orders }: { product: string; orders: 
   return (
     <>
       <style>{`html,body{background:#f7f7f7!important;color:#111!important}`}</style>
-      <div style={{ fontFamily: "system-ui, sans-serif", minHeight: "100vh", background: "#f7f7f7" }}>
+      <div dir="ltr" style={{ fontFamily: "system-ui, sans-serif", minHeight: "100vh", background: "#f7f7f7" }}>
 
         {/* Header */}
         <div style={{ background: "#fff", borderBottom: "1px solid #e5e5e5", padding: "1rem 2rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
