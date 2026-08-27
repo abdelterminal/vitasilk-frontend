@@ -44,7 +44,7 @@ export function LoginForm({ product, error }: { product: string; error: boolean 
             style={{
               width: "100%", padding: "0.65rem 0.85rem", borderRadius: 8,
               border: error ? "1.5px solid #e53e3e" : "1.5px solid #ddd",
-              fontSize: "1rem", outline: "none", boxSizing: "border-box",
+              fontSize: "1rem", outline: "none", boxSizing: "border-box", color: "#111",
               marginBottom: error ? "0.4rem" : "1rem",
             }}
           />
