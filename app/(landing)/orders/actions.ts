@@ -3,6 +3,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { makeSessionToken } from "@/lib/lp-auth";
+import { updateOrdersStatus, deleteOrders, type OrderStatus } from "@/lib/lp-orders";
+import { revalidatePath } from "next/cache";
 
 export async function loginAction(product: string, _: unknown, formData: FormData) {
   const password = formData.get("password") as string;
@@ -24,4 +26,14 @@ export async function logoutAction(product: string) {
   const store = await cookies();
   store.delete("lp_session");
   redirect(`/${product}/orders`);
+}
+
+export async function updateStatusAction(product: string, ids: string[], status: OrderStatus) {
+  await updateOrdersStatus(product, ids, status);
+  revalidatePath(`/${product}/orders`);
+}
+
+export async function deleteOrdersAction(product: string, ids: string[]) {
+  await deleteOrders(product, ids);
+  revalidatePath(`/${product}/orders`);
 }
