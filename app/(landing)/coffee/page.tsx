@@ -7,6 +7,7 @@ export const metadata: Metadata = {
 
 import { AnnouncementBar } from "./components/AnnouncementBar";
 import { Hero } from "./components/Hero";
+import { VideoSection } from "./components/VideoSection";
 import { Marquee } from "./components/Marquee";
 import { ProblemPromise } from "./components/ProblemPromise";
 import { SafetyBanner } from "./components/SafetyBanner";
@@ -26,6 +27,7 @@ export default function Home() {
     <main>
       <AnnouncementBar />
       <Hero />
+      <VideoSection />
       <Marquee />
       <ProblemPromise />
       <SafetyBanner />

@@ -247,6 +247,10 @@ export const ar: Dict = {
       },
     ],
   },
+  video: {
+    eyebrow: "النتيجة بالفيديو",
+    title: "شوفي التحوّل",
+  },
   footer: {
     tagline: "البروتين البرازيلي بالقهوة، عندك فالدار.",
     rights: "© 2026 Vitasilk Professional. جميع الحقوق محفوظة.",

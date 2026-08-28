@@ -259,6 +259,10 @@ export const ar: Dict = {
       },
     ],
   },
+  video: {
+    eyebrow: "النتيجة بالفيديو",
+    title: "شوفي التحوّل",
+  },
   footer: {
     tagline: "تغذية جوز الهند ونعومة اللوز، عندك فالدار.",
     rights: "© 2026 Vitasilk Professional. جميع الحقوق محفوظة.",

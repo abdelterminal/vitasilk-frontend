@@ -242,6 +242,10 @@ export const fr = {
       },
     ],
   },
+  video: {
+    eyebrow: "Le résultat en vidéo",
+    title: "Regardez la transformation",
+  },
   footer: {
     tagline: "La protéine brésilienne au café, chez vous.",
     rights: "© 2026 Vitasilk Professional. Tous droits réservés.",
