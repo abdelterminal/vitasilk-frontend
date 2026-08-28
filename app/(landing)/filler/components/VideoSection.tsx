@@ -11,6 +11,11 @@ export function VideoSection() {
     const video = videoRef.current;
     if (!video) return;
 
+    // React doesn't reflect `muted` as a DOM attribute — set it imperatively
+    // so the browser's autoplay policy (muted-only) is satisfied.
+    video.muted = true;
+    video.load();
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -48,7 +53,7 @@ export function VideoSection() {
               muted
               playsInline
               loop
-              preload="metadata"
+              preload="auto"
               className="w-full"
             >
               <source src="/filler/video.mp4" type="video/mp4" />
