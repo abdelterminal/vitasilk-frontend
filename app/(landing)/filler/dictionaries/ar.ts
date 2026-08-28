@@ -279,6 +279,10 @@ export const ar: Dict = {
       },
     ],
   },
+  video: {
+    eyebrow: "النتيجة بالفيديو",
+    title: "شوفي التحوّل",
+  },
   footer: {
     tagline: "البروتوكول البرازيلي بجوج مراحل، عندك فالدار.",
     rights: "© 2026 Vitasilk Professional. جميع الحقوق محفوظة.",

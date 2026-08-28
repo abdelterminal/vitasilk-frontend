@@ -271,6 +271,10 @@ export const fr = {
       },
     ],
   },
+  video: {
+    eyebrow: "Le résultat en vidéo",
+    title: "Regardez la transformation",
+  },
   footer: {
     tagline: "Le protocole brésilien en deux étapes, chez vous.",
     rights: "© 2026 Vitasilk Professional. Tous droits réservés.",
