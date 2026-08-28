@@ -250,6 +250,10 @@ export const ar: Dict = {
       },
     ],
   },
+  video: {
+    eyebrow: "النتيجة بالفيديو",
+    title: "شوفي التحوّل",
+  },
   footer: {
     tagline: "الأركان المغربي والبروتين البرازيلي، عندك فالدار.",
     rights: "© 2026 Vitasilk Professional. جميع الحقوق محفوظة.",

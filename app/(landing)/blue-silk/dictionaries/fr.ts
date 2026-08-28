@@ -253,6 +253,10 @@ export const fr = {
       },
     ],
   },
+  video: {
+    eyebrow: "Le résultat en vidéo",
+    title: "Regardez la transformation",
+  },
   footer: {
     tagline: "L'argan marocain et la protéine brésilienne, chez vous.",
     rights: "© 2026 Vitasilk Professional. Tous droits réservés.",
