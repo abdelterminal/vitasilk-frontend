@@ -20,6 +20,7 @@ import Conciergerie from '@/components/admin/Conciergerie';
 import GiftSystemManager from '@/components/admin/GiftSystemManager';
 import EventManager from '@/components/admin/EventManager';
 import HomepageManager from '@/components/admin/HomepageManager';
+import TrackingManager from '@/components/admin/TrackingManager';
 import { adminApi, productsApi, ordersApi, messagesApi, imageUrl } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
@@ -73,6 +74,7 @@ const AdminDashboard = () => {
                 { id: 'analytics', label: 'Performances', icon: PieChart, color: 'text-violet-500', bg: 'bg-violet-500/10' },
                 { id: 'gifts', label: 'Gestion des Cadeaux', icon: Gift, color: 'text-amber-600', bg: 'bg-amber-50' },
                 { id: 'events', label: 'Événements & Roue', icon: CalendarDays, color: 'text-primary', bg: 'bg-primary/10' },
+                { id: 'tracking', label: 'Tracking & Pixel', icon: Zap, color: 'text-blue-500', bg: 'bg-blue-500/10' },
             ]
         }
 
@@ -470,6 +472,7 @@ const AdminDashboard = () => {
                                 {activeTab === 'gifts' && <GiftSystemManager />}
                                 {activeTab === 'events' && <EventManager />}
                                 {activeTab === 'homepage' && <HomepageManager />}
+                                {activeTab === 'tracking' && <TrackingManager />}
                             </motion.div>
 
                         </AnimatePresence>

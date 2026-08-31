@@ -7,6 +7,19 @@ import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { DiscountProvider } from "@/context/DiscountContext";
 import AppLayout from "@/components/AppLayout";
+import fs from "fs";
+import path from "path";
+
+function getPixelId(): string {
+  try {
+    const p = path.join(process.cwd(), "data", "tracking-config.json");
+    if (!fs.existsSync(p)) return "";
+    const cfg = JSON.parse(fs.readFileSync(p, "utf-8"));
+    return (cfg.meta_pixel_id || "").trim();
+  } catch {
+    return "";
+  }
+}
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -32,29 +45,34 @@ export default function StoreLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pixelId = getPixelId();
   return (
     <>
-      <Script id="meta-pixel" strategy="afterInteractive">
-        {`!function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '854475387521991');
-        fbq('track', 'PageView');`}
-      </Script>
-      <noscript>
-        <img
-          height="1"
-          width="1"
-          style={{ display: "none" }}
-          src="https://www.facebook.com/tr?id=854475387521991&ev=PageView&noscript=1"
-          alt=""
-        />
-      </noscript>
+      {pixelId && (
+        <>
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`!function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '${pixelId}');
+            fbq('track', 'PageView');`}
+          </Script>
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style={{ display: "none" }}
+              src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+              alt=""
+            />
+          </noscript>
+        </>
+      )}
       <div className={`${playfair.variable} ${poppins.variable} antialiased text-gray-900 bg-white`}>
         <AuthProvider>
           <DiscountProvider>
