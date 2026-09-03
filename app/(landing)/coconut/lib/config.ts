@@ -4,7 +4,7 @@
 // The dictionaries take a formatted price as an argument rather than hardcoding
 // it, so changing the price here can never desync the copy.
 
-export const PRICE_DH = 1499;
+export const PRICE_DH = 1199;
 export const OLD_PRICE_DH = 2000;
 
 // TODO: replace with the real WhatsApp number (international format, no +)
@@ -26,7 +26,7 @@ export type Lang = "ar" | "fr";
  */
 const groupDigits = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-/** "1 499 DH" in French, "1 499 درهم" in Arabic. */
+/** "1 199 DH" in French, "1 199 درهم" in Arabic. */
 export const formatDh = (amount: number, lang: Lang) =>
   `${groupDigits(amount)} ${lang === "ar" ? "درهم" : "DH"}`;
 

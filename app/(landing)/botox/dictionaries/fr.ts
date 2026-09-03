@@ -7,7 +7,7 @@ export const fr = {
     title2: "Capillaire",
     subtitle:
       "Un soin professionnel qui aide à améliorer l’apparence des cheveux abîmés et à les rendre plus doux et plus faciles à coiffer. Protéine et panthénol, 0 % de formaldéhyde.",
-    cta: "Commander — 899 DH",
+    cta: "Commander — 649 DH",
     badge1: "0 % de formaldéhyde",
     badge2: "1 000 ml — format professionnel",
     badge3: "Protéine et panthénol",
@@ -112,8 +112,8 @@ export const fr = {
     title: "Offre spéciale",
     subtitle: "Profitez du prix actuel ; la disponibilité est confirmée par téléphone",
     unit: "Botox capillaire 1 000 ml",
-    price: "899 DH",
-    oldPrice: "1 400 DH",
+    price: "649 DH",
+    oldPrice: "1 149 DH",
     freeDelivery: "Livraison gratuite",
     cod: "Paiement à la livraison",
     guarantee: "Conditions d’échange confirmées avant l’expédition",
@@ -188,7 +188,7 @@ export const fr = {
     tagline: "La beauté professionnelle de vos cheveux, chez vous.",
     rights: "© 2026 Vitasilk Professional. Tous droits réservés.",
   },
-  sticky: { price: "899 DH", cta: "Commander" },
+  sticky: { price: "649 DH", cta: "Commander" },
 };
 
 export type Dict = typeof fr;

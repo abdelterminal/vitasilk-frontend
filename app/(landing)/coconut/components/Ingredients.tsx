@@ -7,7 +7,7 @@ import { OrnamentDivider } from "./Ornament";
 import coconutMacro from "../assets/images/coconut-almond-macro.webp";
 
 /**
- * The formula breakdown. At 1499 DH the page has to justify the price, and for
+ * The formula breakdown. At 1199 DH the page has to justify the price, and for
  * this SKU the justification is the penetration argument — that coconut oil
  * actually enters the fibre where the customer's previous oils only coated it.
  * That claim needs room to be made, so the actives get their own section rather

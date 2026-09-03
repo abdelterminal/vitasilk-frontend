@@ -1,6 +1,6 @@
 // Central commercial config — edit prices/contacts here only.
-export const PRICE_DH = 899;
-export const OLD_PRICE_DH = 1400;
+export const PRICE_DH = 649;
+export const OLD_PRICE_DH = 1149;
 
 // TODO: replace with the real WhatsApp number (international format, no +)
 export const WHATSAPP_NUMBER = "212600000000";
@@ -19,10 +19,10 @@ export type Lang = "ar" | "fr";
 const groupDigits = (n: number) => n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
 /**
- * "899 DH" in French, "899 درهم" in Arabic.
+ * "649 DH" in French, "649 درهم" in Arabic.
  *
  * The currency has to travel with the number. Rendering a bare `… DH` suffix in
- * an RTL paragraph made the browser reorder it to "DH 899", which is what the
+ * an RTL paragraph made the browser reorder it to "DH 649", which is what the
  * copy review flagged on the order form.
  */
 export const formatDh = (amount: number, lang: Lang) =>
