@@ -1,0 +1,166 @@
+/* ==========================================================================
+   VitaSilk Haircare - Powerful Ingredients Banner Styles (Fully Responsive)
+   ========================================================================== */
+
+.powerful-ingredients-section {
+  position: relative;
+  background-color: #f8eeec;
+  width: 100%;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+/* Background Banner with Droplet Graphic on Left */
+.powerful-bg-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* Main Container */
+.powerful-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Right Content Block */
+.powerful-content-area {
+  width: 58%;
+  max-width: 650px;
+  padding-left: 20px;
+}
+
+/* Eyebrow */
+.powerful-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary-pink);
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Heading */
+.powerful-title {
+  font-size: 2.35rem;
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+/* Paragraph */
+.powerful-desc {
+  font-size: 0.96rem;
+  color: #4b5563;
+  line-height: 1.62;
+  max-width: 560px;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1100px) {
+  .powerful-content-area {
+    width: 55%;
+  }
+
+  .powerful-title {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .powerful-ingredients-section {
+    padding: 30px 0;
+  }
+
+  .powerful-content-area {
+    width: 60%;
+    padding-left: 10px;
+  }
+
+  .powerful-title {
+    font-size: 1.85rem;
+  }
+
+  .powerful-desc {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .powerful-ingredients-section {
+    padding: 50px 16px;
+    min-height: auto;
+    background-image:
+      linear-gradient(180deg, rgba(253, 244, 243, 0.78), rgba(247, 234, 231, 0.88)),
+      var(--mobile-ingredients-background);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .powerful-bg-banner {
+    display: none;
+  }
+
+  .powerful-container {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 0;
+    gap: 16px;
+  }
+
+  .powerful-content-area {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 0;
+  }
+
+  .powerful-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+
+  .powerful-title {
+    font-size: clamp(1.5rem, 6vw, 1.95rem);
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .powerful-desc {
+    font-size: 0.88rem;
+    line-height: 1.62;
+    max-width: 95%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .powerful-ingredients-section {
+    padding: 42px 14px;
+  }
+
+}

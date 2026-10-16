@@ -1,0 +1,16 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g opacity="0.32" transform="translate(120, 120)">
+    <!-- 8 delicate botanical petals with soft organic gradients -->
+    <path d="M0 -90 C22 -60, 26 -25, 0 0 C-26 -25, -22 -60, 0 -90 Z" fill="#6B7764" />
+    <path d="M0 -90 C22 -60, 26 -25, 0 0 C-26 -25, -22 -60, 0 -90 Z" fill="#6B7764" transform="rotate(45)" />
+    <path d="M0 -90 C22 -60, 26 -25, 0 0 C-26 -25, -22 -60, 0 -90 Z" fill="#6B7764" transform="rotate(90)" />
+    <path d="M0 -90 C22 -60, 26 -25, 0 0 C-26 -25, -22 -60, 0 -90 Z" fill="#6B7764" transform="rotate(135)" />
+    <path d="M0 -90 C22 -60, 26 -25, 0 0 C-26 -25, -22 -60, 0 -90 Z" fill="#6B7764" transform="rotate(180)" />
+    <path d="M0 -90 C22 -60, 26 -25, 0 0 C-26 -25, -22 -60, 0 -90 Z" fill="#6B7764" transform="rotate(225)" />
+    <path d="M0 -90 C22 -60, 26 -25, 0 0 C-26 -25, -22 -60, 0 -90 Z" fill="#6B7764" transform="rotate(270)" />
+    <path d="M0 -90 C22 -60, 26 -25, 0 0 C-26 -25, -22 -60, 0 -90 Z" fill="#6B7764" transform="rotate(315)" />
+    <!-- Pistil core -->
+    <circle cx="0" cy="0" r="16" fill="#CBBBA6" />
+    <circle cx="0" cy="0" r="8" fill="#586352" />
+  </g>
+</svg>

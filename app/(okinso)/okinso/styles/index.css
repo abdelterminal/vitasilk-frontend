@@ -1,0 +1,280 @@
+/* ==========================================================================
+   VitaSilk Haircare - Premium Design System & Styles
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --primary-pink: #e6006f;
+  --primary-pink-hover: #c4005e;
+  --primary-pink-light: #fff0f6;
+  --primary-pink-glow: rgba(230, 0, 111, 0.25);
+  --primary-pink-subtle: rgba(230, 0, 111, 0.08);
+
+  --text-main: #111111;
+  --text-muted: #4b5563;
+  --text-light: #6b7280;
+  
+  --bg-cream: #faf7f4;
+  --bg-cream-light: #fdfbf9;
+  --bg-white: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.85);
+
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-pink: rgba(230, 0, 111, 0.2);
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, Cambria, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-arabic: 'Cairo', 'Tajawal', 'Plus Jakarta Sans', sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.1);
+  --shadow-pink: 0 10px 25px -4px rgba(230, 0, 111, 0.4);
+  --shadow-pink-hover: 0 15px 35px -5px rgba(230, 0, 111, 0.55);
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-default: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset & Base Setup */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-main);
+  background-color: var(--bg-cream);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, a {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Typography Helpers */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(230, 0, 111, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(230, 0, 111, 0);
+  }
+}
+
+@keyframes pulsePrice {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(230, 0, 111, 0));
+  }
+  50% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 2px 8px rgba(230, 0, 111, 0.35));
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes badgeFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes shineSweep {
+  0% {
+    left: -100%;
+  }
+  20%, 100% {
+    left: 200%;
+  }
+}
+
+@keyframes twinkleSparkle {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15) rotate(12deg);
+    opacity: 0.85;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-price {
+  animation: pricePulse 2.8s ease-in-out infinite;
+  display: inline-block;
+}
+
+.animate-float {
+  animation: badgeFloat 3.5s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkleSparkle 2.5s ease-in-out infinite;
+}
+
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1ede8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d8ceca;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-pink);
+}
+
+/* ==========================================================================
+   Arabic Typography & Language Mode (Preserving Exact Layout Structure)
+   ========================================================================== */
+/* Keep layout containers LTR; only text gets an RTL reading direction.
+   Logical start alignment follows the text direction, while centered text
+   retains its existing alignment and flex/grid children keep their order. */
+.lang-ar :is(h1, h2, h3, h4, h5, h6, p, span, label, input, select, textarea),
+.lang-ar .nav-link,
+.lang-ar .footer-extra-links a,
+.lang-ar .footer-col li > a {
+  direction: rtl;
+  unicode-bidi: isolate;
+}
+
+/* Phone numbers must retain their natural digit order. */
+.lang-ar input[type="tel"],
+.lang-ar input[type="email"] {
+  direction: ltr;
+  text-align: right;
+}
+
+html.lang-ar,
+.lang-ar body,
+.lang-ar button,
+.lang-ar input,
+.lang-ar select,
+.lang-ar textarea {
+  font-family: var(--font-arabic);
+}
+
+.lang-ar .font-serif {
+  font-family: var(--font-arabic);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.lang-ar .font-sans {
+  font-family: var(--font-arabic);
+}
+
+.lang-ar .eyebrow-text,
+.lang-ar .why-eyebrow,
+.lang-ar .powerful-eyebrow,
+.lang-ar .routine-eyebrow,
+.lang-ar .order-eyebrow,
+.lang-ar .transformed-eyebrow {
+  letter-spacing: 0.02em;
+}
+

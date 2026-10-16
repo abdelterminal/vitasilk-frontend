@@ -1,0 +1,343 @@
+/* ==========================================================================
+   CRYSTAL® ROYAL PREMIUM — Luxury Organic Hair Care Design System
+   ========================================================================== */
+
+:root {
+  /* Warm Luxury Palette */
+  --bg-main: #FAF7F2;
+  --bg-surface: #FFFFFF;
+  --bg-warm-ivory: #F5EFEB;
+  --bg-cream: #FAF6F0;
+  --bg-beige: #EFE8DE;
+  --bg-card: #FFFFFF;
+  --bg-card-muted: #F8F4EE;
+  --bg-sand: #E8DFD3;
+
+  /* Accent Colors */
+  --accent-sage: #4E5848;
+  --accent-sage-dark: #3B4436;
+  --accent-sage-light: #6E7B67;
+  --accent-sage-soft: rgba(78, 88, 72, 0.08);
+  --accent-sage-border: rgba(78, 88, 72, 0.18);
+
+  --accent-rose: #C49782;
+  --accent-rose-soft: #F4EAE4;
+  --accent-gold: #C29B38;
+  --accent-gold-soft: #F9F4E8;
+
+  /* Typography Colors */
+  --text-dark: #241C18;
+  --text-primary: #342A24;
+  --text-secondary: #63574F;
+  --text-muted: #8E8177;
+  --text-light: #B5A9A0;
+  --text-on-accent: #FAF7F2;
+
+  /* Borders & Shadows */
+  --border-light: #EBE3D9;
+  --border-medium: #DDD3C5;
+  --border-subtle: rgba(78, 88, 72, 0.08);
+
+  --shadow-sm: 0 4px 14px rgba(52, 42, 36, 0.04);
+  --shadow-card: 0 12px 36px rgba(52, 42, 36, 0.07);
+  --shadow-hover: 0 20px 50px rgba(52, 42, 36, 0.12);
+  --shadow-floating: 0 25px 60px rgba(52, 42, 36, 0.14);
+
+  /* Fonts */
+  --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-editorial: 'Cormorant Garamond', Georgia, serif;
+  --font-brand: 'Cinzel', 'Playfair Display', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-arabic-sans: 'Tajawal', 'Cairo', 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-arabic-heading: 'Cairo', 'Amiri', 'Playfair Display', serif;
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 36px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-luxury: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--text-dark);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+}
+
+.font-editorial {
+  font-family: var(--font-editorial);
+}
+
+.italic-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.brand-title {
+  font-family: var(--font-brand);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* Containers — Expansive Luxury Widths */
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.container-hero {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.container-editorial {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Section Badges */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-sage);
+  margin-bottom: 16px;
+}
+
+.section-tag::before,
+.section-tag::after {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--accent-sage-border);
+}
+
+.section-tag-no-lines::before,
+.section-tag-no-lines::after {
+  display: none;
+}
+
+/* Luxury Buttons — Large & Prominent */
+.btn-luxury {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 36px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-sage);
+  color: #FAF7F2;
+  box-shadow: 0 8px 24px rgba(78, 88, 72, 0.25);
+  transition: all var(--transition-smooth);
+}
+
+.btn-luxury:hover {
+  background-color: var(--accent-sage-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(78, 88, 72, 0.35);
+  color: #FAF7F2;
+}
+
+.btn-luxury:active {
+  transform: translateY(0);
+}
+
+.btn-luxury-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 32px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--text-dark);
+  border: 1.5px solid var(--border-medium);
+  transition: all var(--transition-smooth);
+}
+
+.btn-luxury-outline:hover {
+  background-color: rgba(78, 88, 72, 0.06);
+  border-color: var(--accent-sage);
+  color: var(--accent-sage);
+  transform: translateY(-3px);
+}
+
+.btn-luxury-outline:active {
+  transform: translateY(0);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4C9BC;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B5A9A0;
+}
+
+/* ==========================================================================
+   Arabic Localization & Typography Enhancements (Preserving exact LTR Layout)
+   ========================================================================== */
+/* Keep columns, navigation and icon positions in their French order. */
+html.lang-ar {
+  direction: ltr;
+}
+
+body.lang-ar {
+  text-align: right;
+}
+
+/* Apply bidi direction to text only, never to flex/grid layout containers. */
+.lang-ar :is(h1, h2, h3, h4, h5, h6, p),
+.lang-ar :is(span, a, button, label, strong, small, li, div):not(:has(> :not(br))),
+.lang-ar :is(input, textarea, select) {
+  direction: rtl;
+  unicode-bidi: isolate;
+}
+
+/* Numeric and email values retain their natural reading order. */
+.lang-ar input:is([type="tel"], [type="email"], [type="number"]) {
+  direction: ltr;
+  text-align: right;
+}
+
+html.lang-ar,
+body.lang-ar,
+.lang-ar {
+  font-family: var(--font-arabic-sans);
+}
+
+.lang-ar h1, 
+.lang-ar h2, 
+.lang-ar h3, 
+.lang-ar h4, 
+.lang-ar h5, 
+.lang-ar h6 {
+  font-family: var(--font-arabic-heading);
+  letter-spacing: 0 !important;
+  line-height: 1.35;
+}
+
+.lang-ar p,
+.lang-ar span,
+.lang-ar a,
+.lang-ar button,
+.lang-ar input,
+.lang-ar label {
+  font-family: var(--font-arabic-sans);
+}
+
+.lang-ar .italic-serif,
+.lang-ar .serif-accent,
+.lang-ar .serif-highlight,
+.lang-ar .hero-serif-sage,
+.lang-ar .text-sage {
+  font-family: var(--font-arabic-heading);
+  font-style: normal;
+}
+
+.lang-ar .brand-title,
+.lang-ar .hero-brand-tag,
+.lang-ar .section-tag,
+.lang-ar .btn-luxury,
+.lang-ar .btn-luxury-outline,
+.lang-ar .btn-routine-pill,
+.lang-ar .btn-results-pill {
+  letter-spacing: 0.02em;
+}
+

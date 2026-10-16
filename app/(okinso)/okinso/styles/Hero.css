@@ -1,0 +1,539 @@
+/* ==========================================================================
+   VitaSilk Haircare - Hero Section Styles (Fully Responsive)
+   ========================================================================== */
+
+.vitasilk-hero-section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 115px;
+  padding-bottom: 50px;
+  background-color: #faf6f2;
+}
+
+/* Background Image & Ambient Layer */
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right center;
+  z-index: 1;
+}
+
+/* Subtle Gradient Overlay for enhanced legibility on all viewports */
+.hero-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(251, 248, 245, 0.96) 0%,
+    rgba(251, 248, 245, 0.92) 40%,
+    rgba(251, 248, 245, 0.65) 58%,
+    rgba(251, 248, 245, 0) 78%
+  );
+  pointer-events: none;
+}
+
+/* Container */
+.hero-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* Content Left Column */
+.hero-content-col {
+  max-width: 580px;
+  animation: fadeIn 0.8s var(--ease-smooth);
+}
+
+/* Eyebrow / Top Tagline */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 16px;
+  animation: badgeFloat 4s ease-in-out infinite;
+}
+
+.eyebrow-text {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary-pink);
+  line-height: 1.4;
+}
+
+/* Main Headline */
+.hero-title {
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.12;
+  color: #111111;
+  letter-spacing: -0.025em;
+  margin-bottom: 20px;
+}
+
+/* Paragraph Subtitle */
+.hero-description {
+  font-size: 1.05rem;
+  line-height: 1.68;
+  color: #4b5563;
+  font-weight: 400;
+  margin-bottom: 32px;
+}
+
+.highlight-brand {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Hero Product Image Showcase */
+.hero-product-image-wrap {
+  display: none;
+}
+
+.hero-product-image-card {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(230, 0, 111, 0.16);
+  box-shadow: 0 10px 25px rgba(230, 0, 111, 0.12), 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.hero-product-image-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(230, 0, 111, 0.2);
+}
+
+.hero-product-img {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.hero-product-image-card:hover .hero-product-img {
+  transform: scale(1.03);
+}
+
+/* CTA Action Buttons */
+.hero-cta-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 38px;
+  flex-wrap: wrap;
+}
+
+.btn-hero-primary {
+  background: var(--primary-pink);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  padding: 14px 30px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 25px -4px rgba(230, 0, 111, 0.45);
+  transition: all 0.3s var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-hero-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.32),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shineSweep 4s ease-in-out infinite;
+}
+
+.btn-hero-primary:hover {
+  background: var(--primary-pink-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -4px rgba(230, 0, 111, 0.6);
+}
+
+.btn-hero-primary:active {
+  transform: translateY(0);
+}
+
+.btn-arrow {
+  transition: transform 0.25s ease;
+}
+
+.btn-hero-primary:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.btn-hero-secondary {
+  background: rgba(255, 255, 255, 0.85);
+  color: #1f2937;
+  font-size: 0.94rem;
+  font-weight: 600;
+  padding: 13px 22px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.btn-hero-secondary:hover {
+  background: #ffffff;
+  border-color: var(--primary-pink);
+  color: var(--primary-pink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 3 Feature Pillars */
+.hero-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 22px;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-2px);
+}
+
+.feature-icon-wrapper {
+  color: #111111;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 26px;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+.feature-item:hover .feature-icon-wrapper {
+  transform: scale(1.1);
+  color: var(--primary-pink);
+}
+
+.feature-icon {
+  color: #1e293b;
+  transition: color 0.25s ease;
+}
+
+.feature-item:hover .feature-icon {
+  color: var(--primary-pink);
+}
+
+.feature-text {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  color: #374151;
+}
+
+.feature-title {
+  font-weight: 700;
+  color: #111111;
+}
+
+.feature-subtitle {
+  font-weight: 500;
+  color: #52525b;
+}
+
+.feature-stacked {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.35;
+}
+
+.feature-line {
+  display: block;
+}
+
+/* Arabic feature cards start with the icon on the right. */
+.lang-ar .hero-features-grid .feature-item {
+  direction: rtl;
+}
+
+.lang-ar .hero-features-grid .feature-text {
+  text-align: right;
+}
+
+/* Social Proof Bar */
+.hero-social-proof {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.84rem;
+  color: #4b5563;
+  margin-top: 6px;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 2px;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+  .hero-title {
+    font-size: 2.9rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .vitasilk-hero-section {
+    padding-top: 32px;
+    padding-bottom: 40px;
+  }
+
+  .hero-background {
+    display: none;
+  }
+
+  .hero-gradient-overlay {
+    display: none;
+  }
+
+  .hero-product-image-wrap {
+    display: block;
+    margin: 18px 0 26px;
+    width: 100%;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-content-col {
+    max-width: 580px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-description {
+    margin-bottom: 16px;
+  }
+
+  .hero-cta-wrapper {
+    justify-content: center;
+  }
+
+  .feature-text {
+    text-align: start;
+  }
+}
+
+@media (max-width: 768px) {
+  .vitasilk-hero-section {
+    min-height: auto;
+    padding-top: 28px;
+    padding-bottom: 40px;
+    background: linear-gradient(180deg, #faf6f2 0%, #f7eee7 100%);
+  }
+
+  .hero-container {
+    padding: 0 18px;
+  }
+
+  .hero-content-col {
+    max-width: 100%;
+  }
+
+  .hero-eyebrow {
+    background: rgba(230, 0, 111, 0.08);
+    padding: 5px 12px;
+    border-radius: 9999px;
+    border: 1px solid rgba(230, 0, 111, 0.15);
+    margin-bottom: 14px;
+  }
+
+  .eyebrow-text {
+    font-size: 0.74rem;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-title {
+    font-size: clamp(1.9rem, 7.8vw, 2.5rem);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  /* Description hidden on phone size as requested */
+  .hero-description {
+    display: none;
+  }
+
+  .hero-product-image-wrap {
+    display: block;
+    margin: 12px 0 24px;
+    width: 100%;
+  }
+
+  .hero-product-image-card {
+    border-radius: 14px;
+    box-shadow: 0 12px 28px rgba(230, 0, 111, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .hero-product-img {
+    height: auto;
+    max-height: none;
+    object-fit: contain;
+  }
+
+  .hero-product-image-card:hover .hero-product-img {
+    transform: none;
+  }
+
+  .hero-cta-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    margin-bottom: 26px;
+  }
+
+  .btn-hero-primary, .btn-hero-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 0.98rem;
+  }
+
+  .hero-features-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding-top: 18px;
+    margin-bottom: 18px;
+  }
+
+  .feature-item {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 10px 14px;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  }
+
+  .feature-item:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .feature-icon-wrapper {
+    height: auto;
+    color: var(--primary-pink);
+  }
+
+  .feature-icon {
+    color: var(--primary-pink);
+    width: 20px;
+    height: 20px;
+  }
+
+  .feature-text {
+    font-size: 0.84rem;
+    text-align: start;
+  }
+
+  .feature-stacked {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 0.82rem;
+  }
+
+  .feature-line:not(:last-child)::after {
+    content: ' •';
+    color: var(--primary-pink);
+  }
+
+  .hero-social-proof {
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8rem;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 8px 12px;
+    border-radius: 9999px;
+  }
+}
+
+@media (max-width: 480px) {
+  .vitasilk-hero-section {
+    padding-top: 24px;
+    padding-bottom: 35px;
+  }
+
+  .hero-container {
+    padding: 0 14px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.7rem, 7.5vw, 2.1rem);
+  }
+
+  .eyebrow-text {
+    font-size: 0.68rem;
+  }
+
+  .hero-product-image-wrap {
+    margin: 8px 0 20px;
+  }
+
+  .btn-hero-primary {
+    font-size: 0.92rem;
+    padding: 13px 18px;
+  }
+
+  .btn-hero-secondary {
+    font-size: 0.88rem;
+    padding: 12px 16px;
+  }
+}

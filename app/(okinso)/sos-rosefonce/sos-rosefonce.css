@@ -1,0 +1,271 @@
+
+:root {
+  /* Color Palette */
+  --primary-berry: #88254b;
+  --primary-berry-hover: #721c3d;
+  --primary-berry-dark: #58122c;
+  --primary-berry-light: #a93764;
+  --primary-gradient: linear-gradient(135deg, #9c2854 0%, #761d3e 50%, #5e1430 100%);
+  --primary-gradient-hover: linear-gradient(135deg, #af3262 0%, #88254b 50%, #6e193a 100%);
+  
+  --rose-cream: #fdf5f7;
+  --rose-100: #fae4ec;
+  --rose-200: #f6cedb;
+  --rose-300: #f0b1c5;
+  --rose-soft: #fcf1f5;
+  --rose-gold: #e8a598;
+  --gold-accent: #d4af37;
+  --gold-gradient: linear-gradient(135deg, #e5a86d 0%, #f6d397 50%, #d49a5b 100%);
+
+  --text-dark: #2c0b17;
+  --text-body: #5a273b;
+  --text-muted: #855367;
+  --text-light: #ffffff;
+  
+  /* Backgrounds & Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.78);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.88);
+  --glass-border-pink: rgba(156, 40, 84, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(120, 29, 62, 0.08);
+  --glass-shadow-lg: 0 16px 48px -8px rgba(120, 29, 62, 0.16);
+
+  /* Typography */
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-cursive: 'Alex Brush', cursive;
+  --font-arabic-heading: 'Tajawal', 'Cairo', sans-serif;
+  --font-arabic-body: 'Cairo', 'Tajawal', system-ui, sans-serif;
+  --font-arabic-cursive: 'Amiri', 'Tajawal', Georgia, serif;
+
+  /* Spacing & Transitions */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  background-color: #faf0f4;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Arabic text reads RTL while structural containers keep the French layout. */
+html[lang="ar"] :where(h1, h2, h3, h4, h5, h6, p, span, strong, em, label, a, button, input, textarea, select) {
+  direction: rtl !important;
+  unicode-bidi: isolate;
+}
+
+html[lang="ar"] :where(h1, h2, h3, h4, h5, h6, p, label, input, textarea, select) {
+  text-align: right;
+}
+
+/* Icon rows and buttons retain their original order. */
+html[lang="ar"] :is(span, a, button)[style*="flex"] {
+  direction: ltr !important;
+}
+
+/* Preserve deliberately centered copy, including cards and mobile layouts. */
+html[lang="ar"] [style*="text-align: center"] :where(h1, h2, h3, h4, h5, h6, p, label) {
+  text-align: inherit;
+}
+
+/* Arabic typography */
+html[lang="ar"] {
+  font-family: var(--font-arabic-body);
+}
+
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3,
+html[lang="ar"] h4,
+html[lang="ar"] .font-heading {
+  font-family: var(--font-arabic-heading) !important;
+  letter-spacing: normal !important;
+}
+
+html[lang="ar"] .font-cursive-styled {
+  font-family: var(--font-arabic-cursive) !important;
+  font-style: normal !important;
+  letter-spacing: 0.02em !important;
+}
+
+html[lang="ar"] input,
+html[lang="ar"] textarea,
+html[lang="ar"] button,
+html[lang="ar"] select {
+  font-family: var(--font-arabic-body);
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100vh;
+  background-color: #faf0f4;
+}
+
+/* Animations */
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1.2deg);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(156, 40, 84, 0.35), 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 35px rgba(156, 40, 84, 0.65), 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes badgeFloat1 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes badgeFloat2 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(7px); }
+}
+
+/* Glass Card Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-panel-subtle {
+  background: var(--glass-bg-subtle);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+/* Luxury Button Styles */
+.btn-primary-luxury {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--primary-gradient);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  padding: 14px 34px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+  box-shadow: 0 6px 20px rgba(122, 31, 61, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary-luxury::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.btn-primary-luxury:hover::before {
+  left: 100%;
+}
+
+.btn-primary-luxury:hover {
+  transform: translateY(-2px) scale(1.02);
+  background: var(--primary-gradient-hover);
+  box-shadow: 0 10px 28px rgba(122, 31, 61, 0.45);
+}
+
+.btn-primary-luxury:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+/* Nav Link Hover */
+.nav-link-item {
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  position: relative;
+  transition: var(--transition-smooth);
+  padding: 6px 2px;
+}
+
+.nav-link-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-berry);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-link-item:hover {
+  color: var(--primary-berry);
+}
+
+.nav-link-item:hover::after {
+  width: 100%;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fae4ec;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c77b96;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-berry);
+}

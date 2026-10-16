@@ -10,6 +10,12 @@ const LABELS: Record<string, string> = {
   coconut: "Coconut Smooth",
   coffee: "Coffee Extract",
   filler: "Filler Glow",
+  okinso: "Okinso Rituel Complet",
+  "crystal-mauve": "Crystal Mauve",
+  "crystal-rose": "Crystal Rose",
+  "sos-gold": "SOS Gold",
+  "sos-rosefonce": "SOS Rose Foncé",
+  "sos-therapy": "SOS Hair Therapy",
 };
 
 export function LoginForm({ product, error }: { product: string; error: boolean }) {

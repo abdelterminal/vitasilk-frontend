@@ -1,0 +1,222 @@
+/* ==========================================================================
+   VitaSilk Haircare - Why Choose Us / Second Section Styles (Fully Responsive)
+   ========================================================================== */
+
+.why-vitasilk-section {
+  padding: 80px 24px;
+  background-color: #faf7f4;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.why-vitasilk-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* Header */
+.why-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 55px;
+}
+
+.why-eyebrow {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--primary-pink);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.why-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* Grid Layout */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: stretch;
+}
+
+/* Card */
+.why-card {
+  padding: 16px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.why-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Vertical divider lines between columns */
+.why-card.has-divider::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  right: 0;
+  height: 80%;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.07);
+}
+
+/* Circular Icon Badge with Pink Outline */
+.why-icon-circle {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 2px solid var(--primary-pink);
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-pink);
+  margin-bottom: 20px;
+  transition: all 0.3s var(--ease-smooth);
+  box-shadow: 0 4px 14px rgba(230, 0, 111, 0.08);
+}
+
+.why-card:hover .why-icon-circle {
+  background-color: #fff0f6;
+  transform: scale(1.06);
+  box-shadow: 0 8px 24px rgba(230, 0, 111, 0.2);
+}
+
+.feature-svg-icon {
+  width: 42px;
+  height: 42px;
+  color: var(--primary-pink);
+  transition: transform 0.3s ease;
+}
+
+.why-card:hover .feature-svg-icon {
+  transform: scale(1.05);
+}
+
+/* Title */
+.why-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 10px;
+  line-height: 1.35;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Description */
+.why-card-desc {
+  font-size: 0.88rem;
+  color: #4b5563;
+  line-height: 1.6;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 16px;
+  }
+
+  .why-card.has-divider::after {
+    display: none;
+  }
+
+  .why-card:nth-child(1),
+  .why-card:nth-child(2) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding-bottom: 30px;
+  }
+
+  .why-card:nth-child(odd) {
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .why-title {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .why-vitasilk-section {
+    padding: 55px 14px;
+  }
+
+  .why-header {
+    margin-bottom: 32px;
+  }
+
+  .why-eyebrow {
+    font-size: 0.72rem;
+  }
+
+  .why-title {
+    font-size: clamp(1.6rem, 6.2vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .why-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    min-width: 0;
+    padding: 20px 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  }
+
+  .why-card:nth-child(odd) {
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .why-card:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding-bottom: 22px;
+  }
+
+  .why-icon-circle {
+    width: 62px;
+    height: 62px;
+    margin-bottom: 12px;
+  }
+
+  .feature-svg-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .why-card-title {
+    min-height: auto;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+  }
+
+  .why-card-desc {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    max-width: 280px;
+  }
+}

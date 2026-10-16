@@ -1,0 +1,190 @@
+/* ===== LUXURY FOOTER (VITASILK PROFESSIONAL) ===== */
+.luxury-footer-container {
+  width: 100%;
+  background: #320911;
+  color: #f7ded9;
+  padding: 44px 48px 24px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.luxury-footer-inner {
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Main Top Row */
+.footer-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+/* Left Brand Group */
+.footer-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-brand-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.footer-logo-img {
+  height: 40px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  transition: opacity 0.25s ease;
+}
+
+.footer-brand-link:hover .footer-logo-img {
+  opacity: 0.88;
+}
+
+.footer-brand-divider {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 18px;
+  font-weight: 300;
+  user-select: none;
+}
+
+.footer-slogan-text {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: #d8b0b8;
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Right Nav & Social */
+.footer-nav-social-group {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.footer-quick-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-link {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  color: #edd1d7;
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.footer-nav-dot {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 14px;
+}
+
+/* Social Icons */
+.footer-social-icons {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.social-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #f7ded9;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 50%;
+}
+
+.social-icon-btn svg {
+  width: 19px;
+  height: 19px;
+  display: block;
+}
+
+.social-icon-btn:hover {
+  color: #ffffff;
+  transform: scale(1.18);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+}
+
+/* Bottom Row */
+.footer-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 20px;
+  margin-top: 28px;
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  color: #9f7880;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-copyright-text {
+  font-weight: 400;
+}
+
+.footer-brand-motto {
+  color: #b78a93;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+@media (max-width: 992px) {
+  .luxury-footer-container {
+    padding: 36px 24px 20px;
+  }
+
+  .footer-main-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .footer-brand-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-brand-divider {
+    display: none;
+  }
+
+  .footer-nav-social-group {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .footer-bottom-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+}

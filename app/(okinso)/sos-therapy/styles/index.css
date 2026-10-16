@@ -1,0 +1,143 @@
+:root {
+  --color-primary: #7a2032;
+  --color-primary-dark: #5c1423;
+  --color-primary-light: #943347;
+  --color-gold: #c59f5a;
+  --color-gold-light: #dfc282;
+  --color-rose-bg: #fdf5f3;
+  --color-rose-subtle: #f8ebe8;
+  --color-text-main: #2d181e;
+  --color-text-muted: #6f585f;
+  --color-text-light: #967e85;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-script: 'Caveat', 'Alex Brush', cursive;
+  --font-serif-ar: 'Cairo', 'Tajawal', serif;
+  --font-sans-ar: 'Cairo', 'Tajawal', sans-serif;
+  --font-script-ar: 'Marhey', 'Aref Ruqaa', cursive;
+  --shadow-soft: 0 10px 30px -10px rgba(122, 32, 50, 0.12);
+  --shadow-glow: 0 15px 35px -5px rgba(122, 32, 50, 0.25);
+  --shadow-podium: 0 25px 50px -12px rgba(80, 20, 35, 0.35);
+  --radius-full: 9999px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background-color: #fdf6f4;
+  color: var(--color-text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lang-ar {
+  font-family: var(--font-sans-ar);
+}
+
+/* Apply RTL to copy only, preserving the French grid, flex and artwork positions. */
+.lang-ar :is(h1, h2, h3, h4, p, a, span, strong, input, textarea, select, button, div):not(:has(*)),
+.lang-ar :is(h1, h2, h3, h4, p):not(:has(div, button)) {
+  direction: rtl;
+  unicode-bidi: isolate;
+}
+
+.lang-ar :is(.ingredients-text-col, .testimonial-content-block,
+  .testimonial-author-meta, .order-highlights-list, .trust-item,
+  .checkout-form-card, .success-order-recap, .preview-details) {
+  text-align: right;
+}
+
+.lang-ar :is(input, textarea) {
+  text-align: right;
+}
+
+/* Keep phone numbers and Latin city names readable in their own direction. */
+.lang-ar :is(input[type='tel'], select, .lang-toggle-content) {
+  direction: ltr;
+}
+
+.lang-ar h1,
+.lang-ar h2,
+.lang-ar h3,
+.lang-ar .section-title,
+.lang-ar .exact-headline,
+.lang-ar .visible-results-title,
+.lang-ar .ingredients-title,
+.lang-ar .natural-beauty-title,
+.lang-ar .usage-title,
+.lang-ar .testimonials-title,
+.lang-ar .order-form-title {
+  font-family: var(--font-serif-ar) !important;
+}
+
+.lang-ar .natural-beauty-cursive-quote,
+.lang-ar .font-script-ar {
+  font-family: var(--font-script-ar) !important;
+}
+
+.sos-therapy-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Animations */
+@keyframes floatProduct {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(0.8deg);
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes subtleFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

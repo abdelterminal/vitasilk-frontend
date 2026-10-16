@@ -1,0 +1,300 @@
+export const translations = {
+  fr: {
+    announcement: "LIVRAISON OFFERTE & PAIEMENT À LA LIVRAISON",
+    nav: {
+      home: "Accueil",
+      formula: "Formule",
+      ingredients: "Actifs",
+      reviews: "Avis",
+      order: "Commander",
+      switchLang: "العربية"
+    },
+    hero: {
+      trust: "+1,480 clientes satisfaites",
+      overline: "SOIN CAPILLAIRE RÉPARATEUR & HYDRATANT",
+      title1: "Soin Capillaire",
+      title2: "by VitaPlex",
+      description: "Le secret d'une chevelure saine, brillante et visiblement réparée dès la première utilisation. Formule 400g riche et onctueuse.",
+      cta: "Commander mon soin",
+      guarantee: "Livraison 24/48h • Paiement à la livraison • Satisfait ou remboursé",
+      badge1Title: "Sans sulfate",
+      badge1Sub: "Color Safe",
+      badge2Title: "Hydrate",
+      badge2Sub: "Intensément",
+      badge3Title: "Protège",
+      badge3Sub: "Et illumine",
+      pillLeft: "Sans sulfate • Color Safe",
+      pillRight: "Formule Pro 400g"
+    },
+    formule: {
+      titleLine1: "Une formule puissante",
+      titleLine2: "pour vos cheveux",
+      description: "Découvrez notre soin capillaire exclusif by VitaPlex. Une texture riche enrichie en actifs d'exception pour nourrir la fibre en profondeur et sublimer chaque mèche.",
+      cursive: "Soin Capillaire by VitaPlex",
+      point1Title: "Répare",
+      point1Sub: "la fibre capillaire",
+      point2Title: "Hydrate",
+      point2Sub: "en profondeur",
+      point3Title: "Protège",
+      point3Sub: "contre la casse",
+      point4Title: "Redonne brillance",
+      point4Sub: "et souplesse"
+    },
+    actifs: {
+      title: "Des actifs soigneusement sélectionnés",
+      subtitle: "Une synergie d'ingrédients nobles reconnus pour leurs vertus réparatrices et nutritives exceptionnelles.",
+      item1Name: "Huile d'argan",
+      item1Benefit: "Nourrit & protège",
+      item2Name: "Beurre de karité",
+      item2Benefit: "Hydrate intensément",
+      item3Name: "Vitamine E",
+      item3Benefit: "Renforce & fait briller"
+    },
+    pourquoi: {
+      titleLine1: "Pourquoi choisir",
+      titleLine2: "notre soin capillaire ?",
+      point1: "Sans sulfate et sans danger pour la couleur",
+      point2: "Répare les cheveux abîmés et décolorés",
+      point3: "Facilite le coiffage et discipline les frisottis",
+      point4: "Texture riche, non grasse et facile à rincer",
+      point5: "Format généreux de 400g économique",
+      cursive: "Soin Capillaire by VitaPlex"
+    },
+    cheveux: {
+      titleLine1: "DES CHEVEUX PLUS FORTS,",
+      titleLine2: "PLUS DOUX, PLUS BRILLANTS",
+      subtitle: "Une formule pensée pour sublimer chaque type de cheveux, du cheveu crépu au cheveu fin ou méché.",
+      badge1: "Nutrition",
+      badge2: "Réparation",
+      badge3: "Éclat"
+    },
+    orderForm: {
+      tag: "COMMANDE RAPIDE & SÉCURISÉE",
+      title: "Commandez votre Soin Capillaire",
+      subtitle: "Remplissez le formulaire ci-dessous pour recevoir votre soin directement à domicile.",
+      step1: "Votre Produit :",
+      productName: "Soin Capillaire by VitaPlex (400g)",
+      productSubtitle: "Soin intensif réparateur, nourrissant & hydratant",
+      productBadge: "OFFRE SPÉCIALE",
+      feature1: "Format généreux de 400g économique",
+      feature2: "100% Sans sulfate & Color Safe",
+      feature3: "Répare et illumine dès la 1ère utilisation",
+      shippingFree: "Livraison Gratuite",
+      trust1: "Livraison rapide 24/48h à votre adresse",
+      trust2: "Garantie Satisfait ou Remboursé 30 jours",
+      trust3: "Paiement sécurisé à la réception du colis",
+      step2: "Vos coordonnées de livraison :",
+      nameLabel: "Nom complet *",
+      namePlaceholder: "Ex : Sarah Martin",
+      phoneLabel: "Numéro de téléphone portable *",
+      phonePlaceholder: "Ex : 06 12 34 56 78",
+      addressLabel: "Adresse de livraison complète *",
+      addressPlaceholder: "N° et nom de rue, quartier, ville...",
+      cityLabel: "Ville *",
+      cityPlaceholder: "Ex : Casablanca / Rabat / Marrakech",
+      notesLabel: "Instructions (facultatif)",
+      notesPlaceholder: "Code porte, étage...",
+      paymentLabel: "Mode de règlement :",
+      paymentCod: "Paiement à la livraison (Cash)",
+      paymentCard: "Carte bancaire (En ligne)",
+      recapArticle: "Article :",
+      recapShipping: "Frais de port :",
+      recapFree: "GRATUIT",
+      recapTotal: "Total à régler :",
+      submitBtn: "CONFIRMER MA COMMANDE",
+      submitting: "Validation en cours...",
+      disclaimer: "🔒 Commande 100% sécurisée et sans engagement. Vous recevrez un appel de confirmation.",
+      successTitle: "Merci",
+      successSub: "Votre commande a été enregistrée avec succès.",
+      successDetails: "Votre colis est en cours de préparation et vous sera livré sous 24 à 48 heures ouvrées.",
+      newOrderBtn: "Passer une autre commande",
+      phoneError: "Numéro invalide. Exemple : 06 12 34 56 78",
+      errorTitle: "Votre commande n'a pas pu être envoyée",
+      errorText: "Un souci technique nous empêche d'enregistrer votre commande. Commandez directement sur WhatsApp, c'est immédiat.",
+      whatsappBtn: "Commander sur WhatsApp",
+      retryBtn: "Réessayer"
+    },
+    reviews: {
+      title: "Ce qu'elles en disent",
+      item1Text: "Mes cheveux sont tellement plus doux et brillants ! Je ne peux plus m'en passer.",
+      item1Author: "Sara, 26 ans",
+      item2Text: "J'ai vu une vraie différence dès la première utilisation. Top !",
+      item2Author: "Imane, 32 ans",
+      item3Text: "Enfin un soin qui répare vraiment les cheveux abîmés. Je recommande !",
+      item3Author: "Laila, 28 ans"
+    },
+    ctaBanner: {
+      titleLine1: "Prête à redonner vie",
+      titleLine2: "à vos cheveux ?",
+      subtitleLine1: "Commandez dès maintenant",
+      subtitleLine2: "et profitez d'une chevelure sublime !",
+      btn: "Commander maintenant"
+    },
+    footer: {
+      service1: "Livraison rapide",
+      service2: "Paiement à la livraison",
+      service3: "Service client 7j/7",
+      rights: "Vitasilk Professional • Soin Capillaire by VitaPlex™. Tous droits réservés."
+    },
+    floatingBar: {
+      specialOffer: "Offre Spéciale",
+      btn: "Commander"
+    },
+    toast: {
+      title: "Nouvelle commande confirmée !",
+      desc: "a commandé le Soin Capillaire (400g)",
+      time: "Il y a 3 minutes"
+    }
+  },
+
+  ar: {
+    announcement: "التوصيل مجاني والدفع عند الاستلام",
+    nav: {
+      home: "الرئيسية",
+      formula: "التركيبة",
+      ingredients: "المكونات",
+      reviews: "الآراء",
+      order: "اطلبي الآن",
+      switchLang: "Français"
+    },
+    hero: {
+      trust: "+1,480 عميلة راضية ومقتنعة",
+      overline: "",
+      title1: "علاج الشعر المكثف للإصلاح والترطيب",
+      title2: "",
+      description: "سر الشعر الصحي، اللامع والمُرمم بشكل ملحوظ من أول استخدام. تركيبة غنية وكريمية بحجم 400 غرام لتغذية عميقة.",
+      cta: "اطلبي علاجكِ الآن",
+      guarantee: "توصيل سريع 24/48 ساعة • الدفع عند الاستلام • ضمان استرجاع الأموال",
+      badge1Title: "خالي من السلفات",
+      badge1Sub: "آمن للصبغة",
+      badge2Title: "ترطيب مكثف",
+      badge2Sub: "للأطراف والجذور",
+      badge3Title: "حماية ولمعان",
+      badge3Sub: "مظهر حريري ناعم",
+      pillLeft: "خالي من السلفات",
+      pillRight: "تركيبة مركزة 400غ"
+    },
+    formule: {
+      titleLine1: "تركيبة متطورة وفعالة",
+      titleLine2: "لإعادة حيوية شعركِ",
+      description: "اكتشفي علاج الشعر الحصري من فيتابليكس. قوام كريمي غني بالمكونات الطبيعية الفاخرة لتغذية ألياف الشعر بعمق وتنعيم كل خصلة.",
+      cursive: "Soin Capillaire by VitaPlex",
+      point1Title: "يُرمم",
+      point1Sub: "ألياف الشعر التالفة",
+      point2Title: "يُرطب",
+      point2Sub: "ترطيباً مكثفاً وعميقاً",
+      point3Title: "يحمي",
+      point3Sub: "من التقصف والحرارة",
+      point4Title: "يمنح لمعاناً",
+      point4Sub: "وملمساً حريرياً فائق النعومة"
+    },
+    actifs: {
+      title: "مكونات طبيعية مختارة بعناية فائقة",
+      subtitle: "مزيج متكامل من أنقى المكونات الطبيعية المعترف بفاعليتها الاستثنائية في ترميم وتغذية الشعر.",
+      item1Name: "زيت الأركان النقي",
+      item1Benefit: "يغذي ويحمي الشعر",
+      item2Name: "زبدة الشيا الطبيعية",
+      item2Benefit: "ترطيب عميق ومكثف",
+      item3Name: "فيتامين E المركز",
+      item3Benefit: "يقوي الشعر ويمنحه لمعاناً"
+    },
+    pourquoi: {
+      titleLine1: "لماذا تختارين",
+      titleLine2: "علاج الشعر الخاص بنا؟",
+      point1: "خالي تماماً من السلفات والبارابين وآمن للشعر المصبوغ",
+      point2: "يُصلح الشعر التالف والمجهد بفعل الصبغات وأدوات الحرارة",
+      point3: "يُسهل تصفيف الشعر ويزيل النفشة والتطاير المزعج",
+      point4: "قوام غني وفاخر غير دهني وسهل الشطف تماماً",
+      point5: "عبوة اقتصادية بحجم وفير 400 غرام تدوم طويلاً",
+      cursive: "Soin Capillaire by VitaPlex"
+    },
+    cheveux: {
+      titleLine1: "شعر أكثر قوة،",
+      titleLine2: "أكثر نعومة ولمعاناً ساحراً",
+      subtitle: "تركيبة مصممة بعناية لتناسب وتبرز جمال جميع أنواع الشعر، من المجعد والكيرلي إلى الناعم أو المصبوغ.",
+      badge1: "تغذية",
+      badge2: "ترميم",
+      badge3: "إشراق"
+    },
+    orderForm: {
+      tag: "طلب سريع وآمن 100%",
+      title: "اطلبي علاج الشعر الخاص بكِ الآن",
+      subtitle: "املئي الاستمارة أدناه لتصلكِ طلبيتكِ مباشرة إلى باب منزلكِ مع إمكانية الدفع عند الاستلام.",
+      step1: "المنتج المختار :",
+      productName: "علاج الشعر الفاخر by VitaPlex (400 غرام)",
+      productSubtitle: "علاج مكثف للترميم، التغذية والترطيب العميق",
+      productBadge: "عرض خاص",
+      feature1: "عبوة اقتصادية وفيرة بحجم 400 غرام",
+      feature2: "خالي تماماً من السلفات وآمن للصبغة",
+      feature3: "نتائج مبهرة وترميم فوري من أول استعمال",
+      shippingFree: "توصيل مجاني",
+      trust1: "توصيل سريع خلال 24/48 ساعة إلى باب منزلكِ",
+      trust2: "ضمان استرجاع الأموال لمدة 30 يوماً في حال عدم الرضا",
+      trust3: "الدفع نقداً بكل أمان عند استلام طلبيتكِ",
+      step2: "معلومات التوصيل الخاصة بكِ :",
+      nameLabel: "الاسم الكامل *",
+      namePlaceholder: "مثال : سارة أحمد",
+      phoneLabel: "رقم الهاتف المحمول *",
+      phonePlaceholder: "مثال : 06 12 34 56 78",
+      addressLabel: "عنوان التوصيل بالتفصيل *",
+      addressPlaceholder: "رقم المنزل، الشارع، الحي، المدينة...",
+      cityLabel: "المدينة *",
+      cityPlaceholder: "مثال : الدار البيضاء / الرباط / مراكش",
+      notesLabel: "ملاحظات إضافية للمندوب (اختياري)",
+      notesPlaceholder: "كود الباب، توقيت الاستلام المفضل...",
+      paymentLabel: "طريقة الدفع المفضلة :",
+      paymentCod: "الدفع عند الاستلام (كاش)",
+      paymentCard: "بطاقة بنكية (عبر الإنترنت)",
+      recapArticle: "المنتج :",
+      recapShipping: "مصاريف الشحن :",
+      recapFree: "مجاني",
+      recapTotal: "المجموع الإجمالي :",
+      submitBtn: "تأكيد طلبيتي الآن",
+      submitting: "جاري تسجيل طلبكِ...",
+      disclaimer: "🔒 طلبكِ آمن 100% وبدون أي مخاطرة. ستتلقين اتصالاً هاتفياً لتأكيد موعد التسليم.",
+      successTitle: "شكراً لكِ",
+      successSub: "تم تسجيل وتأكيد طلبيتكِ بنجاح.",
+      successDetails: "طردكِ قيد التجهيز وسيصلكِ خلال 24 إلى 48 ساعة عمل.",
+      newOrderBtn: "إجراء طلبية جديدة",
+      phoneError: "رقم الهاتف غير صحيح. مثال : 06 12 34 56 78",
+      errorTitle: "تعذر إرسال طلبيتكِ",
+      errorText: "حدث خلل تقني منعنا من تسجيل طلبيتكِ. اطلبي مباشرة عبر واتساب، الأمر فوري.",
+      whatsappBtn: "اطلبي عبر واتساب",
+      retryBtn: "إعادة المحاولة"
+    },
+    reviews: {
+      title: "تجارب وآراء عميلاتنا",
+      item1Text: "أصبح شعري أكثر نعومة ولمعاناً بشكل مذهل! لم أعد أستغني عن هذا المعالج إطلاقاً.",
+      item1Author: "سارة، 26 سنة",
+      item2Text: "لاحظت فرقاً حقيقياً وواضحاً من أول استعمال. منتج ممتاز وأنصح به بشدة!",
+      item2Author: "إيمان، 32 سنة",
+      item3Text: "أخيراً وجدت علاجاً يُرمم الشعر التالف والمجهد بعمق. رائع جداً ويستحق كل درهم!",
+      item3Author: "ليلى، 28 سنة"
+    },
+    ctaBanner: {
+      titleLine1: "هل أنتِ مستعدة لإعادة",
+      titleLine2: "الحياة والجمال لشعركِ؟",
+      subtitleLine1: "اطلبي الآن واحصلي",
+      subtitleLine2: "على شعر حريري وإطلالة ساحرة تليق بكِ!",
+      btn: "اطلبي الآن"
+    },
+    footer: {
+      service1: "توصيل سريع",
+      service2: "الدفع عند الاستلام",
+      service3: "خدمة عملاء 7/7",
+      rights: "فيتا سيلك بروفيشنال • علاج الشعر فيتابليكس. جميع الحقوق محفوظة."
+    },
+    floatingBar: {
+      specialOffer: "عرض خاص",
+      btn: "اطلبي الآن"
+    },
+    toast: {
+      title: "تم تأكيد طلبية جديدة!",
+      desc: "طلبت علاج الشعر الفاخر (400 غرام)",
+      time: "منذ 3 دقائق"
+    }
+  }
+};
+
+
+export type Translations = (typeof translations)["fr"];

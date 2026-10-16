@@ -1,0 +1,25 @@
+/* Shown when the order API rejects or fails — not in the Vite source, which
+   reported success unconditionally. Uses the page's own palette tokens. */
+.okinso-order-error {
+  margin: 4px 0 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--primary-pink-light);
+  border: 1px solid var(--border-pink);
+  color: var(--text-main);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.okinso-order-error a {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  background: #25d366;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85rem;
+}

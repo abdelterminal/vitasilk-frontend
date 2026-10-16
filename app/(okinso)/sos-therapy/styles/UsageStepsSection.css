@@ -1,0 +1,261 @@
+/* ===== USAGE STEPS SECTION (EXACT MOCKUP REPLICA) ===== */
+.usage-steps-section {
+  position: relative;
+  width: 100%;
+  padding: 90px 48px 100px;
+  background-color: #f7ded9;
+  background-image: 
+    radial-gradient(ellipse at 50% 25%, rgba(255, 255, 255, 0.5) 0%, rgba(247, 222, 218, 0) 70%),
+    linear-gradient(180deg, rgba(253, 245, 243, 0.6) 0%, rgba(246, 218, 213, 0.45) 100%),
+    url('../assets/marble-pink-bg.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-top: 1px solid rgba(175, 108, 122, 0.15);
+  border-bottom: 1px solid rgba(175, 108, 122, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+  box-sizing: border-box;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* Subtle botanical palm leaf shadow silhouettes on borders */
+.usage-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 5% 50%, rgba(140, 60, 75, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 95% 50%, rgba(140, 60, 75, 0.04) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.usage-steps-container {
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Header matching exact mockup */
+.usage-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 56px;
+}
+
+.usage-eyebrow {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 3.2px;
+  color: #92404e;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.usage-title {
+  font-family: var(--font-serif);
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 1.12;
+  color: #38101a;
+  margin-bottom: 14px;
+  letter-spacing: -0.4px;
+}
+
+.usage-subtitle {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  color: #552731;
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 4-Column Grid */
+.usage-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 36px;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* Step Card */
+.usage-step-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px 14px 20px;
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.usage-step-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Circular photo wrapper */
+.step-circle-wrapper {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+/* Step Number Pill/Badge */
+.step-number-badge {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #601726 0%, #82273a 100%);
+  color: #ffffff;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(96, 23, 38, 0.38);
+  z-index: 3;
+  transition: transform 0.3s ease;
+}
+
+.usage-step-card:hover .step-number-badge {
+  transform: translateX(-50%) scale(1.12);
+}
+
+/* Circular Photo Frame */
+.step-circle-frame {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3.5px solid rgba(255, 255, 255, 0.95);
+  background: #faedea;
+  box-shadow: 
+    0 16px 32px -4px rgba(110, 25, 45, 0.18),
+    0 4px 12px rgba(110, 25, 45, 0.08),
+    inset 0 2px 4px rgba(255, 255, 255, 0.9);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.step-circle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.usage-step-card:hover .step-circle-frame {
+  transform: scale(1.04);
+  box-shadow: 
+    0 20px 38px -4px rgba(110, 25, 45, 0.25),
+    0 6px 16px rgba(110, 25, 45, 0.12),
+    inset 0 2px 5px rgba(255, 255, 255, 1);
+  border-color: #ffffff;
+}
+
+.usage-step-card:hover .step-circle-img {
+  transform: scale(1.08);
+}
+
+/* Card Typography */
+.step-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #38101a;
+  margin-bottom: 8px;
+}
+
+.step-desc {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #552731;
+  font-weight: 400;
+  max-width: 210px;
+  margin: 0 auto;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+@media (max-width: 1080px) {
+  .usage-steps-section {
+    padding: 70px 32px 80px;
+  }
+
+  .usage-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 24px;
+  }
+
+  .usage-title {
+    font-size: 40px;
+  }
+
+  .step-circle-frame {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .usage-steps-section {
+    padding: 60px 20px 70px;
+  }
+
+  .usage-title {
+    font-size: 34px;
+  }
+
+  .usage-subtitle {
+    font-size: 14.5px;
+  }
+
+  .step-circle-frame {
+    width: 135px;
+    height: 135px;
+  }
+
+  .step-number-badge {
+    width: 28px;
+    height: 28px;
+    font-size: 13.5px;
+  }
+
+  .step-title {
+    font-size: 20px;
+  }
+
+  .step-desc {
+    font-size: 13.5px;
+    max-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .usage-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .usage-title {
+    font-size: 28px;
+  }
+
+  .step-desc {
+    max-width: 240px;
+  }
+}

@@ -1,0 +1,264 @@
+/* ==========================================================================
+   VitaSilk Haircare - 4 Steps Routine Section Styles (Fully Responsive)
+   ========================================================================== */
+
+.routine-steps-section {
+  padding: 80px 24px;
+  background-color: #ffffff;
+  position: relative;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.routine-container {
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+/* Header */
+.routine-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 50px;
+}
+
+.routine-eyebrow {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--primary-pink);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.routine-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #111111;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* 4 Steps Row */
+.routine-cards-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Step Column */
+.routine-step-col {
+  flex: 1;
+  min-width: 0;
+  max-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.routine-step-col:hover {
+  transform: translateY(-4px);
+}
+
+/* Product Container (Pure Transparent - No Beige Background) */
+.routine-cushion-container {
+  width: 100%;
+  height: 200px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  padding: 8px;
+}
+
+.routine-studio-img {
+  max-height: 180px;
+  max-width: 90%;
+  height: auto;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.08));
+  transition: transform 0.35s var(--ease-smooth), filter 0.35s ease;
+}
+
+.routine-step-col:hover .routine-studio-img {
+  transform: scale(1.08) translateY(-3px);
+  filter: drop-shadow(0 16px 28px rgba(230, 0, 111, 0.18));
+}
+
+/* Header Row: Badge + Title */
+.routine-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.step-badge-circle {
+  width: 23px;
+  height: 23px;
+  min-width: 23px;
+  border-radius: 50%;
+  background-color: var(--primary-pink);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-title-text {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #111111;
+  text-align: start;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+/* Description */
+.routine-desc-text {
+  font-size: 0.84rem;
+  color: #52525b;
+  line-height: 1.55;
+  margin-bottom: 12px;
+  max-width: 220px;
+}
+
+/* Volume */
+.routine-vol-text {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #8e8e93;
+}
+
+/* Pink Arrow Connector */
+.routine-arrow-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-pink);
+  margin-top: 88px;
+  opacity: 0.85;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.routine-step-col:hover + .routine-arrow-wrap {
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1140px) {
+  .step-title-text {
+    white-space: normal;
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .routine-cards-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 20px;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  .routine-step-col {
+    max-width: 100%;
+  }
+
+  .routine-arrow-wrap {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .routine-steps-section {
+    padding: 55px 14px;
+  }
+
+  .routine-header {
+    margin-bottom: 32px;
+  }
+
+  .routine-eyebrow {
+    font-size: 0.72rem;
+  }
+
+  .routine-title {
+    font-size: clamp(1.6rem, 6vw, 1.95rem);
+    line-height: 1.2;
+  }
+
+  .routine-cards-row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    max-width: 320px;
+  }
+
+  .routine-step-col {
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .routine-step-col:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .routine-cushion-container {
+    height: 180px;
+    margin-bottom: 14px;
+  }
+
+  .routine-studio-img {
+    max-height: 165px;
+  }
+
+  .routine-header-row {
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .step-badge-circle {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    font-size: 0.75rem;
+  }
+
+  .step-title-text {
+    font-size: 0.98rem;
+    font-weight: 700;
+  }
+
+  .routine-desc-text {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    max-width: 260px;
+    margin-bottom: 8px;
+  }
+
+  .routine-vol-text {
+    font-size: 0.78rem;
+    background: #fdf2f8;
+    color: var(--primary-pink);
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-weight: 600;
+  }
+}
