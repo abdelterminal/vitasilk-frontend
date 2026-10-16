@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { PRODUCT_NAME, getOffer } from "@/app/(okinso)/sos-therapy/lib/config";
+import { PRODUCT_NAME, getOffer } from "@/app/(collections)/sos-therapy/lib/config";
 import { saveOrder } from "@/lib/lp-orders";
 
 /**
  * COD order intake for the SOS Hair Therapy landing page.
  *
  * When `SHEETS_ENDPOINT_SOS_THERAPY` is set, orders are forwarded to the Apps
- * Script web app in `app/(okinso)/sos-therapy/apps-script/google_apps_script.js`.
+ * Script web app in `app/(collections)/sos-therapy/apps-script/google_apps_script.js`.
  * The endpoint is read server-side on purpose: a public /exec URL in the client
  * bundle is an open write handle to the sheet.
  *

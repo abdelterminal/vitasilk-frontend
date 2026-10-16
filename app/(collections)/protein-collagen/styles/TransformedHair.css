@@ -1,0 +1,347 @@
+/* ==========================================================================
+   Vitasilk - Transformed Hair Banner & Bottom Bar Styles
+   ========================================================================== */
+
+.transformed-hair-section {
+  width: 100%;
+  position: relative;
+}
+
+/* Top Testimonial Banner */
+.transformed-top-banner {
+  background-color: #fceeed;
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  padding: 65px 24px;
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+}
+
+.transformed-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding-left: 360px; /* Space for the silky hair artwork on the left */
+}
+
+.transformed-mobile-hair {
+  display: none;
+}
+
+/* Center Testimonial Column */
+.transformed-center-col {
+  flex: 1.2;
+  max-width: 480px;
+}
+
+.transformed-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: var(--primary-pink);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.transformed-title {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.transformed-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.transformed-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.transformed-score {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #111111;
+}
+
+.transformed-quote {
+  font-size: 0.96rem;
+  color: #374151;
+  line-height: 1.55;
+  margin-bottom: 8px;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.transformed-author {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+/* Right Checklist Column */
+.transformed-right-col {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.transformed-checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  padding: 20px 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.transformed-check-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.check-circle-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--primary-pink);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Bottom Black Bar */
+.transformed-bottom-bar {
+  background: #111114;
+  color: #ffffff;
+  padding: 22px 24px;
+}
+
+.bottom-bar-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Brand */
+.bar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.bar-brand-logo {
+  height: 40px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Center Message */
+.bar-message {
+  text-align: start;
+}
+
+.bar-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 2px;
+}
+
+.bar-subheading {
+  font-size: 0.82rem;
+  color: #9ca3af;
+}
+
+/* Action Button */
+.btn-bar-commander {
+  background: var(--primary-pink);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(230, 0, 111, 0.4);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-bar-commander::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shineSweep 4s ease-in-out infinite 1.5s;
+}
+
+.btn-bar-commander:hover {
+  background: var(--primary-pink-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(230, 0, 111, 0.6);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+  .transformed-container {
+    padding-left: 280px;
+  }
+}
+
+@media (max-width: 990px) {
+  .transformed-container {
+    padding-left: 200px;
+    gap: 24px;
+  }
+  
+  .transformed-title {
+    font-size: 1.95rem;
+  }
+
+  .transformed-checklist {
+    padding: 16px 18px;
+  }
+}
+
+@media (max-width: 860px) {
+  .transformed-top-banner {
+    background-image: none !important;
+    padding: 48px 16px;
+    background: linear-gradient(180deg, #fbf1f0 0%, #f7e6e5 100%);
+  }
+
+  .transformed-container {
+    padding-left: 0;
+    flex-direction: column;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .transformed-mobile-hair {
+    display: block;
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .transformed-mobile-hair img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(230, 0, 111, 0.12);
+  }
+
+  .transformed-eyebrow {
+    font-size: 0.75rem;
+  }
+
+  .transformed-title {
+    font-size: clamp(1.6rem, 6vw, 2rem);
+    line-height: 1.2;
+  }
+
+  .transformed-rating-row {
+    justify-content: center;
+  }
+
+  .transformed-quote {
+    font-size: 0.92rem;
+  }
+
+  .transformed-right-col {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .transformed-checklist {
+    text-align: start;
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 18px 20px;
+  }
+
+  .transformed-check-item {
+    font-size: 0.88rem;
+  }
+
+  .transformed-bottom-bar {
+    padding: 24px 16px;
+  }
+
+  .bottom-bar-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .bar-brand {
+    align-items: center;
+  }
+
+  .bar-message {
+    text-align: center;
+  }
+
+  .bar-heading {
+    font-size: 0.96rem;
+  }
+
+  .bar-subheading {
+    font-size: 0.8rem;
+  }
+
+  .bar-action {
+    width: 100%;
+  }
+
+  .btn-bar-commander {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+  }
+}

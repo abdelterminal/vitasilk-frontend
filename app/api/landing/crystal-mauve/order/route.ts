@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { PRICE_DH, PACK_TITLE, PRODUCT_NAME } from "@/app/(okinso)/crystal-mauve/lib/config";
+import { PRICE_DH, PACK_TITLE, PRODUCT_NAME } from "@/app/(collections)/crystal-mauve/lib/config";
 import { saveOrder } from "@/lib/lp-orders";
 
 /**
  * COD order intake for the Crystal Mauve landing page.
  *
  * When `SHEETS_ENDPOINT_CRYSTAL_MAUVE` is set, orders are forwarded to the
- * Google Apps Script web app in `app/(okinso)/crystal-mauve/apps-script/`. The
+ * Google Apps Script web app in `app/(collections)/crystal-mauve/apps-script/`. The
  * endpoint is read server-side on purpose: a public /exec URL in the client
  * bundle is an open write handle to the sheet.
  *

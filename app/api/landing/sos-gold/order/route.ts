@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { ORDER_QTY, PRICE_DH, PRODUCT_NAME } from "@/app/(okinso)/sos-gold/lib/config";
+import { ORDER_QTY, PRICE_DH, PRODUCT_NAME } from "@/app/(collections)/sos-gold/lib/config";
 import { saveOrder } from "@/lib/lp-orders";
 
 /**
  * COD order intake for the SOS Gold landing page.
  *
  * When `SHEETS_ENDPOINT_SOS_GOLD` is set, orders are forwarded to the Google
- * Apps Script web app in `app/(okinso)/sos-gold/apps-script/`. The endpoint is
+ * Apps Script web app in `app/(collections)/sos-gold/apps-script/`. The endpoint is
  * read server-side on purpose: a public /exec URL in the client bundle is an
  * open write handle to the sheet.
  *

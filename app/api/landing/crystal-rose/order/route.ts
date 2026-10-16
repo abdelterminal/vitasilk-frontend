@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { DEFAULT_OFFER, OFFERS, isOfferId } from "@/app/(okinso)/crystal-rose/lib/config";
+import { DEFAULT_OFFER, OFFERS, isOfferId } from "@/app/(collections)/crystal-rose/lib/config";
 import { saveOrder } from "@/lib/lp-orders";
 
 /**
  * COD order intake for the Crystal Rose landing page.
  *
  * When `SHEETS_ENDPOINT_CRYSTAL_ROSE` is set, orders are forwarded to the
- * Google Apps Script web app in `app/(okinso)/crystal-rose/apps-script/`. That
+ * Google Apps Script web app in `app/(collections)/crystal-rose/apps-script/`. That
  * script reads a JSON body from `e.postData.contents`, so we send exactly the
  * payload the original Vite page sent. The endpoint is read server-side on
  * purpose: a public /exec URL in the client bundle is an open write handle to

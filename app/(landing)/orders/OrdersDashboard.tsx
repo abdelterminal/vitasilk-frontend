@@ -11,7 +11,7 @@ const LABELS: Record<string, string> = {
   coconut: "Coconut Smooth",
   coffee: "Coffee Extract",
   filler: "Filler Glow",
-  okinso: "Okinso Rituel Complet",
+  "protein-collagen": "Protein Collagen",
   "crystal-mauve": "Crystal Mauve",
   "crystal-rose": "Crystal Rose",
   "sos-gold": "SOS Gold",

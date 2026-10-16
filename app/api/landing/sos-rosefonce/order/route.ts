@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { OFFERS, PRODUCT_NAME, SHEETS_SOURCE, isOfferId } from "@/app/(okinso)/sos-rosefonce/lib/config";
+import { OFFERS, PRODUCT_NAME, SHEETS_SOURCE, isOfferId } from "@/app/(collections)/sos-rosefonce/lib/config";
 import { saveOrder } from "@/lib/lp-orders";
 
 /**
  * COD order intake for the SOS Rose Foncé landing page.
  *
  * When `SHEETS_ENDPOINT_SOS_ROSEFONCE` is set, orders are forwarded to the
- * Google Apps Script web app in `app/(okinso)/sos-rosefonce/apps-script/`. The
+ * Google Apps Script web app in `app/(collections)/sos-rosefonce/apps-script/`. The
  * endpoint is read server-side on purpose: a public /exec URL in the client
  * bundle is an open write handle to the sheet.
  *

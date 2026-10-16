@@ -14,7 +14,7 @@ export type LpOrder = {
   total: number;
   lang: string;
   at: string;
-  // Only some pages collect these (the Okinso-range forms ask for an address
+  // Only some pages collect these (the protein-collagen, crystal and sos forms ask for an address
   // and offer pack tiers); older records simply don't have them.
   address?: string;
   offer?: string;
